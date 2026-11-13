@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  MessageCircle,
   Phone,
   Moon,
   ExternalLink,
@@ -18,6 +17,7 @@ import {
   Compass
 } from 'lucide-react';
 import StatusBadge from './StatusBadge';
+import WhatsAppIcon from './WhatsAppIcon';
 import { PRIORITY_CONFIG } from '../utils/constants';
 import { createWhatsAppUrl, createTelUrl } from '../utils/whatsapp';
 
@@ -146,7 +146,7 @@ export default function ActionCard({
                   onClick={() => setShowDraft(!showDraft)}
                   className="text-[11px] font-semibold text-teal-700 hover:text-teal-900 flex items-center gap-1 transition-colors"
                 >
-                  <MessageCircle className="w-3 h-3 text-emerald-600 flex-shrink-0" />
+                  <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
                   <span className="truncate">{showDraft ? 'Hide prefilled WhatsApp message' : 'Preview prefilled WhatsApp message'}</span>
                   {showDraft ? <ChevronUp className="w-3 h-3 flex-shrink-0" /> : <ChevronDown className="w-3 h-3 flex-shrink-0" />}
                 </button>
@@ -170,7 +170,7 @@ export default function ActionCard({
               className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-bold text-white bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 shadow-xs hover:shadow transition-all active:scale-[0.97]"
               title="Open WhatsApp with prefilled message"
             >
-              <MessageCircle className="w-3.5 h-3.5 flex-shrink-0" />
+              <WhatsAppIcon className="w-3.5 h-3.5 flex-shrink-0" />
               <span>WhatsApp</span>
             </button>
 

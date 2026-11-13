@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { MessageCircle, Check, X, Calendar } from 'lucide-react';
+import { Check, X, Calendar } from 'lucide-react';
 import api from '../api/client';
+import WhatsAppIcon from './WhatsAppIcon';
 
 export default function WhatsAppConfirmModal({
   isOpen = true,
@@ -43,8 +44,8 @@ export default function WhatsAppConfirmModal({
     <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
       <div className="bg-white rounded-xl shadow-xl border border-slate-200 max-w-md w-full p-4 sm:p-6 my-auto animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center gap-3 text-emerald-700 mb-3">
-          <div className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center">
-            <MessageCircle className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
+            <WhatsAppIcon className="w-5 h-5" />
           </div>
           <div>
             <h3 className="font-semibold text-slate-900 text-base">WhatsApp Outreach</h3>

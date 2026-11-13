@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Phone,
-  MessageCircle,
   Mail,
   Users,
   FileText,
@@ -10,11 +9,12 @@ import {
   CheckCircle2,
   Calendar
 } from 'lucide-react';
+import WhatsAppIcon from './WhatsAppIcon';
 import { formatDateTime, formatRelativeTime, formatCurrency } from '../utils/formatters';
 
 const TYPE_ICONS = {
   call: Phone,
-  whatsapp: MessageCircle,
+  whatsapp: WhatsAppIcon,
   email: Mail,
   meeting: Users,
   note: FileText,

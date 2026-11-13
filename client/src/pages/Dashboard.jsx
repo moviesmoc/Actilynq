@@ -12,12 +12,12 @@ import {
   PlusCircle,
   Compass,
   Phone,
-  MessageCircle,
   Plane,
   Sparkles,
   Clock,
   CheckCircle2
 } from 'lucide-react';
+import WhatsAppIcon from '../components/WhatsAppIcon';
 import api from '../api/client';
 import ActionCard from '../components/ActionCard';
 import StatusBadge from '../components/StatusBadge';
@@ -106,7 +106,7 @@ export default function Dashboard() {
       case 'call':
         return <Phone className="w-3.5 h-3.5 text-blue-600" />;
       case 'whatsapp':
-        return <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />;
+        return <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-600" />;
       case 'quotation':
         return <FileText className="w-3.5 h-3.5 text-amber-600" />;
       case 'booking':

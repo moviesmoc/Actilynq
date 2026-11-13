@@ -8,7 +8,6 @@ import {
   MapPin,
   Calendar,
   Phone,
-  MessageCircle,
   Archive,
   RefreshCw,
   AlertCircle,
@@ -19,6 +18,7 @@ import {
   Compass,
   ArrowUpRight
 } from 'lucide-react';
+import WhatsAppIcon from '../components/WhatsAppIcon';
 import api from '../api/client';
 import StatusBadge from '../components/StatusBadge';
 import { STAGES, STAGE_CONFIG, TRAVEL_TYPES } from '../utils/constants';
@@ -273,7 +273,7 @@ export default function LeadsList() {
                       }}
                       className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200"
                     >
-                      <MessageCircle className="w-4 h-4" />
+                      <WhatsAppIcon className="w-4 h-4" />
                     </button>
 
                     <button
@@ -377,7 +377,7 @@ export default function LeadsList() {
                           }}
                           className="p-1.5 rounded-lg text-emerald-700 hover:bg-emerald-50 border border-transparent hover:border-emerald-200 transition-colors"
                         >
-                          <MessageCircle className="w-4 h-4" />
+                          <WhatsAppIcon className="w-4 h-4" />
                         </button>
 
                         <button

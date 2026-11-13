@@ -22,6 +22,7 @@ import {
   Kanban,
   Sparkles
 } from 'lucide-react';
+import WhatsAppIcon from '../components/WhatsAppIcon';
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -256,7 +257,7 @@ export default function Landing() {
                   {/* Action Buttons */}
                   <div className="flex gap-3 pt-2">
                     <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-emerald-600 text-white text-sm font-semibold rounded-lg hover:bg-emerald-700 active:scale-95 transition-all duration-200 group/btn shadow-md hover:shadow-lg">
-                      <MessageCircle className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
+                      <WhatsAppIcon className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
                       WhatsApp
                     </button>
                     <button className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-neutral-100 text-neutral-900 text-sm font-semibold rounded-lg hover:bg-neutral-200 active:scale-95 transition-all duration-200 group/btn">
@@ -499,7 +500,7 @@ export default function Landing() {
               { icon: Zap, title: 'Next-Action Engine', description: 'Rule-based system that automatically identifies the next priority action.' },
               { icon: Target, title: 'Action Center', description: 'Prioritized queue of recommended actions updated in real time.' },
               { icon: Clock, title: 'Follow-up Scheduling', description: 'Set reminders for follow-ups, callbacks, and scheduled touchpoints.' },
-              { icon: MessageCircle, title: 'Click-to-WhatsApp', description: 'Quick access to customer WhatsApp from any screen in the platform.' },
+              { icon: WhatsAppIcon, title: 'Click-to-WhatsApp', description: 'Quick access to customer WhatsApp from any screen in the platform.' },
               { icon: BarChart3, title: 'Dashboard & Reports', description: 'Visibility into enquiry flow, conversion rates, and team performance.' }
             ].map((feature, i) => {
               const Icon = feature.icon;

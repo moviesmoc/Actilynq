@@ -4,7 +4,6 @@ import {
   ArrowLeft,
   Edit,
   Phone,
-  MessageCircle,
   MapPin,
   Calendar,
   Users,
@@ -20,6 +19,7 @@ import {
   Compass,
   CheckCircle2
 } from 'lucide-react';
+import WhatsAppIcon from '../components/WhatsAppIcon';
 import api from '../api/client';
 import StatusBadge from '../components/StatusBadge';
 import StageStepper from '../components/StageStepper';
@@ -170,7 +170,7 @@ export default function LeadDetail() {
             onClick={handleWhatsAppClick}
             className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-white bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 rounded-lg shadow-xs transition-all active:scale-[0.97]"
           >
-            <MessageCircle className="w-4 h-4" />
+            <WhatsAppIcon className="w-4 h-4" />
             <span>WhatsApp</span>
           </button>
 
@@ -429,7 +429,7 @@ export default function LeadDetail() {
           onClick={handleWhatsAppClick}
           className="flex-1 py-2 rounded-lg bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-1 shadow-xs"
         >
-          <MessageCircle className="w-4 h-4" />
+          <WhatsAppIcon className="w-4 h-4" />
           <span>WhatsApp</span>
         </button>
 

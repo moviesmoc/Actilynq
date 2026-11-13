@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Phone,
-  MessageCircle,
   Mail,
   Users,
   FileText,
@@ -10,6 +9,7 @@ import {
   Check
 } from 'lucide-react';
 import api from '../api/client';
+import WhatsAppIcon from './WhatsAppIcon';
 
 export default function LogActivityModal({
   isOpen,
@@ -30,7 +30,7 @@ export default function LogActivityModal({
 
   const ACTIVITY_OPTIONS = [
     { type: 'call', label: 'Phone Call', icon: Phone },
-    { type: 'whatsapp', label: 'WhatsApp', icon: MessageCircle },
+    { type: 'whatsapp', label: 'WhatsApp', icon: WhatsAppIcon },
     { type: 'email', label: 'Email', icon: Mail },
     { type: 'meeting', label: 'Meeting', icon: Users },
     { type: 'note', label: 'Internal Note', icon: FileText }
