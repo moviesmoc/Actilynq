@@ -82,11 +82,11 @@ export default function SettingsPage() {
     <div className="space-y-8 max-w-3xl">
       {/* Page Header */}
       <div>
-        <h1 className="text-3xl font-bold text-neutral-900 mb-2 flex items-center gap-2">
-          <Settings className="w-8 h-8 text-brand-700" />
-          Settings
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-neutral-900 mb-1 flex items-center gap-2">
+          <Settings className="w-6 h-6 sm:w-8 sm:h-8 text-brand-700 flex-shrink-0" />
+          <span>Settings</span>
         </h1>
-        <p className="text-neutral-600">Manage your workspace and business information</p>
+        <p className="text-xs sm:text-sm text-neutral-600">Manage your workspace and business information</p>
       </div>
 
       {/* Messages */}

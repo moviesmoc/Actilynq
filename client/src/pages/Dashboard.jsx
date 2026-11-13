@@ -58,14 +58,14 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="space-y-6 animate-pulse">
+      <div className="space-y-4 sm:space-y-6 animate-pulse max-w-full">
         <div className="h-20 bg-slate-200/80 rounded-xl" />
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4">
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-28 bg-slate-200/80 rounded-xl" />
+            <div key={i} className="h-24 sm:h-28 bg-slate-200/80 rounded-xl" />
           ))}
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           <div className="lg:col-span-2 h-64 bg-slate-200/80 rounded-xl" />
           <div className="h-64 bg-slate-200/80 rounded-xl" />
         </div>
@@ -75,10 +75,10 @@ export default function Dashboard() {
 
   if (error) {
     return (
-      <div className="p-6 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-3">
+      <div className="p-4 sm:p-6 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-3 max-w-full">
         <AlertCircle className="w-5 h-5 text-rose-700 flex-shrink-0 mt-0.5" />
         <div>
-          <h3 className="font-bold text-rose-900">Unable to load dashboard</h3>
+          <h3 className="font-bold text-rose-900 text-sm sm:text-base">Unable to load dashboard</h3>
           <p className="text-xs text-rose-800 mt-1">{error}</p>
           <button
             onClick={fetchDashboardData}
@@ -117,19 +117,19 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="space-y-6 sm:space-y-8 animate-fade-in">
+    <div className="space-y-5 sm:space-y-8 animate-fade-in max-w-full">
       {/* Hero Welcome Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-800 to-teal-950 p-5 sm:p-6 rounded-2xl text-white shadow-md relative overflow-hidden">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-800 to-teal-950 p-4 sm:p-6 rounded-2xl text-white shadow-md relative overflow-hidden max-w-full">
         {/* Subtle background decorative shapes */}
         <div className="absolute -right-6 -bottom-8 w-44 h-44 rounded-full bg-teal-500/10 blur-2xl pointer-events-none" />
         <div className="absolute right-32 -top-10 w-36 h-36 rounded-full bg-amber-500/10 blur-xl pointer-events-none" />
 
-        <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-teal-500/20 text-teal-300 border border-teal-500/30 mb-2">
-            <span className="w-2 h-2 rounded-full bg-teal-400 animate-ping" />
+        <div className="relative z-10 min-w-0">
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-semibold bg-teal-500/20 text-teal-300 border border-teal-500/30 mb-2">
+            <span className="w-2 h-2 rounded-full bg-teal-400 animate-ping flex-shrink-0" />
             <span>Next-Action Engine Active</span>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white">
+          <h1 className="text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white">
             Welcome back, {user?.name ? user.name.split(' ')[0] : 'Agent'} 👋
           </h1>
           <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
@@ -137,131 +137,131 @@ export default function Dashboard() {
           </p>
         </div>
 
-        <div className="relative z-10 flex items-center gap-2.5 flex-shrink-0">
+        <div className="relative z-10 flex flex-wrap items-center gap-2 sm:gap-2.5 flex-shrink-0">
           <Link
             to="/app/leads/new"
-            className="btn-primary text-xs font-bold py-2 px-3.5 shadow-sm hover:shadow-glow-teal"
+            className="btn-primary text-xs font-bold py-2 px-3 sm:px-3.5 shadow-sm hover:shadow-glow-teal flex-1 sm:flex-none justify-center"
           >
-            <PlusCircle className="w-4 h-4" />
+            <PlusCircle className="w-4 h-4 flex-shrink-0" />
             <span>New Travel Enquiry</span>
           </Link>
           <Link
             to="/app/actions"
-            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg bg-white/10 hover:bg-white/15 text-white border border-white/15 transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-lg bg-white/10 hover:bg-white/15 text-white border border-white/15 transition-colors flex-1 sm:flex-none"
           >
-            <Zap className="w-3.5 h-3.5 text-amber-400" />
+            <Zap className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
             <span>Action Queue</span>
           </Link>
         </div>
       </div>
 
       {/* KPI Metrics Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4 max-w-full">
         {/* Active Enquiries */}
-        <div className="interactive-card p-4 relative overflow-hidden group">
+        <div className="interactive-card p-3 sm:p-4 relative overflow-hidden group">
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-blue-600" />
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Active Enquiries</span>
-            <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center">
-              <Users className="w-4 h-4" />
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+            <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider truncate">Active Enquiries</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center flex-shrink-0">
+              <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 group-hover:text-blue-700 transition-colors">
+          <div className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 group-hover:text-blue-700 transition-colors">
             {summary.totalOpen ?? 0}
           </div>
-          <div className="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-            <span>Open & progressing</span>
+          <div className="text-[10px] sm:text-[11px] text-slate-500 mt-1 flex items-center gap-1 truncate">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0" />
+            <span className="truncate">Open & progressing</span>
           </div>
         </div>
 
         {/* Quotations Sent */}
-        <div className="interactive-card p-4 relative overflow-hidden group">
+        <div className="interactive-card p-3 sm:p-4 relative overflow-hidden group">
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-amber-600" />
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Quotes Sent</span>
-            <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center">
-              <FileText className="w-4 h-4" />
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+            <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider truncate">Quotes Sent</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center flex-shrink-0">
+              <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 group-hover:text-amber-700 transition-colors">
+          <div className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 group-hover:text-amber-700 transition-colors">
             {summary.quotationsSent ?? 0}
           </div>
-          <div className="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-            <span>Awaiting decision</span>
+          <div className="text-[10px] sm:text-[11px] text-slate-500 mt-1 flex items-center gap-1 truncate">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0" />
+            <span className="truncate">Awaiting decision</span>
           </div>
         </div>
 
         {/* Confirmed Won */}
-        <div className="interactive-card p-4 relative overflow-hidden group">
+        <div className="interactive-card p-3 sm:p-4 relative overflow-hidden group">
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-emerald-600" />
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Won Bookings</span>
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
-              <Sparkles className="w-4 h-4" />
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+            <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider truncate">Won Bookings</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center flex-shrink-0">
+              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 group-hover:text-emerald-700 transition-colors">
+          <div className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 group-hover:text-emerald-700 transition-colors">
             {summary.confirmedWon ?? 0}
           </div>
-          <div className="text-[11px] text-emerald-700 font-semibold mt-1 flex items-center gap-1">
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            <span>Completed tours</span>
+          <div className="text-[10px] sm:text-[11px] text-emerald-700 font-semibold mt-1 flex items-center gap-1 truncate">
+            <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
+            <span className="truncate">Completed tours</span>
           </div>
         </div>
 
         {/* Overdue Callbacks */}
-        <div className="interactive-card p-4 relative overflow-hidden group">
+        <div className="interactive-card p-3 sm:p-4 relative overflow-hidden group">
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-500 to-rose-600" />
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Overdue Tasks</span>
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${summary.overdueCallbacks > 0 ? 'bg-rose-100 text-rose-700 animate-pulse' : 'bg-slate-100 text-slate-500'}`}>
-              <AlertCircle className="w-4 h-4" />
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+            <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider truncate">Overdue Tasks</span>
+            <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${summary.overdueCallbacks > 0 ? 'bg-rose-100 text-rose-700 animate-pulse' : 'bg-slate-100 text-slate-500'}`}>
+              <AlertCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className={`text-2xl sm:text-3xl font-extrabold ${summary.overdueCallbacks > 0 ? 'text-rose-600' : 'text-slate-900'}`}>
+          <div className={`text-xl sm:text-2xl md:text-3xl font-extrabold ${summary.overdueCallbacks > 0 ? 'text-rose-600' : 'text-slate-900'}`}>
             {summary.overdueCallbacks ?? 0}
           </div>
-          <div className="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
-            <span className={`w-1.5 h-1.5 rounded-full ${summary.overdueCallbacks > 0 ? 'bg-rose-500' : 'bg-slate-400'}`} />
-            <span>{summary.overdueCallbacks > 0 ? 'Needs urgent contact' : 'No overdue tasks'}</span>
+          <div className="text-[10px] sm:text-[11px] text-slate-500 mt-1 flex items-center gap-1 truncate">
+            <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${summary.overdueCallbacks > 0 ? 'bg-rose-500' : 'bg-slate-400'}`} />
+            <span className="truncate">{summary.overdueCallbacks > 0 ? 'Urgent contact' : 'Up to date'}</span>
           </div>
         </div>
 
         {/* Pipeline Value */}
-        <div className="interactive-card p-4 relative overflow-hidden group col-span-2 sm:col-span-1">
+        <div className="interactive-card p-3 sm:p-4 relative overflow-hidden group col-span-2 sm:col-span-1">
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-teal-700" />
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Pipeline Value</span>
-            <div className="w-8 h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center">
-              <TrendingUp className="w-4 h-4" />
+          <div className="flex items-center justify-between mb-1.5 sm:mb-2">
+            <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider truncate">Pipeline Value</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center flex-shrink-0">
+              <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </div>
           </div>
-          <div className="text-xl sm:text-2xl font-extrabold text-slate-900 group-hover:text-teal-700 transition-colors truncate">
+          <div className="text-lg sm:text-xl lg:text-2xl font-extrabold text-slate-900 group-hover:text-teal-700 transition-colors truncate">
             {formatCurrency(summary.pipelineEstimatedValue || 0, summary.currency)}
           </div>
-          <div className="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
-            <span>Estimated active tours</span>
+          <div className="text-[10px] sm:text-[11px] text-slate-500 mt-1 flex items-center gap-1 truncate">
+            <span className="w-1.5 h-1.5 rounded-full bg-teal-500 flex-shrink-0" />
+            <span className="truncate">Active tour estimates</span>
           </div>
         </div>
       </div>
 
       {/* Main Content: Priority Actions & Stage Breakdown */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 max-w-full">
         {/* Priority Actions Column (2 Cols on Desktop) */}
-        <div className="lg:col-span-2 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700">
+        <div className="lg:col-span-2 space-y-3.5 sm:space-y-4 min-w-0">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-7 h-7 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 flex-shrink-0">
                 <Zap className="w-4 h-4" />
               </div>
-              <h2 className="text-base sm:text-lg font-bold text-slate-900">
+              <h2 className="text-sm sm:text-base md:text-lg font-bold text-slate-900 truncate">
                 Priority Action Queue
               </h2>
               {priorityActions.length > 0 && (
-                <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900">
+                <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900 flex-shrink-0">
                   {priorityActions.length} Due
                 </span>
               )}
@@ -269,7 +269,7 @@ export default function Dashboard() {
 
             <Link
               to="/app/actions"
-              className="text-xs font-bold text-teal-700 hover:text-teal-900 flex items-center gap-1 hover:underline"
+              className="text-xs font-bold text-teal-700 hover:text-teal-900 flex items-center gap-1 hover:underline flex-shrink-0"
             >
               <span>View full queue</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -278,7 +278,7 @@ export default function Dashboard() {
 
           {/* Action Cards List */}
           {priorityActions.length > 0 ? (
-            <div className="space-y-3.5">
+            <div className="space-y-3 sm:space-y-3.5">
               {priorityActions.slice(0, 3).map((action) => (
                 <ActionCard
                   key={action.leadId}
@@ -299,7 +299,7 @@ export default function Dashboard() {
               ))}
             </div>
           ) : (
-            <div className="p-8 bg-white border border-slate-200/90 rounded-2xl text-center shadow-xs">
+            <div className="p-6 sm:p-8 bg-white border border-slate-200/90 rounded-2xl text-center shadow-xs">
               <div className="w-12 h-12 rounded-full bg-teal-50 border border-teal-200 text-teal-700 flex items-center justify-center mx-auto mb-3">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
@@ -316,13 +316,13 @@ export default function Dashboard() {
         </div>
 
         {/* Sidebar: Pipeline Stage Funnel & Activity */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6 min-w-0">
           {/* Pipeline Stage Distribution */}
           <div className="card">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Activity className="w-4 h-4 text-teal-700" />
-                Pipeline by Stage
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3 sm:mb-4">
+              <h3 className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <Activity className="w-4 h-4 text-teal-700 flex-shrink-0" />
+                <span>Pipeline by Stage</span>
               </h3>
               <Link to="/app/pipeline" className="text-xs font-bold text-teal-700 hover:underline">
                 Board View
@@ -330,7 +330,7 @@ export default function Dashboard() {
             </div>
 
             {stageItems.length > 0 ? (
-              <div className="space-y-3">
+              <div className="space-y-2.5 sm:space-y-3">
                 {stageItems.map((item) => {
                   const pct = Math.round((item.count / totalLeadsInBreakdown) * 100);
                   return (
@@ -357,9 +357,9 @@ export default function Dashboard() {
           {/* Recent Travel Activity Stream */}
           <div className="card">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
-              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Clock className="w-4 h-4 text-slate-500" />
-                Recent Sales Activities
+              <h3 className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <Clock className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                <span>Recent Activities</span>
               </h3>
               <Link to="/app/leads" className="text-xs font-bold text-teal-700 hover:underline">
                 All Leads
@@ -367,7 +367,7 @@ export default function Dashboard() {
             </div>
 
             {data?.recentActivities && data.recentActivities.length > 0 ? (
-              <div className="space-y-3">
+              <div className="space-y-2.5 sm:space-y-3">
                 {data.recentActivities.slice(0, 5).map((activity, i) => {
                   const custName = activity.leadId?.customerName || activity.customerName || 'Customer';
                   const leadDest = activity.leadId?.destination;
@@ -387,8 +387,8 @@ export default function Dashboard() {
                         </div>
                         {leadDest && (
                           <div className="text-[10px] text-teal-700 font-semibold flex items-center gap-0.5">
-                            <Plane className="w-2.5 h-2.5" />
-                            <span>{leadDest}</span>
+                            <Plane className="w-2.5 h-2.5 flex-shrink-0" />
+                            <span className="truncate">{leadDest}</span>
                           </div>
                         )}
                         <p className="text-[11px] text-slate-600 truncate mt-0.5">

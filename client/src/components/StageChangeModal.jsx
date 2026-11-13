@@ -96,8 +96,8 @@ export default function StageChangeModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-xl border border-slate-200 max-w-md w-full p-6 animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-xl border border-slate-200 max-w-md w-full p-4 sm:p-6 my-auto animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center gap-2 text-slate-800 mb-2 font-semibold text-base">
           <span>{currentConfig.label}</span>
           <ArrowRight className="w-4 h-4 text-slate-400" />

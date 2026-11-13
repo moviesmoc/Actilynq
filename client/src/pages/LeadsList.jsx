@@ -305,7 +305,7 @@ export default function LeadsList() {
           </div>
 
           {/* Desktop Table View (>= 768px) */}
-          <div className="hidden md:block bg-white rounded-xl border border-slate-200/90 shadow-2xs overflow-hidden">
+          <div className="hidden md:block bg-white rounded-xl border border-slate-200/90 shadow-2xs overflow-x-auto w-full max-w-full custom-scroll">
             <table className="w-full text-left text-xs sm:text-sm">
               <thead className="bg-slate-50/80 border-b border-slate-200 text-slate-600 font-bold uppercase tracking-wider text-[11px]">
                 <tr>

@@ -48,8 +48,8 @@ export default function ReopenModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-xl border border-slate-200 max-w-md w-full p-6 animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-xl border border-slate-200 max-w-md w-full p-4 sm:p-6 my-auto animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center gap-3 text-amber-700 mb-2">
           <div className="w-10 h-10 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center">
             <RotateCcw className="w-5 h-5" />

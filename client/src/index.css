@@ -4,9 +4,28 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Reset and base styles */
+/* Universal box-sizing and mobile overflow prevention */
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
 html, body {
-  overflow-x: clip;
+  overflow-x: hidden !important;
+  max-width: 100vw;
+  width: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+#root {
+  overflow-x: hidden !important;
+  max-width: 100vw;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 @layer base {
@@ -22,19 +41,19 @@ html, body {
   }
 
   h1 {
-    @apply text-2xl sm:text-3xl md:text-4xl leading-tight tracking-tight;
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight tracking-tight;
   }
 
   h2 {
-    @apply text-xl sm:text-2xl md:text-3xl leading-tight tracking-tight;
+    @apply text-lg sm:text-xl md:text-2xl lg:text-3xl leading-tight tracking-tight;
   }
 
   h3 {
-    @apply text-lg sm:text-xl md:text-2xl leading-snug tracking-tight;
+    @apply text-base sm:text-lg md:text-xl lg:text-2xl leading-snug tracking-tight;
   }
 
   h4 {
-    @apply text-base sm:text-lg leading-snug font-semibold;
+    @apply text-sm sm:text-base leading-snug font-semibold;
   }
 
   /* Shared button base styles with tactile micro-interaction */
@@ -44,7 +63,7 @@ html, body {
 
   /* Form controls */
   input, textarea, select {
-    @apply transition-all duration-150;
+    @apply transition-all duration-150 max-w-full;
   }
 
   input:focus-visible, textarea:focus-visible, select:focus-visible {
@@ -59,8 +78,8 @@ html, body {
 
 /* Custom Sleek Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -75,64 +94,64 @@ html, body {
 @layer components {
   /* Buttons */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-teal-700 to-teal-800 hover:from-teal-600 hover:to-teal-700 text-white font-semibold rounded-lg shadow-sm hover:shadow transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2 active:scale-[0.97];
+    @apply inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-teal-700 to-teal-800 hover:from-teal-600 hover:to-teal-700 text-white font-semibold rounded-lg shadow-sm hover:shadow transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2 active:scale-[0.97] text-xs sm:text-sm;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white text-slate-800 font-medium border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 active:scale-[0.97];
+    @apply inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-white text-slate-800 font-medium border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 active:scale-[0.97] text-xs sm:text-sm;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 px-3 py-2 text-slate-600 font-medium hover:bg-slate-100 hover:text-slate-900 rounded-lg transition-colors duration-150 active:scale-[0.97];
+    @apply inline-flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 text-slate-600 font-medium hover:bg-slate-100 hover:text-slate-900 rounded-lg transition-colors duration-150 active:scale-[0.97] text-xs sm:text-sm;
   }
 
   .btn-danger {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-rose-600 text-white font-medium rounded-lg hover:bg-rose-700 shadow-xs transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600 focus-visible:ring-offset-2 active:scale-[0.97];
+    @apply inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-rose-600 text-white font-medium rounded-lg hover:bg-rose-700 shadow-xs transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600 focus-visible:ring-offset-2 active:scale-[0.97] text-xs sm:text-sm;
   }
 
   .btn-sm {
-    @apply px-3 py-1.5 text-xs rounded-md;
+    @apply px-2.5 sm:px-3 py-1.5 text-xs rounded-md;
   }
 
   .btn-xs {
-    @apply px-2.5 py-1 text-2xs rounded;
+    @apply px-2 py-1 text-2xs rounded;
   }
 
   /* Input styles */
   .input-base {
-    @apply w-full px-3.5 py-2 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-1 focus-visible:border-teal-700 shadow-xs;
+    @apply w-full max-w-full px-3 py-2 text-xs sm:text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-1 focus-visible:border-teal-700 shadow-xs;
   }
 
   /* Card styles */
   .card {
-    @apply bg-white border border-slate-200/90 rounded-xl p-5 sm:p-6 shadow-xs hover:border-slate-300/90 transition-all duration-200;
+    @apply bg-white border border-slate-200/90 rounded-xl p-4 sm:p-6 shadow-xs hover:border-slate-300/90 transition-all duration-200 max-w-full overflow-hidden;
   }
 
   .card-sm {
-    @apply bg-white border border-slate-200/90 rounded-xl p-4 shadow-xs hover:border-slate-300/90 transition-all duration-200;
+    @apply bg-white border border-slate-200/90 rounded-xl p-3 sm:p-4 shadow-xs hover:border-slate-300/90 transition-all duration-200 max-w-full overflow-hidden;
   }
 
   .interactive-card {
-    @apply bg-white border border-slate-200/90 rounded-xl shadow-xs hover:shadow-card-hover hover:border-teal-300/70 hover:-translate-y-0.5 transition-all duration-200;
+    @apply bg-white border border-slate-200/90 rounded-xl shadow-xs hover:shadow-card-hover hover:border-teal-300/70 hover:-translate-y-0.5 transition-all duration-200 max-w-full overflow-hidden;
   }
 
   /* Travel Specific Boarding Card / Dispatch Ticket */
   .travel-ticket {
-    @apply relative bg-white border border-slate-200/90 rounded-xl overflow-hidden shadow-xs hover:shadow-card-hover hover:border-teal-400/60 transition-all duration-200;
+    @apply relative bg-white border border-slate-200/90 rounded-xl overflow-hidden shadow-xs hover:shadow-card-hover hover:border-teal-400/60 transition-all duration-200 max-w-full;
   }
 
   .ticket-perforation {
-    @apply border-b border-dashed border-slate-200 my-3 relative;
+    @apply border-b border-dashed border-slate-200 my-2.5 sm:my-3 relative;
   }
 
   /* Flight badge */
   .flight-badge {
-    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200/80;
+    @apply inline-flex items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[11px] sm:text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200/80;
   }
 
   /* Badge styles */
   .badge {
-    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] sm:text-xs font-semibold;
   }
 
   .badge-primary {
@@ -157,7 +176,7 @@ html, body {
 
   /* Radar Pulse Beacon for Action Urgency */
   .beacon-dot {
-    @apply w-2.5 h-2.5 rounded-full relative inline-block;
+    @apply w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full relative inline-block;
   }
 
   .beacon-dot::after {
@@ -168,17 +187,17 @@ html, body {
 
   /* Section container */
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full;
   }
 }
 
 /* Universal animations without experimental restrictions */
 .animate-fade-in {
-  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-slide-up {
-  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-scale-in {

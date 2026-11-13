@@ -59,7 +59,7 @@ export default function Landing() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <div className="min-h-screen bg-neutral-50 overflow-x-hidden w-full max-w-full">
       {/* Navigation */}
       <nav className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-sm border-b border-neutral-200/50 shadow-sm' : 'bg-white border-b border-neutral-200'}`}>
         <div className="section-container flex items-center justify-between h-16">
@@ -171,16 +171,16 @@ export default function Landing() {
               </div>
 
               <div className="space-y-4">
-                <h1 className="text-5xl md:text-6xl font-bold leading-tight tracking-tight text-neutral-900">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-neutral-900">
                   Keep every travel enquiry <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-teal-600">moving</span>.
                 </h1>
               </div>
 
-              <p className="text-xl text-neutral-600 leading-relaxed max-w-lg">
+              <p className="text-base sm:text-lg md:text-xl text-neutral-600 leading-relaxed max-w-lg">
                 ActiLynq tells your team exactly what to do next. Organize enquiries, track activities, and never miss a follow-up.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 sm:pt-4">
                 <button
                   onClick={() => navigate('/register')}
                   className="btn-primary flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold hover:shadow-lg hover:shadow-brand-700/20 transition-all duration-200 group"
@@ -196,7 +196,7 @@ export default function Landing() {
                 </Link>
               </div>
 
-              <div className="flex items-center gap-8 pt-6 text-sm text-neutral-600 border-t border-neutral-200">
+              <div className="flex flex-wrap items-center gap-4 sm:gap-8 pt-4 sm:pt-6 text-xs sm:text-sm text-neutral-600 border-t border-neutral-200">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
                   <span>14-day free trial</span>
@@ -213,7 +213,7 @@ export default function Landing() {
               {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-brand-400/20 to-transparent rounded-2xl blur-2xl group-hover:blur-3xl transition-all duration-500 pointer-events-none" />
 
-              <div className="relative bg-white rounded-2xl border border-neutral-200 p-8 shadow-xl hover:shadow-2xl transition-shadow duration-500 group-hover:border-brand-200/50">
+              <div className="relative bg-white rounded-2xl border border-neutral-200 p-4 sm:p-8 shadow-xl hover:shadow-2xl transition-shadow duration-500 group-hover:border-brand-200/50">
                 <div className="space-y-6">
                   {/* Action Header */}
                   <div className="flex items-start justify-between pb-4 border-b border-neutral-100">
@@ -272,18 +272,18 @@ export default function Landing() {
       </section>
 
       {/* Problems Section */}
-      <section id="product" data-animate="problems" className="py-20 md:py-32 bg-white border-t border-neutral-200">
+      <section id="product" data-animate="problems" className="py-12 sm:py-20 md:py-32 bg-white border-t border-neutral-200">
         <div className="section-container">
-          <div className="mb-16" data-animate="problems-header">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-neutral-900">
+          <div className="mb-10 sm:mb-16" data-animate="problems-header">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-neutral-900">
               The challenge travel agencies face.
             </h2>
-            <p className="text-xl text-neutral-600 max-w-2xl">
+            <p className="text-base sm:text-lg md:text-xl text-neutral-600 max-w-2xl">
               Without a clear system, important leads slip through the cracks and revenue stays on the table.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-4 sm:gap-8">
             {[
               {
                 icon: MessageCircle,
@@ -310,7 +310,7 @@ export default function Landing() {
               return (
                 <div
                   key={i}
-                  className="flex gap-4 group p-6 rounded-xl hover:bg-neutral-50 transition-all duration-300 border border-transparent hover:border-brand-200 animate-in fade-in slide-in-from-bottom duration-500"
+                  className="flex gap-3 sm:gap-4 group p-4 sm:p-6 rounded-xl hover:bg-neutral-50 transition-all duration-300 border border-transparent hover:border-brand-200 animate-in fade-in slide-in-from-bottom duration-500"
                   style={{ animationDelay: `${i * 100}ms` }}
                 >
                   <div className="flex-shrink-0">
@@ -330,16 +330,16 @@ export default function Landing() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" data-animate="how-it-works" className="py-20 md:py-32 bg-neutral-50 border-t border-neutral-200">
+      <section id="how-it-works" data-animate="how-it-works" className="py-12 sm:py-20 md:py-32 bg-neutral-50 border-t border-neutral-200">
         <div className="section-container">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-neutral-900">How ActiLynq works.</h2>
-            <p className="text-xl text-neutral-600 max-w-2xl">
+          <div className="mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-neutral-900">How ActiLynq works.</h2>
+            <p className="text-base sm:text-lg md:text-xl text-neutral-600 max-w-2xl">
               A clear workflow that keeps every enquiry moving forward.
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {[
               { number: '1', title: 'Capture enquiry', description: 'Log a new customer enquiry with available information.' },
               { number: '2', title: 'Collect requirements', description: 'Gradually gather travel details through conversations and interactions.' },
@@ -350,17 +350,17 @@ export default function Landing() {
             ].map((item, idx) => (
               <div
                 key={item.number}
-                className="flex gap-6 items-start p-6 rounded-xl bg-white border border-neutral-200 hover:border-brand-200 hover:shadow-md transition-all duration-300 group animate-in fade-in slide-in-from-left duration-500"
+                className="flex gap-4 sm:gap-6 items-start p-4 sm:p-6 rounded-xl bg-white border border-neutral-200 hover:border-brand-200 hover:shadow-md transition-all duration-300 group animate-in fade-in slide-in-from-left duration-500"
                 style={{ animationDelay: `${idx * 75}ms` }}
               >
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-brand-700 to-teal-600 text-white font-bold text-sm group-hover:scale-110 transition-transform duration-300 shadow-md">
+                  <div className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-gradient-to-br from-brand-700 to-teal-600 text-white font-bold text-xs sm:text-sm group-hover:scale-110 transition-transform duration-300 shadow-md">
                     {item.number}
                   </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold mb-1 text-neutral-900">{item.title}</h3>
-                  <p className="text-neutral-600 leading-relaxed">{item.description}</p>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base sm:text-lg font-semibold mb-1 text-neutral-900">{item.title}</h3>
+                  <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -369,15 +369,15 @@ export default function Landing() {
       </section>
 
       {/* Travel Workflow Section */}
-      <section data-animate="workflow" className="py-20 md:py-32 bg-white border-t border-neutral-200">
+      <section data-animate="workflow" className="py-12 sm:py-20 md:py-32 bg-white border-t border-neutral-200">
         <div className="section-container">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-neutral-900">The travel sales workflow.</h2>
-            <p className="text-xl text-neutral-600">Nine stages from first enquiry to confirmed booking.</p>
+          <div className="mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-neutral-900">The travel sales workflow.</h2>
+            <p className="text-base sm:text-lg md:text-xl text-neutral-600">Nine stages from first enquiry to confirmed booking.</p>
           </div>
 
-          <div className="overflow-x-auto">
-            <div className="inline-flex gap-3 pb-6 min-w-full md:min-w-auto md:justify-between md:gap-0">
+          <div className="overflow-x-auto w-full max-w-full custom-scroll">
+            <div className="inline-flex gap-3 pb-6 min-w-max md:min-w-0 md:w-full md:justify-between">
               {[
                 'New Enquiry',
                 'Contacted',
@@ -390,16 +390,13 @@ export default function Landing() {
               ].map((stage, i) => (
                 <div key={i} className="flex flex-col items-center flex-shrink-0 md:flex-1">
                   <div className="relative">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-700 to-teal-600 text-white flex items-center justify-center text-sm font-bold mb-3 shadow-lg hover:shadow-xl transition-shadow duration-300 group">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-brand-700 to-teal-600 text-white flex items-center justify-center text-xs sm:text-sm font-bold mb-2.5 sm:mb-3 shadow-lg hover:shadow-xl transition-shadow duration-300 group">
                       <span className="group-hover:scale-110 transition-transform duration-300">{i + 1}</span>
                     </div>
                   </div>
                   <p className="text-xs font-semibold text-center text-neutral-900 whitespace-pre-line min-h-10 md:min-h-auto">
                     {stage}
                   </p>
-                  {i < 7 && (
-                    <div className="hidden md:block absolute top-6 left-1/2 w-[calc(100%-3rem)] h-1 bg-gradient-to-r from-brand-300 to-teal-300 rounded-full" style={{ marginLeft: '3rem', width: 'calc(100% - 2rem)' }} />
-                  )}
                 </div>
               ))}
             </div>
@@ -408,20 +405,20 @@ export default function Landing() {
       </section>
 
       {/* Next-Action Engine Section (Core Product) */}
-      <section data-animate="engine" className="py-20 md:py-32 bg-neutral-50 border-t border-neutral-200">
+      <section data-animate="engine" className="py-12 sm:py-20 md:py-32 bg-neutral-50 border-t border-neutral-200">
         <div className="section-container">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-neutral-900">The Next-Action Engine.</h2>
-            <p className="text-xl text-neutral-600 max-w-2xl">
+          <div className="mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-neutral-900">The Next-Action Engine.</h2>
+            <p className="text-base sm:text-lg md:text-xl text-neutral-600 max-w-2xl">
               A rule-based system that tells salespeople exactly what to do next—and why.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
-            <div className="space-y-8 animate-in fade-in slide-in-from-left duration-700">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-16 items-start">
+            <div className="space-y-6 sm:space-y-8 animate-in fade-in slide-in-from-left duration-700">
               <div>
-                <h3 className="text-2xl font-semibold mb-4 text-neutral-900">Identifies priority situations:</h3>
-                <ul className="space-y-3">
+                <h3 className="text-lg sm:text-2xl font-semibold mb-3 sm:mb-4 text-neutral-900">Identifies priority situations:</h3>
+                <ul className="space-y-2.5 sm:space-y-3">
                   {[
                     'Missing travel information that blocks progress',
                     'Quotations waiting to be prepared',
@@ -429,16 +426,16 @@ export default function Landing() {
                     'Scheduled callbacks that are overdue',
                     'Enquiries inactive for too long'
                   ].map((item, i) => (
-                    <li key={i} className="flex gap-3 items-start group cursor-default">
-                      <CheckCircle2 className="w-6 h-6 text-emerald-600 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300" />
+                    <li key={i} className="flex gap-2.5 sm:gap-3 items-start group cursor-default text-sm sm:text-base">
+                      <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform duration-300" />
                       <span className="text-neutral-700 leading-relaxed group-hover:text-neutral-900 transition-colors duration-300">{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="p-6 bg-blue-50 border border-blue-200 rounded-xl hover:shadow-md transition-shadow duration-300">
-                <p className="text-neutral-700 leading-relaxed">
+              <div className="p-4 sm:p-6 bg-blue-50 border border-blue-200 rounded-xl hover:shadow-md transition-shadow duration-300">
+                <p className="text-neutral-700 text-xs sm:text-sm leading-relaxed">
                   <span className="font-semibold text-blue-900">How it works:</span> The engine uses clear, predefined business rules—not AI or machine learning. It's transparent and deterministic.
                 </p>
               </div>
@@ -448,33 +445,33 @@ export default function Landing() {
             <div className="relative group animate-in fade-in slide-in-from-right duration-700 delay-200">
               <div className="absolute inset-0 bg-gradient-to-br from-brand-400/20 to-transparent rounded-2xl blur-2xl group-hover:blur-3xl transition-all duration-500 pointer-events-none" />
 
-              <div className="relative bg-white rounded-2xl border border-neutral-200 p-8 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:border-brand-200/50 space-y-6">
+              <div className="relative bg-white rounded-2xl border border-neutral-200 p-4 sm:p-8 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:border-brand-200/50 space-y-4 sm:space-y-6">
                 <div>
-                  <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-3">Example Recommendation</p>
-                  <h3 className="text-2xl font-bold text-neutral-900">Follow up with Rahul Patel today.</h3>
+                  <p className="text-[11px] sm:text-xs font-semibold text-neutral-400 uppercase tracking-wide mb-2 sm:mb-3">Example Recommendation</p>
+                  <h3 className="text-lg sm:text-2xl font-bold text-neutral-900">Follow up with Rahul Patel today.</h3>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-neutral-50 rounded-lg p-3 hover:bg-brand-50 transition-colors duration-300">
-                    <p className="text-xs text-neutral-500 uppercase font-semibold mb-1">Customer</p>
-                    <p className="text-sm font-bold text-neutral-900">Rahul Patel</p>
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-4">
+                  <div className="bg-neutral-50 rounded-lg p-2.5 sm:p-3 hover:bg-brand-50 transition-colors duration-300">
+                    <p className="text-[10px] sm:text-xs text-neutral-500 uppercase font-semibold mb-1">Customer</p>
+                    <p className="text-xs sm:text-sm font-bold text-neutral-900">Rahul Patel</p>
                   </div>
-                  <div className="bg-neutral-50 rounded-lg p-3 hover:bg-brand-50 transition-colors duration-300">
-                    <p className="text-xs text-neutral-500 uppercase font-semibold mb-1">Destination</p>
-                    <p className="text-sm font-bold text-neutral-900">Dubai, UAE</p>
+                  <div className="bg-neutral-50 rounded-lg p-2.5 sm:p-3 hover:bg-brand-50 transition-colors duration-300">
+                    <p className="text-[10px] sm:text-xs text-neutral-500 uppercase font-semibold mb-1">Destination</p>
+                    <p className="text-xs sm:text-sm font-bold text-neutral-900">Dubai, UAE</p>
                   </div>
-                  <div className="bg-neutral-50 rounded-lg p-3 hover:bg-brand-50 transition-colors duration-300">
-                    <p className="text-xs text-neutral-500 uppercase font-semibold mb-1">Status</p>
-                    <p className="text-sm font-bold text-neutral-900">Quotation Sent</p>
+                  <div className="bg-neutral-50 rounded-lg p-2.5 sm:p-3 hover:bg-brand-50 transition-colors duration-300">
+                    <p className="text-[10px] sm:text-xs text-neutral-500 uppercase font-semibold mb-1">Status</p>
+                    <p className="text-xs sm:text-sm font-bold text-neutral-900">Quotation Sent</p>
                   </div>
-                  <div className="bg-neutral-50 rounded-lg p-3 hover:bg-brand-50 transition-colors duration-300">
-                    <p className="text-xs text-neutral-500 uppercase font-semibold mb-1">Last Contact</p>
-                    <p className="text-sm font-bold text-neutral-900">3 days ago</p>
+                  <div className="bg-neutral-50 rounded-lg p-2.5 sm:p-3 hover:bg-brand-50 transition-colors duration-300">
+                    <p className="text-[10px] sm:text-xs text-neutral-500 uppercase font-semibold mb-1">Last Contact</p>
+                    <p className="text-xs sm:text-sm font-bold text-neutral-900">3 days ago</p>
                   </div>
                 </div>
 
-                <div className="border-t border-neutral-200 pt-4">
-                  <p className="text-sm text-neutral-600 leading-relaxed">
+                <div className="border-t border-neutral-200 pt-3 sm:pt-4">
+                  <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
                     <span className="font-semibold text-neutral-900">Why:</span> Quotation sent three days ago. No customer contact recorded since then.
                   </p>
                 </div>
@@ -485,16 +482,16 @@ export default function Landing() {
       </section>
 
       {/* Features Section */}
-      <section id="features" data-animate="features" className="py-20 md:py-32 bg-white border-t border-neutral-200">
+      <section id="features" data-animate="features" className="py-12 sm:py-20 md:py-32 bg-white border-t border-neutral-200">
         <div className="section-container">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-neutral-900">Built for travel sales.</h2>
-            <p className="text-xl text-neutral-600 max-w-2xl">
+          <div className="mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-neutral-900">Built for travel sales.</h2>
+            <p className="text-base sm:text-lg md:text-xl text-neutral-600 max-w-2xl">
               Everything travel agencies need to manage enquiries efficiently.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {[
               { icon: Users, title: 'Travel-Specific Lead Management', description: 'Designed for travel enquiries with fields for destinations, traveller counts, and dates.' },
               { icon: Activity, title: 'Activity Timeline', description: 'Complete record of every interaction, note, and milestone in the sales process.' },
@@ -509,14 +506,14 @@ export default function Landing() {
               return (
                 <div
                   key={i}
-                  className="flex flex-col p-6 rounded-xl border border-neutral-200 bg-neutral-50 hover:bg-white hover:border-brand-200 hover:shadow-lg transition-all duration-300 group cursor-default animate-in fade-in slide-in-from-bottom duration-500"
+                  className="flex flex-col p-4 sm:p-6 rounded-xl border border-neutral-200 bg-neutral-50 hover:bg-white hover:border-brand-200 hover:shadow-lg transition-all duration-300 group cursor-default animate-in fade-in slide-in-from-bottom duration-500"
                   style={{ animationDelay: `${i * 50}ms` }}
                 >
-                  <div className="mb-4">
-                    <Icon className="w-8 h-8 text-brand-700 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
+                  <div className="mb-3 sm:mb-4">
+                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-brand-700 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 text-neutral-900">{feature.title}</h3>
-                  <p className="text-neutral-600 text-sm leading-relaxed">{feature.description}</p>
+                  <h3 className="text-base sm:text-lg font-semibold mb-1.5 sm:mb-2 text-neutral-900">{feature.title}</h3>
+                  <p className="text-neutral-600 text-xs sm:text-sm leading-relaxed">{feature.description}</p>
                 </div>
               );
             })}
@@ -525,11 +522,11 @@ export default function Landing() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" data-animate="faq" className="py-20 md:py-32 bg-neutral-50 border-t border-neutral-200">
+      <section id="faq" data-animate="faq" className="py-12 sm:py-20 md:py-32 bg-neutral-50 border-t border-neutral-200">
         <div className="section-container">
-          <div className="mb-16 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-neutral-900">Frequently asked questions.</h2>
-            <p className="text-xl text-neutral-600">Everything you need to know about ActiLynq.</p>
+          <div className="mb-10 sm:mb-16 text-center">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-neutral-900">Frequently asked questions.</h2>
+            <p className="text-base sm:text-lg md:text-xl text-neutral-600">Everything you need to know about ActiLynq.</p>
           </div>
 
           <div className="space-y-3 max-w-3xl mx-auto">
@@ -565,14 +562,14 @@ export default function Landing() {
             ].map((faq, i) => (
               <details
                 key={i}
-                className="group bg-white border border-neutral-200 rounded-xl p-6 hover:shadow-md hover:border-brand-200 transition-all duration-300 cursor-pointer animate-in fade-in duration-500"
+                className="group bg-white border border-neutral-200 rounded-xl p-4 sm:p-6 hover:shadow-md hover:border-brand-200 transition-all duration-300 cursor-pointer animate-in fade-in duration-500"
                 style={{ animationDelay: `${i * 30}ms` }}
               >
-                <summary className="flex items-center justify-between font-semibold text-neutral-900 select-none outline-none">
+                <summary className="flex items-center justify-between font-semibold text-neutral-900 select-none outline-none text-sm sm:text-base">
                   <span className="group-hover:text-brand-700 transition-colors duration-300">{faq.q}</span>
-                  <ChevronDown className="w-5 h-5 text-neutral-600 group-open:rotate-180 transition-transform duration-300" />
+                  <ChevronDown className="w-5 h-5 text-neutral-600 group-open:rotate-180 transition-transform duration-300 flex-shrink-0 ml-2" />
                 </summary>
-                <p className="mt-4 text-neutral-700 leading-relaxed group-open:animate-in group-open:fade-in group-open:duration-300">
+                <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-neutral-700 leading-relaxed group-open:animate-in group-open:fade-in group-open:duration-300">
                   {faq.a}
                 </p>
               </details>
@@ -582,25 +579,25 @@ export default function Landing() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-br from-white via-neutral-50 to-brand-50/30 border-t border-neutral-200">
+      <section className="py-12 sm:py-20 md:py-32 bg-gradient-to-br from-white via-neutral-50 to-brand-50/30 border-t border-neutral-200">
         <div className="section-container text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-neutral-900">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-neutral-900">
             Ready to keep every enquiry moving?
           </h2>
-          <p className="text-xl text-neutral-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-neutral-600 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed">
             Start your 14-day free trial today. No credit card required. Full access to all features.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <button
               onClick={() => navigate('/register')}
-              className="btn-primary flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold hover:shadow-lg hover:shadow-brand-700/20 transition-all duration-200 group"
+              className="btn-primary flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold hover:shadow-lg hover:shadow-brand-700/20 transition-all duration-200 group"
             >
               Create Your Workspace
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
             </button>
             <Link
               to="/login"
-              className="btn-secondary flex items-center justify-center gap-2 px-8 py-4 text-lg font-semibold hover:shadow-md transition-all duration-200"
+              className="btn-secondary flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold hover:shadow-md transition-all duration-200"
             >
               Already have an account? Sign in
             </Link>

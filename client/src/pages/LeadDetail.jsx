@@ -230,11 +230,11 @@ export default function LeadDetail() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
+          <div className="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto mt-2 sm:mt-0">
             <button
               type="button"
               onClick={handleWhatsAppClick}
-              className="btn-primary text-xs font-bold py-2 px-4 shadow-sm"
+              className="btn-primary text-xs font-bold py-2 px-4 shadow-sm w-full sm:w-auto justify-center"
             >
               Take Recommended Action
             </button>

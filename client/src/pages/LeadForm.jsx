@@ -136,7 +136,7 @@ export default function LeadForm() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6 w-full max-w-full">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -147,7 +147,7 @@ export default function LeadForm() {
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
               {isEdit ? 'Edit Travel Enquiry' : 'Capture New Travel Enquiry'}
             </h1>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -433,17 +433,17 @@ export default function LeadForm() {
         </div>
 
         {/* Form Actions */}
-        <div className="flex items-center justify-end gap-3 pt-2">
+        <div className="flex flex-wrap items-center justify-end gap-2.5 sm:gap-3 pt-2">
           <Link
             to={isEdit ? `/app/leads/${id}` : '/app/leads'}
-            className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-100 rounded-lg border border-slate-200 transition-colors"
+            className="flex-1 sm:flex-none text-center px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-100 rounded-lg border border-slate-200 transition-colors"
           >
             Cancel
           </Link>
           <button
             type="submit"
             disabled={submitting}
-            className="px-5 py-2 text-xs font-semibold text-white bg-teal-700 hover:bg-teal-600 rounded-lg shadow-xs flex items-center gap-1.5 transition-colors disabled:opacity-50"
+            className="flex-1 sm:flex-none justify-center px-5 py-2 text-xs font-semibold text-white bg-teal-700 hover:bg-teal-600 rounded-lg shadow-xs flex items-center gap-1.5 transition-colors disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             <span>{submitting ? 'Saving...' : isEdit ? 'Save Changes' : 'Create Enquiry'}</span>

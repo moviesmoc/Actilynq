@@ -43,7 +43,7 @@ export default function AppLayout() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 w-full max-w-full">
         <div className="flex flex-col items-center gap-4 text-center animate-pulse">
           <div className="w-12 h-12 rounded-2xl bg-teal-500/20 border border-teal-500/40 flex items-center justify-center text-teal-400 shadow-glow-teal">
             <Compass className="w-7 h-7 animate-spin" style={{ animationDuration: '3s' }} />
@@ -69,7 +69,7 @@ export default function AppLayout() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen bg-slate-50 w-full max-w-full overflow-x-hidden relative">
       {/* Sidebar (Desktop Docked + Mobile Slide-out Drawer) */}
       <Sidebar
         actionCount={actionCount}
@@ -78,14 +78,14 @@ export default function AppLayout() {
       />
 
       {/* Main View Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 w-full max-w-full overflow-x-hidden">
         <Navbar
           onToggleMobileMenu={() => setMobileMenuOpen((prev) => !prev)}
           actionCount={actionCount}
         />
 
         {/* Content area: extra bottom padding on mobile for bottom navigation bar */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto pb-24 md:pb-8 animate-fade-in">
+        <main className="flex-1 px-3 sm:px-6 lg:px-8 py-4 sm:py-6 max-w-7xl w-full mx-auto pb-24 md:pb-8 min-w-0 overflow-x-hidden">
           <Outlet context={{
             refreshActionCount: () => {
               fetchActionCount();
@@ -95,7 +95,7 @@ export default function AppLayout() {
         </main>
 
         {/* Mobile Sticky Bottom Navigation Bar (< 768px) */}
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-lg px-2 py-1.5 flex items-center justify-around">
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-lg px-2 py-1.5 flex items-center justify-around w-full max-w-full">
           {BOTTOM_NAV.map((item) => {
             const Icon = item.icon;
             return (
@@ -104,7 +104,7 @@ export default function AppLayout() {
                 to={item.to}
                 end={item.exact}
                 className={({ isActive }) =>
-                  `flex flex-col items-center justify-center py-1 px-3 rounded-lg text-[10px] font-semibold transition-all relative ${
+                  `flex flex-col items-center justify-center py-1 px-2.5 rounded-lg text-[10px] font-semibold transition-all relative ${
                     isActive
                       ? 'text-teal-700 font-bold scale-105'
                       : 'text-slate-500 hover:text-slate-800'
@@ -112,7 +112,7 @@ export default function AppLayout() {
                 }
               >
                 <div className="relative">
-                  <Icon className="w-5 h-5 mb-0.5" />
+                  <Icon className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5" />
                   {item.hasBadge && actionCount > 0 && (
                     <span className="absolute -top-1 -right-2 px-1.5 py-0.2 rounded-full text-[9px] font-black bg-rose-600 text-white shadow-xs">
                       {actionCount}
@@ -128,9 +128,9 @@ export default function AppLayout() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(true)}
-            className="flex flex-col items-center justify-center py-1 px-3 rounded-lg text-[10px] font-semibold text-slate-500 hover:text-slate-800 transition-all"
+            className="flex flex-col items-center justify-center py-1 px-2.5 rounded-lg text-[10px] font-semibold text-slate-500 hover:text-slate-800 transition-all"
           >
-            <Menu className="w-5 h-5 mb-0.5" />
+            <Menu className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5" />
             <span>Menu</span>
           </button>
         </nav>

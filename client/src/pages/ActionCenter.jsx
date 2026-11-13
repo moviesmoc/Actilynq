@@ -216,9 +216,9 @@ export default function ActionCenter() {
       )}
 
       {/* Touch-Friendly Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 w-full max-w-full min-w-0 custom-scroll">
         <SlidersHorizontal className="w-4 h-4 text-slate-400 flex-shrink-0 hidden xs:inline" />
-        <div className="flex gap-1.5 sm:gap-2 flex-nowrap sm:flex-wrap">
+        <div className="flex gap-1.5 sm:gap-2 flex-nowrap sm:flex-wrap min-w-min">
           {filterOptions.map((opt) => {
             const isSelected = selectedFilter === opt.id;
             return (

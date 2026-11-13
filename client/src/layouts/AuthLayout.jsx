@@ -19,7 +19,7 @@ export default function AuthLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-neutral-50 flex flex-col justify-center py-8 sm:py-12 px-4 sm:px-6 lg:px-8 w-full max-w-full overflow-x-hidden">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-brand-700 text-white shadow-sm mb-4">
           <Compass className="w-6 h-6" />
@@ -32,8 +32,8 @@ export default function AuthLayout() {
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-6 shadow-sm border border-neutral-200 rounded-lg sm:px-10">
+      <div className="mt-6 sm:mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-6 sm:py-8 px-4 sm:px-10 shadow-sm border border-neutral-200 rounded-xl max-w-full overflow-hidden">
           <Outlet />
         </div>
 

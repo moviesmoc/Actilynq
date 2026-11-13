@@ -47,8 +47,8 @@ export default function SnoozeModal({
   ];
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-xl border border-slate-200 max-w-sm w-full p-6 animate-in fade-in zoom-in-95 duration-150">
+    <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+      <div className="bg-white rounded-xl shadow-xl border border-slate-200 max-w-sm w-full p-4 sm:p-6 my-auto animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center gap-3 text-indigo-700 mb-3">
           <div className="w-10 h-10 rounded-full bg-indigo-50 border border-indigo-200 flex items-center justify-center">
             <Moon className="w-5 h-5" />

@@ -169,8 +169,8 @@ export default function Pipeline() {
       </div>
 
       {/* Horizontal Kanban Track */}
-      <div className="overflow-x-auto pb-4 pt-1 snap-x snap-mandatory">
-        <div className="flex gap-4 min-w-min">
+      <div className="overflow-x-auto pb-4 pt-1 snap-x snap-mandatory w-full max-w-full min-w-0 custom-scroll">
+        <div className="flex gap-3 sm:gap-4 min-w-min">
           {visibleStages.map((stage) => {
             const config = STAGE_CONFIG[stage];
             const stageLeads = leads[stage] || [];
@@ -179,7 +179,7 @@ export default function Pipeline() {
             return (
               <div
                 key={stage}
-                className="flex-shrink-0 w-72 sm:w-80 bg-slate-100/70 p-3 rounded-2xl border border-slate-200/90 snap-start flex flex-col max-h-[calc(100vh-250px)]"
+                className="flex-shrink-0 w-[82vw] xs:w-72 sm:w-80 bg-slate-100/70 p-3 rounded-2xl border border-slate-200/90 snap-start flex flex-col max-h-[calc(100vh-250px)]"
               >
                 {/* Stage Header */}
                 <div className="mb-3 px-1">

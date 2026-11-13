@@ -87,20 +87,20 @@ export default function Reports() {
   return (
     <div className="space-y-8">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-3xl font-bold text-neutral-900 mb-2 flex items-center gap-2">
-            <BarChart3 className="w-8 h-8 text-brand-700" />
-            Reports & Analytics
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-neutral-900 mb-1 flex items-center gap-2">
+            <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-brand-700 flex-shrink-0" />
+            <span>Reports & Analytics</span>
           </h1>
-          <p className="text-neutral-600">Track your sales performance and enquiry metrics</p>
+          <p className="text-xs sm:text-sm text-neutral-600">Track your sales performance and enquiry metrics</p>
         </div>
         <button
           onClick={fetchReports}
-          className="btn-secondary flex items-center gap-2"
+          className="btn-secondary self-start sm:self-auto flex items-center gap-2 text-xs sm:text-sm"
         >
           <RefreshCw className="w-4 h-4" />
-          Refresh
+          <span>Refresh</span>
         </button>
       </div>
 
