@@ -1,20 +1,22 @@
 import { ZodError } from 'zod';
 
 export function errorHandler(err, req, res, next) {
-  console.error('[API Error]:', err);
-
-  // Handle Zod Validation Errors
-  if (err instanceof ZodError) {
-    const issues = err.issues.map((issue) => ({
-      field: issue.path.join('.'),
+  // Handle Zod Validation Errors safely (prevent Node 24 util.inspect crash on ZodError)
+  if (err instanceof ZodError || err?.name === 'ZodError' || Array.isArray(err?.issues)) {
+    const issues = (err.issues || []).map((issue) => ({
+      field: Array.isArray(issue.path) ? issue.path.join('.') : String(issue.path || ''),
       message: issue.message
     }));
+    console.error('[API Validation Error]:', issues.map(i => `${i.field}: ${i.message}`).join(', '));
     return res.status(400).json({
       success: false,
-      error: 'Validation failed',
+      error: issues[0]?.message || 'Validation failed',
       details: issues
     });
   }
+
+  // Safe error logging for standard and database errors
+  console.error('[API Error]:', err?.stack || err?.message || err);
 
   // Handle Mongoose Duplicate Key Error (code 11000)
   if (err.code === 11000) {

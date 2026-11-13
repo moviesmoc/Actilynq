@@ -120,7 +120,11 @@ export default function LeadForm() {
 
       navigate(`/app/leads/${leadId}`);
     } catch (err) {
-      setError(err.message || 'Failed to save enquiry');
+      const errorMsg =
+        (err.details && Array.isArray(err.details) && err.details[0]?.message) ||
+        err.message ||
+        'Failed to save enquiry';
+      setError(errorMsg);
     } finally {
       setSubmitting(false);
     }

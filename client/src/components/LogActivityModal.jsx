@@ -44,19 +44,29 @@ export default function LogActivityModal({
     try {
       const activityTitle = title.trim() || `${ACTIVITY_OPTIONS.find((a) => a.type === type)?.label || 'Activity'}`;
 
+      let formattedFollowUp = null;
+      if (!clearFollowUp && nextFollowUpAt) {
+        const d = new Date(nextFollowUpAt);
+        formattedFollowUp = !isNaN(d.getTime()) ? d.toISOString() : nextFollowUpAt;
+      }
+
       await api.post(`/leads/${lead._id}/activities`, {
         type,
         title: activityTitle,
         description: description.trim(),
         contactOutcome: type === 'note' ? undefined : contactOutcome,
-        nextFollowUpAt: clearFollowUp ? null : (nextFollowUpAt || null),
+        nextFollowUpAt: formattedFollowUp,
         clearFollowUp
       });
 
       if (onActivityLogged) onActivityLogged();
       onClose();
     } catch (err) {
-      setError(err.message || 'Failed to record activity');
+      const errorMsg =
+        (err.details && Array.isArray(err.details) && err.details[0]?.message) ||
+        err.message ||
+        'Failed to record activity';
+      setError(errorMsg);
     } finally {
       setSubmitting(false);
     }

@@ -96,11 +96,14 @@ export async function createActivity(req, res, next) {
     // 3. Update or clear salesperson-scheduled follow-up
     if (clearFollowUp === true) {
       lead.nextFollowUpAt = null;
-    } else if (nextFollowUpAt) {
-      lead.nextFollowUpAt = new Date(nextFollowUpAt);
+    } else if (nextFollowUpAt && nextFollowUpAt !== '') {
+      const parsedFollowUp = new Date(nextFollowUpAt);
+      if (!isNaN(parsedFollowUp.getTime())) {
+        lead.nextFollowUpAt = parsedFollowUp;
+      }
     }
 
-    await lead.save();
+    await lead.save({ validateModifiedOnly: true });
 
     return res.status(201).json({
       success: true,

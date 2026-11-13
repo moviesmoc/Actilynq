@@ -14,6 +14,7 @@ import {
   stageUpdateSchema,
   reopenLeadSchema
 } from '../validators/leadValidator.js';
+import { createActivitySchema } from '../validators/activityValidator.js';
 
 describe('Workflow, Stage Progression & Customer Contact Derivation', () => {
   describe('deriveIsCustomerContact (Server-Side derivation)', () => {
@@ -125,6 +126,60 @@ describe('Workflow, Stage Progression & Customer Contact Derivation', () => {
         lostReason: 'Budget mismatch'
       });
       assert.equal(valid.lostReason, 'Budget mismatch');
+    });
+  });
+
+  describe('Activity & Date Validation: Datetime-local and ISO compatibility', () => {
+    it('accepts datetime-local strings for follow-up callback', () => {
+      const parsed = createActivitySchema.parse({
+        type: ACTIVITY_TYPES.CALL,
+        title: 'HELLO',
+        description: 'EHELOO',
+        contactOutcome: CONTACT_OUTCOMES.CONNECTED,
+        nextFollowUpAt: '2026-11-15T08:00',
+        clearFollowUp: false
+      });
+      assert.equal(parsed.title, 'HELLO');
+      assert.equal(parsed.nextFollowUpAt, '2026-11-15T08:00');
+    });
+
+    it('accepts standard ISO strings, empty strings, null, and Date instances', () => {
+      const isoStr = new Date().toISOString();
+      const now = new Date();
+
+      const resIso = createActivitySchema.parse({
+        type: ACTIVITY_TYPES.NOTE,
+        title: 'Internal Note',
+        nextFollowUpAt: isoStr
+      });
+      assert.equal(resIso.nextFollowUpAt, isoStr);
+
+      const resEmpty = createActivitySchema.parse({
+        type: ACTIVITY_TYPES.NOTE,
+        title: 'Internal Note',
+        nextFollowUpAt: ''
+      });
+      assert.equal(resEmpty.nextFollowUpAt, null);
+
+      const resDate = createActivitySchema.parse({
+        type: ACTIVITY_TYPES.NOTE,
+        title: 'Internal Note',
+        nextFollowUpAt: now
+      });
+      assert.equal(resDate.nextFollowUpAt.getTime(), now.getTime());
+    });
+
+    it('createLeadSchema accepts date-only and datetime-local strings', () => {
+      const lead = createLeadSchema.parse({
+        customerName: 'Aditi Sharma',
+        phone: '+91757242255',
+        travelStartDate: '2026-11-12',
+        travelEndDate: '2026-11-20',
+        nextFollowUpAt: '2026-11-15T08:00'
+      });
+      assert.equal(lead.travelStartDate, '2026-11-12');
+      assert.equal(lead.travelEndDate, '2026-11-20');
+      assert.equal(lead.nextFollowUpAt, '2026-11-15T08:00');
     });
   });
 });

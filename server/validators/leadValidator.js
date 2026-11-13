@@ -1,6 +1,17 @@
 import { z } from 'zod';
 import { STAGES } from '../constants/workflow.js';
 
+// Preprocess and validate flexible date/datetime input (accepts ISO strings, HTML5 date / datetime-local, Date objects, or null/empty)
+const flexibleDateSchema = z.preprocess((val) => {
+  if (val === '' || val === null || val === undefined) return null;
+  return val;
+}, z.union([
+  z.date(),
+  z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: 'Invalid date or datetime format'
+  })
+]).optional().nullable());
+
 export const createLeadSchema = z.object({
   customerName: z.string().trim().min(2, 'Customer name must be at least 2 characters'),
   phone: z.string().trim().min(7, 'Phone number must be at least 7 digits'),
@@ -9,8 +20,8 @@ export const createLeadSchema = z.object({
   // Trip specifications — intentionally nullable/optional for raw incomplete leads
   destination: z.string().trim().optional().nullable().or(z.literal('')),
   departureCity: z.string().trim().optional().nullable().or(z.literal('')),
-  travelStartDate: z.string().datetime().optional().nullable().or(z.literal('')).or(z.date()),
-  travelEndDate: z.string().datetime().optional().nullable().or(z.literal('')).or(z.date()),
+  travelStartDate: flexibleDateSchema,
+  travelEndDate: flexibleDateSchema,
   travellerCount: z.number().int().min(1, 'Traveller count must be at least 1').optional().nullable(),
   budgetAmount: z.number().nonnegative().optional().nullable(),
   budgetCurrency: z.string().trim().default('INR'),
@@ -21,7 +32,7 @@ export const createLeadSchema = z.object({
   leadSource: z.enum(['manual', 'website', 'referral', 'social', 'phone', 'walk_in', 'other']).default('manual'),
   
   estimatedValue: z.number().nonnegative().optional().nullable(),
-  nextFollowUpAt: z.string().datetime().optional().nullable().or(z.literal('')).or(z.date())
+  nextFollowUpAt: flexibleDateSchema
 });
 
 export const updateLeadSchema = createLeadSchema.partial();

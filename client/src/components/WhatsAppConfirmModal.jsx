@@ -22,19 +22,29 @@ export default function WhatsAppConfirmModal({
   const handleConfirmSent = async () => {
     setSubmitting(true);
     try {
+      let formattedFollowUp = null;
+      if (scheduleNextFollowUp && nextFollowUpAt) {
+        const d = new Date(nextFollowUpAt);
+        formattedFollowUp = !isNaN(d.getTime()) ? d.toISOString() : nextFollowUpAt;
+      }
+
       await api.post(`/leads/${currentLead._id || currentLead.leadId}/activities`, {
         type: 'whatsapp',
         title: 'WhatsApp Message Sent',
         description: note || 'Shared trip details and followed up via WhatsApp.',
         contactOutcome: 'sent', // Derives isCustomerContact = true on backend!
-        nextFollowUpAt: scheduleNextFollowUp && nextFollowUpAt ? nextFollowUpAt : null,
+        nextFollowUpAt: formattedFollowUp,
         clearFollowUp: !scheduleNextFollowUp // Clear existing overdue callback if not scheduling new one
       });
       if (onActivityLogged) onActivityLogged();
       if (onConfirm) onConfirm();
       onClose();
     } catch (err) {
-      alert(err.message || 'Failed to record WhatsApp activity');
+      const errorMsg =
+        (err.details && Array.isArray(err.details) && err.details[0]?.message) ||
+        err.message ||
+        'Failed to record WhatsApp activity';
+      alert(errorMsg);
     } finally {
       setSubmitting(false);
     }

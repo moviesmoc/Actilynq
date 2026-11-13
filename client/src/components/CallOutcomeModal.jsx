@@ -24,12 +24,18 @@ export default function CallOutcomeModal({
     try {
       const isConnected = outcome === 'connected';
 
+      let formattedFollowUp = null;
+      if (nextFollowUpAt) {
+        const d = new Date(nextFollowUpAt);
+        formattedFollowUp = !isNaN(d.getTime()) ? d.toISOString() : nextFollowUpAt;
+      }
+
       await api.post(`/leads/${currentLead._id || currentLead.leadId}/activities`, {
         type: 'call',
         title: isConnected ? 'Phone Call Connected' : `Call Unsuccessful (${outcome.replace('_', ' ')})`,
         description: note || (isConnected ? 'Discussed trip requirements and itinerary.' : 'Attempted to reach customer.'),
         contactOutcome: outcome, // Server derives isCustomerContact based on this!
-        nextFollowUpAt: nextFollowUpAt || null,
+        nextFollowUpAt: formattedFollowUp,
         clearFollowUp: isConnected && !nextFollowUpAt // If connected and no new date chosen, clear old callback
       });
 
@@ -37,7 +43,11 @@ export default function CallOutcomeModal({
       if (onConfirm) onConfirm();
       onClose();
     } catch (err) {
-      alert(err.message || 'Failed to log call outcome');
+      const errorMsg =
+        (err.details && Array.isArray(err.details) && err.details[0]?.message) ||
+        err.message ||
+        'Failed to log call outcome';
+      alert(errorMsg);
     } finally {
       setSubmitting(false);
     }
