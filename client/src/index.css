@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset and base styles */
+html, body {
+  overflow-x: clip;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-slate-900;
+    font-family: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1 {
+    @apply text-2xl sm:text-3xl md:text-4xl leading-tight tracking-tight;
+  }
+
+  h2 {
+    @apply text-xl sm:text-2xl md:text-3xl leading-tight tracking-tight;
+  }
+
+  h3 {
+    @apply text-lg sm:text-xl md:text-2xl leading-snug tracking-tight;
+  }
+
+  h4 {
+    @apply text-base sm:text-lg leading-snug font-semibold;
+  }
+
+  /* Shared button base styles with tactile micro-interaction */
+  button, [role="button"] {
+    @apply transition-all duration-150 active:scale-[0.97];
+  }
+
+  /* Form controls */
+  input, textarea, select {
+    @apply transition-all duration-150;
+  }
+
+  input:focus-visible, textarea:focus-visible, select:focus-visible {
+    @apply outline-none ring-2 ring-brand-700 ring-offset-1 border-brand-600;
+  }
+
+  /* Links */
+  a {
+    @apply transition-all duration-150;
+  }
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full hover:bg-slate-400;
+}
+
+/* Component utilities */
+@layer components {
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-teal-700 to-teal-800 hover:from-teal-600 hover:to-teal-700 text-white font-semibold rounded-lg shadow-sm hover:shadow transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-2 active:scale-[0.97];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white text-slate-800 font-medium border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 shadow-xs transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 active:scale-[0.97];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-3 py-2 text-slate-600 font-medium hover:bg-slate-100 hover:text-slate-900 rounded-lg transition-colors duration-150 active:scale-[0.97];
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-rose-600 text-white font-medium rounded-lg hover:bg-rose-700 shadow-xs transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-600 focus-visible:ring-offset-2 active:scale-[0.97];
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs rounded-md;
+  }
+
+  .btn-xs {
+    @apply px-2.5 py-1 text-2xs rounded;
+  }
+
+  /* Input styles */
+  .input-base {
+    @apply w-full px-3.5 py-2 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-1 focus-visible:border-teal-700 shadow-xs;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-white border border-slate-200/90 rounded-xl p-5 sm:p-6 shadow-xs hover:border-slate-300/90 transition-all duration-200;
+  }
+
+  .card-sm {
+    @apply bg-white border border-slate-200/90 rounded-xl p-4 shadow-xs hover:border-slate-300/90 transition-all duration-200;
+  }
+
+  .interactive-card {
+    @apply bg-white border border-slate-200/90 rounded-xl shadow-xs hover:shadow-card-hover hover:border-teal-300/70 hover:-translate-y-0.5 transition-all duration-200;
+  }
+
+  /* Travel Specific Boarding Card / Dispatch Ticket */
+  .travel-ticket {
+    @apply relative bg-white border border-slate-200/90 rounded-xl overflow-hidden shadow-xs hover:shadow-card-hover hover:border-teal-400/60 transition-all duration-200;
+  }
+
+  .ticket-perforation {
+    @apply border-b border-dashed border-slate-200 my-3 relative;
+  }
+
+  /* Flight badge */
+  .flight-badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200/80;
+  }
+
+  /* Badge styles */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+
+  .badge-primary {
+    @apply badge bg-teal-50 text-teal-800 border border-teal-200;
+  }
+
+  .badge-neutral {
+    @apply badge bg-slate-100 text-slate-700 border border-slate-200;
+  }
+
+  .badge-success {
+    @apply badge bg-emerald-50 text-emerald-800 border border-emerald-200;
+  }
+
+  .badge-warning {
+    @apply badge bg-amber-50 text-amber-800 border border-amber-200;
+  }
+
+  .badge-urgent {
+    @apply badge bg-rose-50 text-rose-800 border border-rose-200 animate-pulse;
+  }
+
+  /* Radar Pulse Beacon for Action Urgency */
+  .beacon-dot {
+    @apply w-2.5 h-2.5 rounded-full relative inline-block;
+  }
+
+  .beacon-dot::after {
+    content: '';
+    @apply absolute inset-0 rounded-full animate-ping opacity-75;
+    background-color: inherit;
+  }
+
+  /* Section container */
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Universal animations without experimental restrictions */
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-scale-in,
+  .beacon-dot::after {
+    animation: none !important;
+  }
+}
