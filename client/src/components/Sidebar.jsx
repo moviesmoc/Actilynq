@@ -157,8 +157,8 @@ export default function Sidebar({ actionCount = 0, isOpen = false, onClose }) {
 
   return (
     <>
-      {/* Desktop Persistent Sidebar */}
-      <aside className="hidden md:flex flex-col w-64 flex-shrink-0 min-h-screen sticky top-0 h-screen z-30">
+      {/* Desktop Persistent Sidebar (Fixed to viewport) */}
+      <aside className="hidden md:flex flex-col w-64 fixed inset-y-0 left-0 z-30">
         {navContent}
       </aside>
 

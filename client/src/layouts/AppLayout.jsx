@@ -69,23 +69,23 @@ export default function AppLayout() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-slate-50 w-full max-w-full overflow-x-hidden relative">
-      {/* Sidebar (Desktop Docked + Mobile Slide-out Drawer) */}
+    <div className="min-h-screen bg-slate-50 w-full relative">
+      {/* Sidebar (Desktop Persistent Fixed + Mobile Slide-out Drawer) */}
       <Sidebar
         actionCount={actionCount}
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
       />
 
-      {/* Main View Area */}
-      <div className="flex-1 flex flex-col min-w-0 w-full max-w-full overflow-x-hidden">
+      {/* Main View Area (offset by fixed sidebar width md:pl-64 on desktop) */}
+      <div className="md:pl-64 flex flex-col min-h-screen w-full min-w-0">
         <Navbar
           onToggleMobileMenu={() => setMobileMenuOpen((prev) => !prev)}
           actionCount={actionCount}
         />
 
         {/* Content area: extra bottom padding on mobile for bottom navigation bar */}
-        <main className="flex-1 px-3 sm:px-6 lg:px-8 py-4 sm:py-6 max-w-7xl w-full mx-auto pb-24 md:pb-8 min-w-0 overflow-x-hidden">
+        <main className="flex-1 px-3 sm:px-6 lg:px-8 py-4 sm:py-6 max-w-7xl w-full mx-auto pb-24 md:pb-8 min-w-0">
           <Outlet context={{
             refreshActionCount: () => {
               fetchActionCount();
