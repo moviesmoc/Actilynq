@@ -374,11 +374,11 @@ export default function Landing() {
         <div className="section-container">
           <div className="mb-10 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-neutral-900">The travel sales workflow.</h2>
-            <p className="text-base sm:text-lg md:text-xl text-neutral-600">Nine stages from first enquiry to confirmed booking.</p>
+            <p className="text-base sm:text-lg md:text-xl text-neutral-600">Eight stages from first enquiry to confirmed booking.</p>
           </div>
 
-          <div className="overflow-x-auto w-full max-w-full custom-scroll">
-            <div className="inline-flex gap-3 pb-6 min-w-max md:min-w-0 md:w-full md:justify-between">
+          <div className="overflow-x-auto w-full max-w-full custom-scroll pb-4">
+            <div className="inline-flex items-start justify-between gap-1 sm:gap-2 min-w-max md:min-w-0 md:w-full">
               {[
                 'New Enquiry',
                 'Contacted',
@@ -389,16 +389,22 @@ export default function Landing() {
                 'Negotiation',
                 'Booking\nConfirmed'
               ].map((stage, i) => (
-                <div key={i} className="flex flex-col items-center flex-shrink-0 md:flex-1">
-                  <div className="relative">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-brand-700 to-teal-600 text-white flex items-center justify-center text-xs sm:text-sm font-bold mb-2.5 sm:mb-3 shadow-lg hover:shadow-xl transition-shadow duration-300 group">
-                      <span className="group-hover:scale-110 transition-transform duration-300">{i + 1}</span>
+                <React.Fragment key={i}>
+                  <div className="flex flex-col items-center flex-1 min-w-[95px] sm:min-w-[105px] text-center group">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-brand-700 to-teal-600 text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-md hover:shadow-xl group-hover:scale-110 transition-all duration-300">
+                      <span>{i + 1}</span>
                     </div>
+                    <p className="text-xs font-semibold text-center text-neutral-900 whitespace-pre-line mt-2.5 leading-tight">
+                      {stage}
+                    </p>
                   </div>
-                  <p className="text-xs font-semibold text-center text-neutral-900 whitespace-pre-line min-h-10 md:min-h-auto">
-                    {stage}
-                  </p>
-                </div>
+
+                  {i < 7 && (
+                    <div className="flex items-center justify-center self-start mt-3 sm:mt-3.5 text-teal-600 flex-shrink-0 px-0.5 sm:px-1.5" aria-hidden="true">
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-teal-600" />
+                    </div>
+                  )}
+                </React.Fragment>
               ))}
             </div>
           </div>
