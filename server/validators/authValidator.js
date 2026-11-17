@@ -17,3 +17,19 @@ export const updateBusinessSchema = z.object({
   contactPhone: z.string().trim().optional(),
   currency: z.string().trim().min(2).max(5).optional()
 });
+
+export const forgotPasswordSchema = z.object({
+  email: z.string().trim().toLowerCase().email('Please enter a valid email address')
+});
+
+export const resetPasswordSchema = z.object({
+  token: z.string().min(1, 'Reset token is required'),
+  password: z.string().min(8, 'Password must be at least 8 characters long')
+});
+
+export const googleAuthSchema = z.object({
+  credential: z.string().optional(),
+  email: z.string().trim().toLowerCase().email('Valid email is required'),
+  name: z.string().trim().optional(),
+  googleId: z.string().optional()
+});

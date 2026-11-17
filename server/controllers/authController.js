@@ -1,8 +1,15 @@
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import { User } from '../models/User.js';
 import { Business } from '../models/Business.js';
 import { generateTokenAndSetCookie, clearAuthCookie } from '../middleware/auth.js';
-import { registerSchema, loginSchema } from '../validators/authValidator.js';
+import {
+  registerSchema,
+  loginSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
+  googleAuthSchema
+} from '../validators/authValidator.js';
 
 export async function register(req, res, next) {
   try {
@@ -16,12 +23,16 @@ export async function register(req, res, next) {
       });
     }
 
-    // Create Business first
+    // Create Business first with 14-day free trial
+    const trialExpiry = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
     const business = await Business.create({
       name: validatedData.businessName,
       businessType: 'travel_agency',
       currency: 'INR',
-      isDemo: false
+      isDemo: false,
+      subscriptionPlan: 'trial',
+      subscriptionExpiresAt: trialExpiry,
+      maxUsers: 2
     });
 
     // Hash password
@@ -46,8 +57,8 @@ export async function register(req, res, next) {
 
     return res.status(201).json({
       success: true,
-      message: 'Registration successful',
-      token, // Also return token for environments where cookie is not supported
+      message: 'Registration successful. 14-day free trial activated.',
+      token,
       user: {
         id: user._id,
         name: user.name,
@@ -58,7 +69,11 @@ export async function register(req, res, next) {
         id: business._id,
         name: business.name,
         currency: business.currency,
-        isDemo: business.isDemo
+        isDemo: business.isDemo,
+        subscriptionPlan: business.subscriptionPlan,
+        subscriptionExpiresAt: business.subscriptionExpiresAt,
+        isTrialExpired: false,
+        daysRemaining: 14
       }
     });
   } catch (error) {
@@ -94,6 +109,11 @@ export async function login(req, res, next) {
       });
     }
 
+    const now = new Date();
+    const expiresAt = business.subscriptionExpiresAt ? new Date(business.subscriptionExpiresAt) : null;
+    const isTrialExpired = Boolean(expiresAt && now > expiresAt);
+    const daysRemaining = expiresAt ? Math.max(0, Math.ceil((expiresAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))) : 0;
+
     const token = generateTokenAndSetCookie(res, user, business);
 
     return res.status(200).json({
@@ -110,7 +130,11 @@ export async function login(req, res, next) {
         id: business._id,
         name: business.name,
         currency: business.currency,
-        isDemo: business.isDemo
+        isDemo: business.isDemo,
+        subscriptionPlan: business.subscriptionPlan || 'trial',
+        subscriptionExpiresAt: business.subscriptionExpiresAt || null,
+        isTrialExpired,
+        daysRemaining
       }
     });
   } catch (error) {
@@ -139,7 +163,156 @@ export async function getMe(req, res) {
       id: req.user.businessId,
       name: req.user.businessName,
       currency: req.user.currency,
-      isDemo: req.user.isDemo
+      isDemo: req.user.isDemo,
+      subscriptionPlan: req.user.subscriptionPlan,
+      subscriptionExpiresAt: req.user.subscriptionExpiresAt,
+      isTrialExpired: req.user.isTrialExpired,
+      daysRemaining: req.user.daysRemaining
     }
   });
+}
+
+export async function forgotPassword(req, res, next) {
+  try {
+    const { email } = forgotPasswordSchema.parse(req.body);
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'No registered account found with this email address.'
+      });
+    }
+
+    // Generate secure 64-char crypto reset token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = new Date(Date.now() + 3600000); // Valid 1 hour
+    await user.save();
+
+    const clientOrigin = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
+    const resetUrl = `${clientOrigin}/reset-password?token=${resetToken}`;
+
+    return res.status(200).json({
+      success: true,
+      message: 'Password reset link generated successfully.',
+      resetToken,
+      resetUrl
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function resetPassword(req, res, next) {
+  try {
+    const { token, password } = resetPasswordSchema.parse(req.body);
+
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: new Date() }
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        error: 'Password reset token is invalid or has expired. Please request a new link.'
+      });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.passwordHash = await bcrypt.hash(password, salt);
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: 'Password has been reset successfully. You can now sign in with your new password.'
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function googleAuth(req, res, next) {
+  try {
+    const validatedData = googleAuthSchema.parse(req.body);
+    const { email, name, googleId } = validatedData;
+    const normalizedEmail = email.toLowerCase().trim();
+
+    let user = await User.findOne({
+      $or: [{ email: normalizedEmail }, ...(googleId ? [{ googleId }] : [])]
+    });
+    let business;
+
+    if (user) {
+      if (!user.googleId && googleId) {
+        user.googleId = googleId;
+        await user.save();
+      }
+      business = await Business.findById(user.businessId);
+    } else {
+      // New user via Google: create dedicated business with 14-day free trial
+      const agencyName = name ? `${name.split(' ')[0]}'s Travel Agency` : 'Travel Agency';
+      const trialExpiry = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
+
+      business = await Business.create({
+        name: agencyName,
+        businessType: 'travel_agency',
+        currency: 'INR',
+        isDemo: false,
+        subscriptionPlan: 'trial',
+        subscriptionExpiresAt: trialExpiry,
+        maxUsers: 2
+      });
+
+      const randomPassword = crypto.randomBytes(16).toString('hex');
+      const salt = await bcrypt.genSalt(10);
+      const passwordHash = await bcrypt.hash(randomPassword, salt);
+
+      user = await User.create({
+        name: name || normalizedEmail.split('@')[0],
+        email: normalizedEmail,
+        passwordHash,
+        businessId: business._id,
+        role: 'owner',
+        googleId: googleId || `goog_${Date.now()}`
+      });
+
+      business.ownerUserId = user._id;
+      await business.save();
+    }
+
+    const now = new Date();
+    const expiresAt = business.subscriptionExpiresAt ? new Date(business.subscriptionExpiresAt) : null;
+    const isTrialExpired = Boolean(expiresAt && now > expiresAt);
+    const daysRemaining = expiresAt ? Math.max(0, Math.ceil((expiresAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))) : 0;
+
+    const token = generateTokenAndSetCookie(res, user, business);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Google authentication successful',
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      },
+      business: {
+        id: business._id,
+        name: business.name,
+        currency: business.currency,
+        isDemo: business.isDemo,
+        subscriptionPlan: business.subscriptionPlan || 'trial',
+        subscriptionExpiresAt: business.subscriptionExpiresAt || null,
+        isTrialExpired,
+        daysRemaining
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
 }

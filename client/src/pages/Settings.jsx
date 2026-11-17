@@ -6,22 +6,48 @@ import {
   Building2,
   BookOpen,
   RotateCcw,
-  Save
+  Save,
+  Phone,
+  Sparkles,
+  Lock,
+  Clock
 } from 'lucide-react';
+import WhatsAppIcon from '../components/WhatsAppIcon';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/client';
 
 export default function SettingsPage() {
-  const { business, user } = useAuth();
+  const { business, user, refreshProfile } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [simulating, setSimulating] = useState(false);
 
   const [formData, setFormData] = useState({
     name: business?.name || '',
     currency: business?.currency || 'INR',
     contactPhone: business?.contactPhone || ''
   });
+
+  const sponsorPhone = '7359510771';
+  const whatsappUrl = `https://wa.me/91${sponsorPhone}?text=${encodeURIComponent(
+    `Hi, I am contacting you regarding my ActiLynq subscription for "${business?.name || 'Travel Agency'}".`
+  )}`;
+
+  const handleSimulate = async (expireNow) => {
+    setSimulating(true);
+    setError('');
+    setSuccess('');
+    try {
+      await api.post('/business/simulate-trial', { expireNow, daysRemaining: expireNow ? 0 : 14 });
+      if (refreshProfile) await refreshProfile();
+      setSuccess(expireNow ? 'Simulated trial expiry: Modal is now visible' : 'Restored trial: 14 active days remaining');
+    } catch (err) {
+      setError(err.message || 'Simulation failed');
+    } finally {
+      setSimulating(false);
+    }
+  };
 
   useEffect(() => {
     if (business) {
@@ -193,6 +219,94 @@ export default function SettingsPage() {
           <div>
             <p className="text-sm font-semibold text-neutral-700">Role</p>
             <p className="text-base text-neutral-900 mt-1 capitalize">{user?.role || 'Owner'}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Subscription & Sponsor Contact */}
+      <div className="card border-teal-200 bg-gradient-to-br from-white to-teal-50/40">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <Clock className="w-5 h-5 text-teal-700" />
+            <span>Subscription & Sponsor Support</span>
+          </h2>
+          <span className={`text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${
+            business?.isTrialExpired
+              ? 'bg-rose-100 text-rose-800 border border-rose-200'
+              : 'bg-teal-100 text-teal-800 border border-teal-200'
+          }`}>
+            {business?.isTrialExpired ? 'Trial Expired' : `${business?.daysRemaining ?? 14} Days Left`}
+          </span>
+        </div>
+
+        <div className="space-y-4 text-xs sm:text-sm text-slate-700">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-white rounded-lg border border-slate-200">
+            <div>
+              <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Current Plan</span>
+              <span className="font-bold text-slate-900 capitalize text-sm">{business?.subscriptionPlan || '14-Day Free Evaluation Trial'}</span>
+            </div>
+            <div>
+              <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Status</span>
+              <span className={`font-bold ${business?.isTrialExpired ? 'text-rose-600' : 'text-emerald-700'}`}>
+                {business?.isTrialExpired ? 'Expired — Renewal Required' : 'Active 14-Day Trial'}
+              </span>
+            </div>
+          </div>
+
+          <div className="p-4 bg-teal-50/70 border border-teal-200 rounded-xl space-y-3">
+            <div className="flex items-center gap-2">
+              <Phone className="w-4 h-4 text-teal-700" />
+              <span className="font-bold text-slate-900">Official Sponsor Contact:</span>
+              <span className="font-bold text-teal-800">+91 {sponsorPhone}</span>
+            </div>
+            <p className="text-xs text-slate-600">
+              For plan renewals, seat upgrades, or customized travel CRM integrations, reach out to our sponsor directly:
+            </p>
+            <div className="flex flex-wrap gap-2.5">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-white font-semibold text-xs shadow-xs hover:opacity-95 transition-opacity"
+                style={{ backgroundColor: '#25D366' }}
+              >
+                <WhatsAppIcon className="w-4 h-4 text-white" />
+                <span>Chat on WhatsApp</span>
+              </a>
+              <a
+                href={`tel:+91${sponsorPhone}`}
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs transition-colors shadow-xs"
+              >
+                <Phone className="w-3.5 h-3.5 text-teal-400" />
+                <span>Call +91 {sponsorPhone}</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Demonstration Tool for Faculty Presentation */}
+          <div className="pt-2 border-t border-slate-200">
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-teal-600" />
+              <span>Faculty Presentation Simulator</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => handleSimulate(true)}
+                disabled={simulating}
+                className="px-3 py-1.5 text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 rounded-md transition-colors"
+              >
+                Simulate: Trigger Trial Expiry Modal
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSimulate(false)}
+                disabled={simulating}
+                className="px-3 py-1.5 text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 rounded-md transition-colors"
+              >
+                Restore: 14 Days Active Trial
+              </button>
+            </div>
           </div>
         </div>
       </div>

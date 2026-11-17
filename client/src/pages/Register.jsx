@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ArrowRight, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import GoogleLoginButton from '../components/GoogleLoginButton';
 
 export default function Register() {
   const [businessName, setBusinessName] = useState('');
@@ -64,6 +65,17 @@ export default function Register() {
           <span>{error}</span>
         </div>
       )}
+
+      {/* Google OAuth Button */}
+      <div className="mb-5">
+        <GoogleLoginButton onError={(msg) => setError(msg)} />
+      </div>
+
+      <div className="relative flex py-2 items-center mb-5">
+        <div className="flex-grow border-t border-slate-200"></div>
+        <span className="flex-shrink mx-3 text-xs text-slate-400 uppercase tracking-wider font-semibold">Or register with email</span>
+        <div className="flex-grow border-t border-slate-200"></div>
+      </div>
 
       {/* Registration Form */}
       <form onSubmit={handleSubmit} className="space-y-4 mb-6">

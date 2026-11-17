@@ -30,6 +30,21 @@ const businessSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
       index: true
+    },
+    // Subscription & Trial Management
+    subscriptionPlan: {
+      type: String,
+      enum: ['trial', 'starter', 'pro', 'enterprise'],
+      default: 'trial'
+    },
+    subscriptionExpiresAt: {
+      type: Date,
+      default: () => new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14-day free trial
+      index: true
+    },
+    maxUsers: {
+      type: Number,
+      default: 2
     }
   },
   {

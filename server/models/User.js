@@ -27,8 +27,25 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['owner'],
+      enum: ['owner', 'agent', 'admin'],
       default: 'owner'
+    },
+    // Password Reset tokens
+    resetPasswordToken: {
+      type: String,
+      default: null,
+      index: true
+    },
+    resetPasswordExpires: {
+      type: Date,
+      default: null
+    },
+    // Google OAuth Linkage
+    googleId: {
+      type: String,
+      default: null,
+      sparse: true,
+      index: true
     }
   },
   {

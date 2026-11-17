@@ -7,6 +7,8 @@ import AuthLayout from './layouts/AuthLayout';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
 import ActionCenter from './pages/ActionCenter';
 import LeadsList from './pages/LeadsList';
@@ -28,6 +30,8 @@ export default function App() {
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
           </Route>
 
           {/* Authenticated Tenant App Routes */}

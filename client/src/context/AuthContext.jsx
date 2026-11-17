@@ -45,6 +45,15 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const loginWithGoogle = async (googleData) => {
+    const res = await api.post('/auth/google', googleData);
+    if (res.data?.success) {
+      setUser(res.data.user);
+      setBusiness(res.data.business);
+      return res.data;
+    }
+  };
+
   const logout = async () => {
     try {
       await api.post('/auth/logout');
@@ -75,6 +84,7 @@ export function AuthProvider({ children }) {
         isAuthenticated: !!user,
         login,
         register,
+        loginWithGoogle,
         logout,
         refreshProfile
       }}

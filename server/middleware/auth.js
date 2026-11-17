@@ -91,6 +91,11 @@ export async function requireAuth(req, res, next) {
       });
     }
 
+    const now = new Date();
+    const expiresAt = business.subscriptionExpiresAt ? new Date(business.subscriptionExpiresAt) : null;
+    const isTrialExpired = Boolean(expiresAt && now > expiresAt);
+    const daysRemaining = expiresAt ? Math.max(0, Math.ceil((expiresAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))) : 0;
+
     // Attach strictly validated tenant context to request
     req.user = {
       _id: user._id,
@@ -101,7 +106,11 @@ export async function requireAuth(req, res, next) {
       businessId: business._id, // Enforces tenant isolation
       businessName: business.name,
       currency: business.currency || 'INR',
-      isDemo: Boolean(business.isDemo)
+      isDemo: Boolean(business.isDemo),
+      subscriptionPlan: business.subscriptionPlan || 'trial',
+      subscriptionExpiresAt: business.subscriptionExpiresAt || null,
+      isTrialExpired,
+      daysRemaining
     };
 
     next();

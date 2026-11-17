@@ -3,6 +3,8 @@ import { Navigate, Outlet, NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
+import TrialStatusBar from '../components/TrialStatusBar';
+import TrialExpiredModal from '../components/TrialExpiredModal';
 import api from '../api/client';
 import {
   LayoutDashboard,
@@ -14,7 +16,7 @@ import {
 } from 'lucide-react';
 
 export default function AppLayout() {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading, business, refreshProfile } = useAuth();
   const [actionCount, setActionCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -84,6 +86,9 @@ export default function AppLayout() {
           actionCount={actionCount}
         />
 
+        {/* Global 14-Day Free Trial Status Bar */}
+        <TrialStatusBar business={business} onRefresh={refreshProfile} />
+
         {/* Content area: extra bottom padding on mobile for bottom navigation bar */}
         <main className="flex-1 px-3 sm:px-6 lg:px-8 py-4 sm:py-6 max-w-7xl w-full mx-auto pb-24 md:pb-8 min-w-0">
           <Outlet context={{
@@ -93,6 +98,13 @@ export default function AppLayout() {
             }
           }} />
         </main>
+
+        {/* Blocking Modal when 14-Day Free Trial is Expired */}
+        <TrialExpiredModal
+          isOpen={Boolean(business?.isTrialExpired)}
+          business={business}
+          onRefresh={refreshProfile}
+        />
 
         {/* Mobile Sticky Bottom Navigation Bar (< 768px) */}
         <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-lg px-2 py-1.5 flex items-center justify-around w-full max-w-full">

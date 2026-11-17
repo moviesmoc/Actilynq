@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ArrowRight, AlertCircle, Eye, EyeOff, Sparkles } from 'lucide-react';
+import { ArrowRight, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import GoogleLoginButton from '../components/GoogleLoginButton';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -27,40 +28,13 @@ export default function Login() {
     }
   };
 
-  const handleDemoQuickFill = () => {
-    setEmail('demo@actilynq.com');
-    setPassword('DemoPassword123!');
-  };
-
   return (
     <div>
-      <div className="mb-8">
+      <div className="mb-6">
         <h1 className="text-2xl font-bold text-neutral-900 mb-2">Sign in to your workspace</h1>
         <p className="text-sm text-neutral-600">
           Access your travel enquiry queue and Next-Action recommendations
         </p>
-      </div>
-
-      {/* Demo Quick-Fill Banner */}
-      <div className="mb-6 p-4 rounded-lg bg-blue-50 border border-blue-200">
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex items-start gap-3">
-            <Sparkles className="w-4 h-4 text-blue-700 mt-0.5 flex-shrink-0" />
-            <div className="text-sm">
-              <p className="font-semibold text-blue-900 mb-1">Faculty Demonstration Access</p>
-              <p className="text-xs text-blue-800 mb-2">
-                Demo account: <code className="bg-white px-1.5 py-0.5 rounded font-mono text-xs">demo@actilynq.com</code>
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={handleDemoQuickFill}
-            className="text-xs font-semibold text-blue-700 hover:text-blue-900 bg-white px-3 py-1.5 rounded border border-blue-300 shadow-xs hover:bg-blue-50 transition-colors flex-shrink-0"
-          >
-            Quick-Fill
-          </button>
-        </div>
       </div>
 
       {/* Error Message */}
@@ -70,6 +44,17 @@ export default function Login() {
           <span>{error}</span>
         </div>
       )}
+
+      {/* Google OAuth Button */}
+      <div className="mb-5">
+        <GoogleLoginButton onError={(msg) => setError(msg)} />
+      </div>
+
+      <div className="relative flex py-2 items-center mb-5">
+        <div className="flex-grow border-t border-slate-200"></div>
+        <span className="flex-shrink mx-3 text-xs text-slate-400 uppercase tracking-wider font-semibold">Or with email</span>
+        <div className="flex-grow border-t border-slate-200"></div>
+      </div>
 
       {/* Login Form */}
       <form onSubmit={handleSubmit} className="space-y-4 mb-6">
@@ -88,9 +73,17 @@ export default function Login() {
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-neutral-900 mb-2">
-            Password
-          </label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-sm font-semibold text-neutral-900">
+              Password
+            </label>
+            <Link
+              to="/forgot-password"
+              className="text-xs font-semibold text-teal-700 hover:text-teal-800 transition-colors"
+            >
+              Forgot password?
+            </Link>
+          </div>
           <div className="relative">
             <input
               type={showPassword ? 'text' : 'password'}
@@ -128,7 +121,7 @@ export default function Login() {
       <div className="border-t border-neutral-200 pt-6 text-center text-sm text-neutral-600">
         New to ActiLynq?{' '}
         <Link to="/register" className="font-semibold text-brand-700 hover:text-brand-600 transition-colors">
-          Create an account
+          Start 14-Day Free Trial
         </Link>
       </div>
     </div>
