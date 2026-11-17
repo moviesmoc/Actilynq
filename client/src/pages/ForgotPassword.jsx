@@ -56,45 +56,25 @@ export default function ForgotPassword() {
           <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900">
             <div className="flex items-center gap-2 font-semibold text-sm mb-1 text-emerald-800">
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>{successData.emailSent ? 'Email Sent to Your Inbox!' : 'Reset Link Generated'}</span>
+              <span>Email Sent to Your Inbox!</span>
             </div>
             <p className="text-xs text-emerald-700 leading-relaxed">
-              {successData.emailSent ? (
-                <>
-                  We have sent an automated password reset email to <strong className="font-semibold">{email}</strong>. Please check your inbox and click the reset button.
-                </>
-              ) : (
-                <>
-                  Password reset instructions have been generated for <strong className="font-semibold">{email}</strong>.
-                </>
-              )}
+              We have sent a secure password reset email to <strong className="font-semibold">{email}</strong>. Please check your inbox and click the reset button to set a new password.
             </p>
           </div>
 
-          {/* Quick-Test / Academic Link */}
-          {successData.resetToken && (
-            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
-                <Sparkles className="w-3.5 h-3.5 text-teal-600" />
-                <span>Instant In-Browser Reset Option</span>
-              </div>
-              <p className="text-xs text-slate-600">
-                You can also proceed directly to reset your password right now:
-              </p>
-              <button
-                type="button"
-                onClick={() => navigate(`/reset-password?token=${successData.resetToken}`)}
-                className="w-full btn-primary flex items-center justify-center gap-2 py-2 text-xs"
-              >
-                <span>Open Password Reset Form</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          )}
+          <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 text-xs text-slate-600">
+            <p className="font-semibold text-slate-700">Didn't receive the email?</p>
+            <ul className="list-disc pl-4 space-y-1 text-slate-500">
+              <li>Check your Spam / Junk folder.</li>
+              <li>Ensure the email address was spelled correctly.</li>
+              <li>The reset link remains valid for 1 hour.</li>
+            </ul>
+          </div>
 
           <div className="text-center pt-2">
-            <Link to="/login" className="text-xs font-semibold text-teal-700 hover:text-teal-800">
-              Return to Login
+            <Link to="/login" className="w-full btn-primary block text-center py-2 text-xs">
+              Return to Sign In
             </Link>
           </div>
         </div>

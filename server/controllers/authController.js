@@ -204,11 +204,9 @@ export async function forgotPassword(req, res, next) {
     return res.status(200).json({
       success: true,
       message: mailResult.success
-        ? `A password reset link has been dispatched to ${user.email}. Please check your inbox and spam folder.`
-        : 'Password reset link generated successfully.',
-      emailSent: Boolean(mailResult.success),
-      resetToken,
-      resetUrl
+        ? `A password reset link has been dispatched to ${user.email}. Please check your inbox and click the link to reset your password.`
+        : 'Unable to deliver password reset email. Please contact support.',
+      emailSent: Boolean(mailResult.success)
     });
   } catch (error) {
     next(error);
