@@ -10,7 +10,12 @@ import {
   Phone,
   Sparkles,
   Lock,
-  Clock
+  Clock,
+  Users,
+  UserPlus,
+  Trash2,
+  Shield,
+  X
 } from 'lucide-react';
 import WhatsAppIcon from '../components/WhatsAppIcon';
 import { useAuth } from '../context/AuthContext';
@@ -22,6 +27,13 @@ export default function SettingsPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [simulating, setSimulating] = useState(false);
+
+  // Multi-user Team state
+  const [teamMembers, setTeamMembers] = useState([]);
+  const [seatInfo, setSeatInfo] = useState({ maxUsers: 2, currentCount: 1, seatsRemaining: 1 });
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newMember, setNewMember] = useState({ name: '', email: '', password: '', role: 'agent' });
+  const [addingMember, setAddingMember] = useState(false);
 
   const [formData, setFormData] = useState({
     name: business?.name || '',
@@ -49,6 +61,22 @@ export default function SettingsPage() {
     }
   };
 
+  const fetchTeam = async () => {
+    try {
+      const res = await api.get('/business/users');
+      if (res.data?.success) {
+        setTeamMembers(res.data.users);
+        setSeatInfo({
+          maxUsers: res.data.maxUsers,
+          currentCount: res.data.currentCount,
+          seatsRemaining: res.data.seatsRemaining
+        });
+      }
+    } catch (e) {
+      console.warn('Could not load team members:', e);
+    }
+  };
+
   useEffect(() => {
     if (business) {
       setFormData({
@@ -56,8 +84,44 @@ export default function SettingsPage() {
         currency: business.currency || 'INR',
         contactPhone: business.contactPhone || ''
       });
+      fetchTeam();
     }
   }, [business]);
+
+  const handleAddMember = async (e) => {
+    e.preventDefault();
+    setAddingMember(true);
+    setError('');
+    setSuccess('');
+    try {
+      const res = await api.post('/business/users', newMember);
+      if (res.data?.success) {
+        setSuccess(res.data.message || 'Team member added');
+        setShowAddModal(false);
+        setNewMember({ name: '', email: '', password: '', role: 'agent' });
+        fetchTeam();
+      }
+    } catch (err) {
+      setError(err.message || 'Failed to add team member');
+    } finally {
+      setAddingMember(false);
+    }
+  };
+
+  const handleRemoveMember = async (userId, memberName) => {
+    if (!window.confirm(`Are you sure you want to remove ${memberName} from your agency workspace?`)) return;
+    setError('');
+    setSuccess('');
+    try {
+      const res = await api.delete(`/business/users/${userId}`);
+      if (res.data?.success) {
+        setSuccess(res.data.message || 'Team member removed');
+        fetchTeam();
+      }
+    } catch (err) {
+      setError(err.message || 'Failed to remove team member');
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -221,6 +285,200 @@ export default function SettingsPage() {
             <p className="text-base text-neutral-900 mt-1 capitalize">{user?.role || 'Owner'}</p>
           </div>
         </div>
+      </div>
+
+      {/* Team Members & Multi-User Management */}
+      <div className="card">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
+          <div>
+            <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <Users className="w-5 h-5 text-teal-700" />
+              <span>Team Members & Sales Agents</span>
+            </h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Manage salesperson access to your agency's enquiry queue and pipeline
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
+              seatInfo.seatsRemaining === 0
+                ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                : 'bg-teal-50 text-teal-800 border border-teal-200'
+            }`}>
+              {seatInfo.currentCount} / {seatInfo.maxUsers} Seats Used
+            </span>
+            {(user?.role === 'owner' || user?.role === 'admin') && (
+              <button
+                type="button"
+                onClick={() => setShowAddModal(true)}
+                disabled={seatInfo.seatsRemaining === 0}
+                className="btn-primary py-1.5 px-3 text-xs flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed shadow-2xs"
+              >
+                <UserPlus className="w-3.5 h-3.5" />
+                <span>Add Sales Agent</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        {seatInfo.seatsRemaining === 0 && (
+          <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-800 flex items-center justify-between gap-2">
+            <span>You have reached your seat limit ({seatInfo.maxUsers} users). Need more sales executives?</span>
+            <a
+              href={`https://wa.me/917359510771?text=${encodeURIComponent(`Hi, I want to add more user seats for my agency ${business?.name}.`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold underline text-amber-900 whitespace-nowrap"
+            >
+              Contact +91 7359510771
+            </a>
+          </div>
+        )}
+
+        {/* Team Members List */}
+        <div className="divide-y divide-slate-100">
+          {teamMembers.map((member) => (
+            <div key={member.id} className="py-3 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs flex-shrink-0 ${
+                  member.role === 'owner' ? 'bg-teal-700 text-white' : 'bg-slate-100 text-slate-700 border border-slate-200'
+                }`}>
+                  {member.name.slice(0, 2).toUpperCase()}
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-slate-900 text-xs sm:text-sm truncate">{member.name}</span>
+                    {member.id === user?.id && (
+                      <span className="text-[10px] font-medium text-slate-400 bg-slate-100 px-1.5 py-0.2 rounded">You</span>
+                    )}
+                  </div>
+                  <div className="text-xs text-slate-500 truncate">{member.email}</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 flex-shrink-0">
+                <span className={`text-[11px] font-bold px-2 py-0.5 rounded capitalize ${
+                  member.role === 'owner'
+                    ? 'bg-teal-50 text-teal-800 border border-teal-200'
+                    : member.role === 'admin'
+                    ? 'bg-blue-50 text-blue-800 border border-blue-200'
+                    : 'bg-slate-100 text-slate-700 border border-slate-200'
+                }`}>
+                  {member.role === 'owner' ? 'Owner' : member.role === 'admin' ? 'Manager' : 'Sales Agent'}
+                </span>
+
+                {user?.role === 'owner' && member.role !== 'owner' && (
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveMember(member.id, member.name)}
+                    className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                    title="Remove user"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Add Team Member Modal */}
+        {showAddModal && (
+          <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-2xs flex items-center justify-center p-4">
+            <div className="bg-white rounded-xl shadow-xl border border-slate-200 max-w-md w-full p-5 my-auto animate-in zoom-in-95 duration-150">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                <div className="flex items-center gap-2 text-teal-800 font-bold text-sm">
+                  <UserPlus className="w-4 h-4" />
+                  <span>Add New Sales Agent</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowAddModal(false)}
+                  className="text-slate-400 hover:text-slate-600 p-1 rounded-lg"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <form onSubmit={handleAddMember} className="space-y-3.5">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Agent Full Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Aditi Rao"
+                    value={newMember.name}
+                    onChange={(e) => setNewMember({ ...newMember, name: e.target.value })}
+                    className="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-600"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Agent Work Email
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="aditi@travelagency.com"
+                    value={newMember.email}
+                    onChange={(e) => setNewMember({ ...newMember, email: e.target.value })}
+                    className="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-600"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Initial Password (min 8 characters)
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    minLength={8}
+                    placeholder="••••••••"
+                    value={newMember.password}
+                    onChange={(e) => setNewMember({ ...newMember, password: e.target.value })}
+                    className="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-600"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1">The agent will use this password to sign in to your workspace.</p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Role & Permissions
+                  </label>
+                  <select
+                    value={newMember.role}
+                    onChange={(e) => setNewMember({ ...newMember, role: e.target.value })}
+                    className="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-teal-600"
+                  >
+                    <option value="agent">Sales Agent (View/edit enquiries, calls, WhatsApp)</option>
+                    <option value="admin">Branch Manager / Admin (Full enquiry + team view)</option>
+                  </select>
+                </div>
+
+                <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => setShowAddModal(false)}
+                    className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-800"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={addingMember}
+                    className="btn-primary py-1.5 px-4 text-xs font-semibold disabled:opacity-50"
+                  >
+                    {addingMember ? 'Adding...' : 'Add Team Member'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Subscription & Sponsor Contact */}

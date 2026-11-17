@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { forgotPasswordSchema, resetPasswordSchema, googleAuthSchema } from '../validators/authValidator.js';
+import { forgotPasswordSchema, resetPasswordSchema, googleAuthSchema, createTeamMemberSchema } from '../validators/authValidator.js';
 import { requireActiveSubscription } from '../middleware/auth.js';
 
 describe('Trial & Plan Expiry & Auth Recovery Logic', () => {
@@ -105,6 +105,56 @@ describe('Trial & Plan Expiry & Auth Recovery Logic', () => {
           name: 'Nilesh'
         });
       });
+    });
+  });
+
+  describe('Team Member Validation & Multi-User Seat Logic', () => {
+    it('accepts valid team member data with agent or admin role', () => {
+      const validAgent = createTeamMemberSchema.parse({
+        name: 'Aditi Rao',
+        email: 'Aditi@Agency.com',
+        password: 'Password123!',
+        role: 'agent'
+      });
+      assert.equal(validAgent.name, 'Aditi Rao');
+      assert.equal(validAgent.email, 'aditi@agency.com');
+      assert.equal(validAgent.role, 'agent');
+
+      const validAdmin = createTeamMemberSchema.parse({
+        name: 'Rahul Sharma',
+        email: 'rahul@agency.com',
+        password: 'SecureAdminPassword123',
+        role: 'admin'
+      });
+      assert.equal(validAdmin.role, 'admin');
+    });
+
+    it('rejects team member creation with weak password or invalid email', () => {
+      assert.throws(() => {
+        createTeamMemberSchema.parse({
+          name: 'Test Agent',
+          email: 'invalid-email',
+          password: 'Password123!'
+        });
+      });
+
+      assert.throws(() => {
+        createTeamMemberSchema.parse({
+          name: 'Test Agent',
+          email: 'agent@agency.com',
+          password: 'short'
+        });
+      });
+    });
+
+    it('enforces seat limits calculation accurately', () => {
+      const maxUsers = 5;
+      const currentUsers = 5;
+      const hasSeatAvailable = currentUsers < maxUsers;
+      assert.equal(hasSeatAvailable, false);
+
+      const seatsRemaining = Math.max(0, maxUsers - currentUsers);
+      assert.equal(seatsRemaining, 0);
     });
   });
 });

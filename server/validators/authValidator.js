@@ -35,3 +35,10 @@ export const googleAuthSchema = z.object({
 }).refine((data) => Boolean(data.credential || (data.email && data.email.length > 0)), {
   message: 'Either Google credential token or email is required'
 });
+
+export const createTeamMemberSchema = z.object({
+  name: z.string().trim().min(2, 'Name must be at least 2 characters'),
+  email: z.string().trim().toLowerCase().email('Valid email is required'),
+  password: z.string().min(8, 'Password must be at least 8 characters long'),
+  role: z.enum(['agent', 'admin']).default('agent')
+});
