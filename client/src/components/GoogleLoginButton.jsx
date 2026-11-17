@@ -16,35 +16,49 @@ export default function GoogleLoginButton({ disabled, onError }) {
 
   // Initialize Real Google Identity Services if Client ID exists
   useEffect(() => {
-    if (googleClientId && window.google?.accounts?.id) {
-      try {
-        window.google.accounts.id.initialize({
-          client_id: googleClientId,
-          callback: async (response) => {
-            setLoading(true);
-            try {
-              await loginWithGoogle({ credential: response.credential });
-              navigate('/app');
-            } catch (err) {
-              if (onError) onError(err.message || 'Google authentication failed');
-            } finally {
-              setLoading(false);
-            }
-          }
-        });
+    if (!googleClientId) return;
 
-        if (googleButtonRef.current) {
+    const initGoogle = () => {
+      if (window.google?.accounts?.id && googleButtonRef.current) {
+        try {
+          window.google.accounts.id.initialize({
+            client_id: googleClientId,
+            callback: async (response) => {
+              setLoading(true);
+              try {
+                await loginWithGoogle({ credential: response.credential });
+                navigate('/app');
+              } catch (err) {
+                if (onError) onError(err.message || 'Google authentication failed');
+              } finally {
+                setLoading(false);
+              }
+            }
+          });
+
+          // Render official Google Sign-In button
+          googleButtonRef.current.innerHTML = '';
           window.google.accounts.id.renderButton(googleButtonRef.current, {
             theme: 'outline',
             size: 'large',
-            width: '100%',
+            width: 360,
             text: 'continue_with',
-            shape: 'rectangular'
+            shape: 'rectangular',
+            logo_alignment: 'center'
           });
+          return true;
+        } catch (e) {
+          console.warn('Google Identity Services initialization warning:', e.message);
         }
-      } catch (e) {
-        console.warn('Google Identity Services initialization warning:', e.message);
       }
+      return false;
+    };
+
+    if (!initGoogle()) {
+      const interval = setInterval(() => {
+        if (initGoogle()) clearInterval(interval);
+      }, 200);
+      return () => clearInterval(interval);
     }
   }, [googleClientId]);
 
