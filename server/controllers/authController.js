@@ -10,6 +10,7 @@ import {
   resetPasswordSchema,
   googleAuthSchema
 } from '../validators/authValidator.js';
+import { sendPasswordResetEmail } from '../services/emailService.js';
 
 export async function register(req, res, next) {
   try {
@@ -193,9 +194,19 @@ export async function forgotPassword(req, res, next) {
     const clientOrigin = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
     const resetUrl = `${clientOrigin}/reset-password?token=${resetToken}`;
 
+    // Dispatch automated password reset email via configured Gmail SMTP
+    const mailResult = await sendPasswordResetEmail({
+      toEmail: user.email,
+      name: user.name,
+      resetUrl
+    });
+
     return res.status(200).json({
       success: true,
-      message: 'Password reset link generated successfully.',
+      message: mailResult.success
+        ? `A password reset link has been dispatched to ${user.email}. Please check your inbox and spam folder.`
+        : 'Password reset link generated successfully.',
+      emailSent: Boolean(mailResult.success),
       resetToken,
       resetUrl
     });

@@ -56,22 +56,30 @@ export default function ForgotPassword() {
           <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900">
             <div className="flex items-center gap-2 font-semibold text-sm mb-1 text-emerald-800">
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>Reset Link Generated</span>
+              <span>{successData.emailSent ? 'Email Sent to Your Inbox!' : 'Reset Link Generated'}</span>
             </div>
             <p className="text-xs text-emerald-700 leading-relaxed">
-              Password reset instructions have been generated for <strong className="font-semibold">{email}</strong>.
+              {successData.emailSent ? (
+                <>
+                  We have sent an automated password reset email to <strong className="font-semibold">{email}</strong>. Please check your inbox and click the reset button.
+                </>
+              ) : (
+                <>
+                  Password reset instructions have been generated for <strong className="font-semibold">{email}</strong>.
+                </>
+              )}
             </p>
           </div>
 
-          {/* Academic & Live Quick-Test Link */}
+          {/* Quick-Test / Academic Link */}
           {successData.resetToken && (
             <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
               <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
                 <Sparkles className="w-3.5 h-3.5 text-teal-600" />
-                <span>One-Click Academic Evaluation</span>
+                <span>Instant In-Browser Reset Option</span>
               </div>
               <p className="text-xs text-slate-600">
-                You can immediately proceed to set your new password using this secure token:
+                You can also proceed directly to reset your password right now:
               </p>
               <button
                 type="button"
