@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
 import TrialStatusBar from '../components/TrialStatusBar';
-import TrialExpiredModal from '../components/TrialExpiredModal';
+import TrialExpiredPaywall from '../components/TrialExpiredPaywall';
 import api from '../api/client';
 import {
   LayoutDashboard,
@@ -89,22 +89,19 @@ export default function AppLayout() {
         {/* Global 14-Day Free Trial Status Bar */}
         <TrialStatusBar business={business} onRefresh={refreshProfile} />
 
-        {/* Content area: extra bottom padding on mobile for bottom navigation bar */}
-        <main className="flex-1 px-3 sm:px-6 lg:px-8 py-4 sm:py-6 max-w-7xl w-full mx-auto pb-24 md:pb-8 min-w-0">
-          <Outlet context={{
-            refreshActionCount: () => {
-              fetchActionCount();
-              setActionCount((c) => Math.max(0, c - 1));
-            }
-          }} />
-        </main>
-
-        {/* Blocking Modal when 14-Day Free Trial is Expired */}
-        <TrialExpiredModal
-          isOpen={Boolean(business?.isTrialExpired)}
-          business={business}
-          onRefresh={refreshProfile}
-        />
+        {/* If trial is expired, lock the entire content view so enquiries and data are completely hidden */}
+        {business?.isTrialExpired ? (
+          <TrialExpiredPaywall business={business} onRefresh={refreshProfile} />
+        ) : (
+          <main className="flex-1 px-3 sm:px-6 lg:px-8 py-4 sm:py-6 max-w-7xl w-full mx-auto pb-24 md:pb-8 min-w-0">
+            <Outlet context={{
+              refreshActionCount: () => {
+                fetchActionCount();
+                setActionCount((c) => Math.max(0, c - 1));
+              }
+            }} />
+          </main>
+        )}
 
         {/* Mobile Sticky Bottom Navigation Bar (< 768px) */}
         <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-lg px-2 py-1.5 flex items-center justify-around w-full max-w-full">

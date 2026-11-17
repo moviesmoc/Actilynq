@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { getActionQueue, snoozeAction, cancelSnooze } from '../controllers/actionController.js';
-import { requireAuth } from '../middleware/auth.js';
+import { requireAuth, requireActiveSubscription } from '../middleware/auth.js';
 
 const router = Router();
 
 router.use(requireAuth);
+router.use(requireActiveSubscription);
 
 router.get('/', getActionQueue);
 router.post('/:leadId/snooze', snoozeAction);

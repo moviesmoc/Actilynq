@@ -58,15 +58,17 @@ export default function TrialStatusBar({ business, onRefresh }) {
             <Phone className="w-3 h-3 text-teal-300" />
             <span>Call {sponsorPhone}</span>
           </a>
-          <button
-            type="button"
-            onClick={handleToggleExpiry}
-            disabled={toggling}
-            className="text-[10px] text-amber-200 underline hover:text-white ml-1"
-            title="Faculty Demo Switcher"
-          >
-            {toggling ? '...' : '[Demo: Restore 14d]'}
-          </button>
+          {business?.isDemo && (
+            <button
+              type="button"
+              onClick={handleToggleExpiry}
+              disabled={toggling}
+              className="text-[10px] text-amber-200 underline hover:text-white ml-1"
+              title="Faculty Demo Switcher"
+            >
+              {toggling ? '...' : '[Demo: Restore 14d]'}
+            </button>
+          )}
         </div>
       </div>
     );
@@ -101,15 +103,17 @@ export default function TrialStatusBar({ business, onRefresh }) {
           <Phone className="w-3 h-3" />
           <span>Call: {sponsorPhone}</span>
         </a>
-        <button
-          type="button"
-          onClick={handleToggleExpiry}
-          disabled={toggling}
-          className="text-[10px] text-slate-400 hover:text-amber-300 ml-1 transition-colors"
-          title="Simulate what faculty sees when trial expires"
-        >
-          {toggling ? '...' : '[Demo: Test Expiry]'}
-        </button>
+        {business?.isDemo && (
+          <button
+            type="button"
+            onClick={handleToggleExpiry}
+            disabled={toggling}
+            className="text-[10px] text-slate-400 hover:text-amber-300 ml-1 transition-colors"
+            title="Simulate what faculty sees when trial expires"
+          >
+            {toggling ? '...' : '[Demo: Test Expiry]'}
+          </button>
+        )}
         <button
           type="button"
           onClick={() => setDismissed(true)}

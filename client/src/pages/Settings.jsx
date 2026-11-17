@@ -283,31 +283,33 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          {/* Demonstration Tool for Faculty Presentation */}
-          <div className="pt-2 border-t border-slate-200">
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-teal-600" />
-              <span>Faculty Presentation Simulator</span>
+          {/* Demonstration Tool for Faculty Presentation (Only visible on Demo Account) */}
+          {business?.isDemo && (
+            <div className="pt-2 border-t border-slate-200">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 mb-2">
+                <Sparkles className="w-3.5 h-3.5 text-teal-600" />
+                <span>Faculty Presentation Simulator (Demo Account Only)</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleSimulate(true)}
+                  disabled={simulating}
+                  className="px-3 py-1.5 text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 rounded-md transition-colors"
+                >
+                  Simulate: Trigger Trial Expiry Paywall
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSimulate(false)}
+                  disabled={simulating}
+                  className="px-3 py-1.5 text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 rounded-md transition-colors"
+                >
+                  Restore: 14 Days Active Trial
+                </button>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={() => handleSimulate(true)}
-                disabled={simulating}
-                className="px-3 py-1.5 text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 rounded-md transition-colors"
-              >
-                Simulate: Trigger Trial Expiry Modal
-              </button>
-              <button
-                type="button"
-                onClick={() => handleSimulate(false)}
-                disabled={simulating}
-                className="px-3 py-1.5 text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 rounded-md transition-colors"
-              >
-                Restore: 14 Days Active Trial
-              </button>
-            </div>
-          </div>
+          )}
         </div>
       </div>
 

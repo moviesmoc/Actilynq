@@ -29,6 +29,14 @@ export async function updateBusinessProfile(req, res, next) {
 
 export async function simulateTrial(req, res, next) {
   try {
+    // Only permit simulation on demo workspaces (prevents real users from extending/simulating)
+    if (!req.user.isDemo) {
+      return res.status(403).json({
+        success: false,
+        error: 'Simulation controls are strictly reserved for demonstration accounts.'
+      });
+    }
+
     const { expireNow, daysRemaining = 14 } = req.body;
     const newExpiresAt = expireNow 
       ? new Date(Date.now() - 24 * 60 * 60 * 1000) // 1 day in the past (expired)

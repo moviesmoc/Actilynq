@@ -122,3 +122,18 @@ export async function requireAuth(req, res, next) {
     });
   }
 }
+
+/**
+ * Middleware: Verify that business has an active trial or paid subscription
+ * Blocks access to enquiries and actions when a real user's 14-day trial has expired.
+ */
+export function requireActiveSubscription(req, res, next) {
+  if (req.user?.isTrialExpired && !req.user?.isDemo) {
+    return res.status(403).json({
+      success: false,
+      error: 'Your 14-day free trial has ended. Access to enquiries is locked. Please contact our sponsor at +91 7359510771 to renew your subscription.',
+      trialExpired: true
+    });
+  }
+  next();
+}

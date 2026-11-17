@@ -12,12 +12,13 @@ import {
   listActivities,
   createActivity
 } from '../controllers/activityController.js';
-import { requireAuth } from '../middleware/auth.js';
+import { requireAuth, requireActiveSubscription } from '../middleware/auth.js';
 
 const router = Router();
 
-// All lead endpoints require verified tenant authentication
+// All lead endpoints require verified tenant authentication and active trial
 router.use(requireAuth);
+router.use(requireActiveSubscription);
 
 // Core Lead CRUD
 router.get('/', listLeads);

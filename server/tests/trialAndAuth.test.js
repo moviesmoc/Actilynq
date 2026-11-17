@@ -1,8 +1,45 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { forgotPasswordSchema, resetPasswordSchema, googleAuthSchema } from '../validators/authValidator.js';
+import { requireActiveSubscription } from '../middleware/auth.js';
 
 describe('Trial & Plan Expiry & Auth Recovery Logic', () => {
+  describe('requireActiveSubscription Middleware Enforcement', () => {
+    it('allows access when trial is active', () => {
+      let nextCalled = false;
+      const req = { user: { isTrialExpired: false, isDemo: false } };
+      const res = {};
+      requireActiveSubscription(req, res, () => { nextCalled = true; });
+      assert.equal(nextCalled, true);
+    });
+
+    it('blocks access with 403 when real user trial is expired', () => {
+      let statusSent = null;
+      let jsonSent = null;
+      let nextCalled = false;
+
+      const req = { user: { isTrialExpired: true, isDemo: false } };
+      const res = {
+        status(s) { statusSent = s; return this; },
+        json(j) { jsonSent = j; return this; }
+      };
+
+      requireActiveSubscription(req, res, () => { nextCalled = true; });
+
+      assert.equal(nextCalled, false);
+      assert.equal(statusSent, 403);
+      assert.equal(jsonSent.trialExpired, true);
+      assert.ok(jsonSent.error.includes('7359510771'));
+    });
+
+    it('allows demo account access even when expired for academic evaluation', () => {
+      let nextCalled = false;
+      const req = { user: { isTrialExpired: true, isDemo: true } };
+      const res = {};
+      requireActiveSubscription(req, res, () => { nextCalled = true; });
+      assert.equal(nextCalled, true);
+    });
+  });
   describe('Trial Calculation Logic', () => {
     it('calculates active trial with days remaining', () => {
       const now = new Date();
