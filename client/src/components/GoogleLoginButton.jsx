@@ -92,79 +92,45 @@ export default function GoogleLoginButton({ disabled, onError }) {
             </div>
 
             <p className="text-xs text-slate-600 mb-4">
-              Select a Google account to continue to <strong>ActiLynq Travel CRM</strong>:
+              Enter your Google account details to sign in or create your agency workspace:
             </p>
 
-            <div className="space-y-2 mb-4">
-              <button
-                type="button"
-                onClick={() =>
-                  handleSelectAccount({
-                    name: 'Nilesh Travels (Founder)',
-                    email: 'nilesh.travels@gmail.com',
-                    googleId: 'goog_nilesh_travels_1'
-                  })
-                }
-                className="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:border-teal-500 hover:bg-teal-50/50 transition-all flex items-center gap-3 group"
-              >
-                <div className="w-8 h-8 rounded-full bg-teal-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0">
-                  N
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="text-xs font-semibold text-slate-900 truncate">Nilesh Travels</div>
-                  <div className="text-[11px] text-slate-500 truncate">nilesh.travels@gmail.com</div>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() =>
-                  handleSelectAccount({
-                    name: 'Faculty Evaluator',
-                    email: 'faculty.evaluation@university.edu',
-                    googleId: 'goog_faculty_eval_2'
-                  })
-                }
-                className="w-full text-left p-2.5 rounded-xl border border-slate-200 hover:border-teal-500 hover:bg-teal-50/50 transition-all flex items-center gap-3 group"
-              >
-                <div className="w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center flex-shrink-0">
-                  F
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="text-xs font-semibold text-slate-900 truncate">Faculty Evaluator</div>
-                  <div className="text-[11px] text-slate-500 truncate">faculty.evaluation@university.edu</div>
-                </div>
-              </button>
-            </div>
-
-            <div className="pt-3 border-t border-slate-100">
-              <div className="text-[11px] font-semibold text-slate-500 mb-2 uppercase tracking-wider">
-                Or sign in with custom Google account:
-              </div>
-              <form onSubmit={handleCustomSubmit} className="space-y-2">
+            <form onSubmit={handleCustomSubmit} className="space-y-3">
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Full Name
+                </label>
                 <input
                   type="text"
-                  placeholder="Full Name"
+                  placeholder="e.g. Nilesh Dhankani"
                   value={customName}
                   onChange={(e) => setCustomName(e.target.value)}
-                  className="w-full text-xs px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-600"
                 />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Google Email Address
+                </label>
                 <input
                   type="email"
                   required
                   placeholder="name@gmail.com"
                   value={customEmail}
                   onChange={(e) => setCustomEmail(e.target.value)}
-                  className="w-full text-xs px-3 py-1.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-500"
+                  className="w-full text-xs px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-teal-600"
                 />
-                <button
-                  type="submit"
-                  className="w-full py-1.5 px-3 bg-teal-700 hover:bg-teal-600 text-white text-xs font-semibold rounded-lg transition-colors"
-                >
-                  Continue with this Account
-                </button>
-              </form>
-            </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-2 px-3 bg-teal-700 hover:bg-teal-600 text-white text-xs font-semibold rounded-lg shadow-xs transition-colors disabled:opacity-50"
+              >
+                {loading ? 'Authenticating...' : 'Continue to Workspace'}
+              </button>
+            </form>
           </div>
         </div>
       )}
