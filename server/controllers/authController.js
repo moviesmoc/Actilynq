@@ -238,7 +238,30 @@ export async function resetPassword(req, res, next) {
 export async function googleAuth(req, res, next) {
   try {
     const validatedData = googleAuthSchema.parse(req.body);
-    const { email, name, googleId } = validatedData;
+    let { credential, email, name, googleId } = validatedData;
+
+    // If client sent Google ID token credential from real Google popup, decode payload
+    if (credential) {
+      try {
+        const payloadBase64 = credential.split('.')[1];
+        const decoded = JSON.parse(Buffer.from(payloadBase64, 'base64').toString('utf8'));
+        if (decoded.email) {
+          email = decoded.email;
+          name = name || decoded.name;
+          googleId = googleId || decoded.sub;
+        }
+      } catch (err) {
+        console.warn('[Google Auth] Could not decode credential payload:', err.message);
+      }
+    }
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        error: 'Google authentication failed: Email address could not be verified.'
+      });
+    }
+
     const normalizedEmail = email.toLowerCase().trim();
 
     let user = await User.findOne({

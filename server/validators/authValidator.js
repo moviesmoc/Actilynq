@@ -29,7 +29,9 @@ export const resetPasswordSchema = z.object({
 
 export const googleAuthSchema = z.object({
   credential: z.string().optional(),
-  email: z.string().trim().toLowerCase().email('Valid email is required'),
+  email: z.string().trim().toLowerCase().email('Valid email is required').optional().or(z.literal('')),
   name: z.string().trim().optional(),
   googleId: z.string().optional()
+}).refine((data) => Boolean(data.credential || (data.email && data.email.length > 0)), {
+  message: 'Either Google credential token or email is required'
 });
