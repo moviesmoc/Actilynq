@@ -220,7 +220,45 @@ body {
   .animate-fade-in,
   .animate-slide-up,
   .animate-scale-in,
-  .beacon-dot::after {
+  .beacon-dot::after,
+  .animate-float-slow,
+  .animate-float-reverse,
+  .animate-float-gentle {
     animation: none !important;
   }
+}
+
+/* Floating micro-animations for Hero showcase */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(7px); }
+}
+
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(0.4deg); }
+}
+
+.animate-float-slow {
+  animation: floatSlow 4.5s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: floatReverse 5.2s ease-in-out infinite;
+}
+
+.animate-float-gentle {
+  animation: floatGentle 6s ease-in-out infinite;
+}
+
+.bg-grid-mesh {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(15, 118, 110, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 118, 110, 0.06) 1px, transparent 1px);
 }
