@@ -289,7 +289,7 @@ export default function LeadDetail() {
                 <div className="p-2.5 rounded-lg border border-slate-100 bg-slate-50/50">
                   <span className="text-slate-400 block text-[10px] font-bold uppercase">Return Date</span>
                   <span className="font-semibold text-slate-800 text-xs mt-0.5">
-                    {lead.travelEndDate ? formatDate(lead.travelEndDate) : <em className="text-slate-400 font-normal">—</em>}
+                    {lead.travelEndDate ? formatDate(lead.travelEndDate) : <em className="text-slate-400 font-normal">-</em>}
                   </span>
                 </div>
               </div>

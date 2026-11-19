@@ -126,7 +126,7 @@ export default function Reports() {
           <p className="text-2xl font-bold text-brand-700">
             {data?.totalEnquiries > 0
               ? `${Math.round((data.totalWon / data.totalEnquiries) * 100)}%`
-              : '—'}
+              : '-'}
           </p>
         </div>
       </div>

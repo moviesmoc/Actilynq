@@ -40,7 +40,7 @@ export default function StageStepper({
             Travel Sales Progression Track
           </span>
           <span className="text-[10px] text-slate-400 font-medium hidden sm:inline">
-            (Step {currentIdx >= 0 ? currentIdx + 1 : '—'} of {STAGE_FLOW.length})
+            (Step {currentIdx >= 0 ? currentIdx + 1 : '-'} of {STAGE_FLOW.length})
           </span>
         </div>
 
@@ -64,7 +64,7 @@ export default function StageStepper({
         <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/80">
           <div className="flex items-center justify-between text-xs mb-1.5">
             <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-              Step {currentIdx >= 0 ? currentIdx + 1 : '—'} of {STAGE_FLOW.length}
+              Step {currentIdx >= 0 ? currentIdx + 1 : '-'} of {STAGE_FLOW.length}
             </span>
             <span className="font-extrabold text-teal-700 text-xs">
               {progressPercent}% Complete

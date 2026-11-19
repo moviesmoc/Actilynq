@@ -50,7 +50,7 @@ export default function Landing() {
       name: 'Vikram Singhania',
       role: 'Director, Odyssey Luxury Holidays, Mumbai',
       quote:
-        'ActiLynq eliminated our biggest revenue leakage—quotations sent that nobody followed up on. Our booking conversion jumped 38% in the first 60 days.',
+        'ActiLynq eliminated our biggest revenue leakage - quotations sent that nobody followed up on. Our booking conversion jumped 38% in the first 60 days.',
       rating: 5,
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&h=160&q=80'
     },
@@ -66,7 +66,7 @@ export default function Landing() {
       name: 'Rohan Verma',
       role: 'Head of Sales, Royal India Journeys, New Delhi',
       quote:
-        'The travel-specific fields—destinations, traveller count, flight dates, and stage progression—make generic corporate CRMs look completely outdated.',
+        'The travel-specific fields - destinations, traveller count, flight dates, and stage progression - make generic corporate CRMs look completely outdated.',
       rating: 5,
       avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&h=160&q=80'
     }
@@ -407,7 +407,7 @@ export default function Landing() {
               Full Visibility Across Every Stage of the Sales Journey
             </h2>
             <p className="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
-              Organize enquiries through 9 deterministic travel stages—from initial Instagram/website inquiry to customized quotation, follow-ups, and confirmed bookings.
+              Organize enquiries through 9 deterministic travel stages - from initial Instagram/website inquiry to customized quotation, follow-ups, and confirmed bookings.
             </p>
           </div>
 
@@ -550,7 +550,7 @@ export default function Landing() {
                   Deterministic Next-Action Engine
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
-                  Clear, rule-based business logic that highlights exactly what to do next on each enquiry—without AI hallucinations or guesswork.
+                  Clear, rule-based business logic that highlights exactly what to do next on each enquiry - without AI hallucinations or guesswork.
                 </p>
               </div>
 
@@ -1052,7 +1052,7 @@ export default function Landing() {
             {[
               {
                 q: 'How does the 14-day free trial work?',
-                a: 'You get instant full access to the entire platform—including 2 sales agent seats, the Next-Action Engine, and WhatsApp drafts. No credit card is required. When your trial ends, you can renew by contacting our sponsor on WhatsApp or choosing one of our affordable plans.'
+                a: 'You get instant full access to the entire platform - including 2 sales agent seats, the Next-Action Engine, and WhatsApp drafts. No credit card is required. When your trial ends, you can renew by contacting our sponsor on WhatsApp or choosing one of our affordable plans.'
               },
               {
                 q: 'Can multiple sales agents log in under the same business?',

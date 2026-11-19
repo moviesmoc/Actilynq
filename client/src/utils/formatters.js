@@ -3,7 +3,7 @@
  */
 export function formatCurrency(amount, currency = 'INR') {
   if (amount === null || amount === undefined || isNaN(amount)) {
-    return '—';
+    return '-';
   }
   try {
     return new Intl.NumberFormat('en-IN', {
@@ -20,9 +20,9 @@ export function formatCurrency(amount, currency = 'INR') {
  * Format date nicely
  */
 export function formatDate(date) {
-  if (!date) return '—';
+  if (!date) return '-';
   const d = new Date(date);
-  if (isNaN(d.getTime())) return '—';
+  if (isNaN(d.getTime())) return '-';
   return d.toLocaleDateString('en-IN', {
     day: 'numeric',
     month: 'short',
@@ -34,10 +34,10 @@ export function formatDate(date) {
  * Format date & time
  */
 export function formatDateTime(date) {
-  if (!date) return '—';
+  if (!date) return '-';
   const d = new Date(date);
-  if (isNaN(d.getTime())) return '—';
-  return d.toLocaleString('en-IN', {
+  if (isNaN(d.getTime())) return '-';
+  return d.toLocaleDateString('en-IN', {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
@@ -50,7 +50,7 @@ export function formatDateTime(date) {
  * Format relative time (e.g., "3 days ago" or "due in 2 hours")
  */
 export function formatRelativeTime(date) {
-  if (!date) return '—';
+  if (!date) return '-';
   const time = new Date(date).getTime();
   const now = Date.now();
   const diffMs = time - now;

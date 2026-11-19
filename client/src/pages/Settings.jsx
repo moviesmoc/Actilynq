@@ -506,7 +506,7 @@ export default function SettingsPage() {
             <div>
               <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Status</span>
               <span className={`font-bold ${business?.isTrialExpired ? 'text-rose-600' : 'text-emerald-700'}`}>
-                {business?.isTrialExpired ? 'Expired — Renewal Required' : 'Active 14-Day Trial'}
+                {business?.isTrialExpired ? 'Expired - Renewal Required' : 'Active 14-Day Trial'}
               </span>
             </div>
           </div>
