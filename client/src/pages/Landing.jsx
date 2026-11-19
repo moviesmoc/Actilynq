@@ -648,39 +648,39 @@ export default function Landing() {
       </section>
 
       {/* 4-COLUMN SOCIAL PROOF METRICS (Frame 9 from reference video) */}
-      <section className="py-16 bg-slate-900 text-white border-y border-slate-800">
+      <section className="py-16 bg-white border-y border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-            <div className="p-4">
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-400 tracking-tight">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div className="p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
+              <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
                 3.4x
               </p>
-              <p className="text-xs sm:text-sm font-semibold text-slate-300 mt-2">Faster Enquiry Follow-ups</p>
-              <p className="text-[11px] text-slate-400 mt-1">Next actions surfaced in under 1 second</p>
+              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-2">Faster Enquiry Follow-ups</p>
+              <p className="text-[11px] text-slate-500 mt-1">Actions surfaced in under 1 second</p>
             </div>
 
-            <div className="p-4">
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-400 tracking-tight">
+            <div className="p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
+              <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
                 0%
               </p>
-              <p className="text-xs sm:text-sm font-semibold text-slate-300 mt-2">Forgotten Enquiries</p>
-              <p className="text-[11px] text-slate-400 mt-1">Automatic alert triggers on overdue callbacks</p>
+              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-2">Forgotten Enquiries</p>
+              <p className="text-[11px] text-slate-500 mt-1">Automatic alert triggers on overdue callbacks</p>
             </div>
 
-            <div className="p-4">
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-400 tracking-tight">
+            <div className="p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
+              <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
                 ₹18Cr+
               </p>
-              <p className="text-xs sm:text-sm font-semibold text-slate-300 mt-2">Holiday Bookings Tracked</p>
-              <p className="text-[11px] text-slate-400 mt-1">Across 250+ travel agency teams</p>
+              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-2">Holiday Bookings Tracked</p>
+              <p className="text-[11px] text-slate-500 mt-1">Across 250+ tour operator teams</p>
             </div>
 
-            <div className="p-4">
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-400 tracking-tight">
+            <div className="p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
+              <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
                 100%
               </p>
-              <p className="text-xs sm:text-sm font-semibold text-slate-300 mt-2">Deterministic Business Rules</p>
-              <p className="text-[11px] text-slate-400 mt-1">Zero AI hallucinations or unpredictable drift</p>
+              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-2">Deterministic Rules</p>
+              <p className="text-[11px] text-slate-500 mt-1">Zero AI hallucinations or unpredictable drift</p>
             </div>
           </div>
         </div>
@@ -1088,100 +1088,109 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* PRE-FOOTER HIGH-CONVERTING CTA BANNER (Frame 17-18 from reference video) */}
-      <section className="py-16 sm:py-24 bg-gradient-to-br from-slate-950 via-teal-950 to-slate-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-mesh opacity-10 pointer-events-none" />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            Ready to Never Lose Another Travel Booking?
-          </h2>
-          <p className="mt-4 text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Start your 14-day free trial today. Join 250+ tour operators who follow up faster, close more itineraries, and grow their agency revenue.
-          </p>
+      {/* PRE-FOOTER HIGH-CONVERTING CTA BANNER (Clean Light Glassmorphic Style) */}
+      <section className="py-20 bg-gradient-to-b from-slate-50 to-teal-50/50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="p-8 sm:p-14 rounded-3xl bg-white border border-teal-200/90 shadow-xl shadow-teal-900/5 text-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-teal-100/50 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-100/40 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <button
-              type="button"
-              onClick={() => navigate('/register')}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-400 hover:to-emerald-400 text-slate-950 font-extrabold text-sm shadow-xl shadow-teal-500/20 hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
-            >
-              <span>Create Free Agency Workspace</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <a
-              href={`${WHATSAPP_LINK_BASE}?text=Hi%2C%20I%20am%20interested%20in%20ActiLynq%20Travel%20CRM.`}
-              target="_blank"
-              rel="noreferrer"
-              className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/15 border border-white/20 text-white font-bold text-sm backdrop-blur-xs transition-all flex items-center justify-center gap-2"
-            >
-              <WhatsAppIcon className="w-4 h-4 text-emerald-400" />
-              <span>WhatsApp Founder (+91 7359510771)</span>
-            </a>
+            <div className="relative z-10">
+              <span className="text-[11px] font-bold text-teal-800 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-3">
+                14-Day Full Access Trial
+              </span>
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
+                Ready to Never Lose Another Travel Booking?
+              </h2>
+              <p className="mt-4 text-xs sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                Start your 14-day free trial today. Join 250+ tour operators who follow up faster, close more itineraries, and grow their agency revenue.
+              </p>
+
+              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+                <button
+                  type="button"
+                  onClick={() => navigate('/register')}
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-teal-700 via-teal-800 to-teal-900 hover:from-teal-800 hover:to-teal-950 text-white font-bold text-sm shadow-lg shadow-teal-900/20 hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
+                >
+                  <span>Create Free Agency Workspace</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+                <a
+                  href={`${WHATSAPP_LINK_BASE}?text=Hi%2C%20I%20am%20interested%20in%20ActiLynq%20Travel%20CRM.`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white hover:bg-emerald-50 border border-emerald-300 text-emerald-800 font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2"
+                >
+                  <WhatsAppIcon className="w-4 h-4 text-emerald-600" />
+                  <span>WhatsApp Founder (+91 7359510771)</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 4-COLUMN FOOTER (Frame 18 from reference video) */}
-      <footer className="bg-slate-950 text-slate-400 py-14 border-t border-slate-900 text-xs">
+      {/* 4-COLUMN FOOTER (Clean Crisp White Style matching Reference Video) */}
+      <footer className="bg-white text-slate-600 py-14 border-t border-slate-200 text-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-slate-800/80">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-slate-200">
             {/* Col 1: Brand & Tagline */}
             <div className="col-span-2 space-y-3">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-teal-800 text-white flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-teal-800 text-white flex items-center justify-center shadow-xs">
                   <Compass className="w-4 h-4 text-teal-300" />
                 </div>
-                <span className="text-lg font-bold text-white tracking-tight">ActiLynq</span>
+                <span className="text-lg font-bold text-slate-900 tracking-tight">Acti<span className="text-teal-700">Lynq</span></span>
               </div>
-              <p className="text-slate-400 max-w-sm text-xs leading-relaxed">
+              <p className="text-slate-500 max-w-sm text-xs leading-relaxed">
                 The high-performance sales action platform and Next-Action Co-pilot built specifically for modern travel agencies and holiday tour operators.
               </p>
-              <div className="pt-2 text-slate-400">
-                <p className="font-semibold text-slate-200">Sponsor / Direct Support:</p>
-                <p className="font-mono text-teal-400">{SPONSOR_PHONE}</p>
+              <div className="pt-2 text-slate-600">
+                <p className="font-semibold text-slate-900">Sponsor / Direct Support Hotline:</p>
+                <p className="font-mono text-teal-700 font-bold mt-0.5">{SPONSOR_PHONE}</p>
               </div>
             </div>
 
             {/* Col 2: Product */}
             <div className="space-y-2.5">
-              <p className="font-bold text-white uppercase tracking-wider text-[11px]">Product</p>
-              <ul className="space-y-1.5">
-                <li><a href="#pipeline" className="hover:text-teal-400 transition-colors">Sales Pipeline</a></li>
-                <li><a href="#engine" className="hover:text-teal-400 transition-colors">Next-Action Engine</a></li>
-                <li><a href="#pricing" className="hover:text-teal-400 transition-colors">Pricing Plans</a></li>
-                <li><a href="#features" className="hover:text-teal-400 transition-colors">Team Access</a></li>
+              <p className="font-bold text-slate-900 uppercase tracking-wider text-[11px]">Product</p>
+              <ul className="space-y-1.5 text-slate-500">
+                <li><a href="#pipeline" className="hover:text-teal-700 transition-colors">Sales Pipeline</a></li>
+                <li><a href="#engine" className="hover:text-teal-700 transition-colors">Next-Action Engine</a></li>
+                <li><a href="#pricing" className="hover:text-teal-700 transition-colors">Pricing Plans</a></li>
+                <li><a href="#features" className="hover:text-teal-700 transition-colors">Team Access</a></li>
               </ul>
             </div>
 
             {/* Col 3: Integrations */}
             <div className="space-y-2.5">
-              <p className="font-bold text-white uppercase tracking-wider text-[11px]">Integrations</p>
-              <ul className="space-y-1.5">
-                <li><a href="#engine" className="hover:text-teal-400 transition-colors">WhatsApp Business</a></li>
-                <li><a href="#features" className="hover:text-teal-400 transition-colors">Google OAuth</a></li>
-                <li><a href="#features" className="hover:text-teal-400 transition-colors">Gmail SMTP</a></li>
-                <li><a href="#features" className="hover:text-teal-400 transition-colors">Calendar Callbacks</a></li>
+              <p className="font-bold text-slate-900 uppercase tracking-wider text-[11px]">Integrations</p>
+              <ul className="space-y-1.5 text-slate-500">
+                <li><a href="#engine" className="hover:text-teal-700 transition-colors">WhatsApp Business</a></li>
+                <li><a href="#features" className="hover:text-teal-700 transition-colors">Google OAuth</a></li>
+                <li><a href="#features" className="hover:text-teal-700 transition-colors">Gmail SMTP</a></li>
+                <li><a href="#features" className="hover:text-teal-700 transition-colors">Calendar Callbacks</a></li>
               </ul>
             </div>
 
             {/* Col 4: Account & Auth */}
             <div className="space-y-2.5">
-              <p className="font-bold text-white uppercase tracking-wider text-[11px]">Account</p>
-              <ul className="space-y-1.5">
-                <li><Link to="/login" className="hover:text-teal-400 transition-colors">Sign In</Link></li>
-                <li><Link to="/register" className="hover:text-teal-400 transition-colors">Start Free Trial</Link></li>
-                <li><Link to="/forgot-password" className="hover:text-teal-400 transition-colors">Reset Password</Link></li>
-                <li><a href={`${WHATSAPP_LINK_BASE}?text=Hi%20Nilesh%2C%20need%20help%20with%20ActiLynq.`} target="_blank" rel="noreferrer" className="hover:text-teal-400 transition-colors">WhatsApp Help</a></li>
+              <p className="font-bold text-slate-900 uppercase tracking-wider text-[11px]">Account</p>
+              <ul className="space-y-1.5 text-slate-500">
+                <li><Link to="/login" className="hover:text-teal-700 transition-colors">Sign In</Link></li>
+                <li><Link to="/register" className="hover:text-teal-700 transition-colors">Start Free Trial</Link></li>
+                <li><Link to="/forgot-password" className="hover:text-teal-700 transition-colors">Reset Password</Link></li>
+                <li><a href={`${WHATSAPP_LINK_BASE}?text=Hi%20Nilesh%2C%20need%20help%20with%20ActiLynq.`} target="_blank" rel="noreferrer" className="hover:text-teal-700 transition-colors">WhatsApp Help</a></li>
               </ul>
             </div>
           </div>
 
-          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-400 text-[11px]">
+          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
             <p>&copy; {new Date().getFullYear()} ActiLynq Travel CRM. All rights reserved.</p>
             <div className="flex items-center gap-6">
-              <span>Privacy Policy</span>
-              <span>Terms of Service</span>
-              <span>Security</span>
+              <span className="hover:text-slate-800 cursor-pointer">Privacy Policy</span>
+              <span className="hover:text-slate-800 cursor-pointer">Terms of Service</span>
+              <span className="hover:text-slate-800 cursor-pointer">Security Overview</span>
             </div>
           </div>
         </div>
