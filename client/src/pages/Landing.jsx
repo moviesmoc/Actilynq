@@ -101,16 +101,16 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden selection:bg-teal-100 selection:text-teal-900 font-sans">
       {/* Top Banner: 14-Day Free Trial Announcement */}
-      <div className="bg-slate-950 text-slate-300 py-2 px-4 text-xs border-b border-slate-800 text-center flex items-center justify-center gap-2">
+      <div className="bg-slate-950 text-slate-300 py-2 px-3 sm:px-4 text-[11px] sm:text-xs border-b border-slate-800 text-center flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5">
         <span className="inline-flex items-center gap-1.5 font-semibold text-teal-400">
-          <Sparkles className="w-3.5 h-3.5 text-teal-400 animate-pulse" />
+          <Sparkles className="w-3.5 h-3.5 text-teal-400 animate-pulse flex-shrink-0" />
           <span>New in ActiLynq 2.0:</span>
         </span>
         <span className="hidden sm:inline">14-Day Full Access Free Trial &bull; Real Google OAuth &bull; Dedicated Sales Agent Seats</span>
         <span className="sm:hidden">14-Day Free Trial Available</span>
         <Link
           to="/register"
-          className="underline font-semibold text-white hover:text-teal-300 ml-1 transition-colors"
+          className="underline font-semibold text-white hover:text-teal-300 ml-0.5 transition-colors"
         >
           Claim Trial &rarr;
         </Link>
@@ -203,19 +203,20 @@ export default function Landing() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - visible on screens < lg */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="sm:hidden p-2 text-slate-700 hover:text-slate-900 rounded-lg hover:bg-slate-100"
+            className="lg:hidden p-2 text-slate-700 hover:text-slate-900 rounded-lg hover:bg-slate-100"
+            aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile Dropdown with Smooth Scrolling */}
+        {/* Mobile Dropdown with Smooth Scrolling - visible on screens < lg */}
         {mobileMenuOpen && (
-          <div className="sm:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-5 space-y-3 shadow-xl">
+          <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-5 space-y-3 shadow-xl">
             <button
               type="button"
               onClick={(e) => scrollToSection(e, 'pipeline')}
@@ -261,13 +262,15 @@ export default function Landing() {
             <div className="pt-2 border-t border-slate-100 flex flex-col gap-2">
               <Link
                 to="/login"
+                onClick={() => setMobileMenuOpen(false)}
                 className="w-full text-center py-2 text-xs font-bold text-slate-700 bg-slate-100 rounded-lg"
               >
                 Sign In
               </Link>
               <Link
                 to="/register"
-                className="w-full text-center py-2 text-xs font-bold text-white bg-teal-800 rounded-lg"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full text-center py-2 text-xs font-bold text-white bg-teal-800 rounded-lg shadow-xs"
               >
                 Start 14-Day Free Trial
               </Link>
@@ -324,22 +327,22 @@ export default function Landing() {
             </Link>
           </div>
 
-          <div className="mt-4 flex items-center justify-center gap-6 text-[11px] text-slate-500 font-medium">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-slate-500 font-medium">
             <span className="flex items-center gap-1.5">
               <Check className="w-3.5 h-3.5 text-teal-600 stroke-[3]" /> No credit card required
             </span>
             <span className="flex items-center gap-1.5">
               <Check className="w-3.5 h-3.5 text-teal-600 stroke-[3]" /> Setup in under 2 minutes
             </span>
-            <span className="hidden sm:flex items-center gap-1.5">
+            <span className="flex items-center gap-1.5">
               <Check className="w-3.5 h-3.5 text-teal-600 stroke-[3]" /> 2 Sales Agent Seats included
             </span>
           </div>
 
           {/* FLOATING MICRO-UI GLASS WIDGETS (Matching the reference video) */}
-          <div className="relative mt-12 sm:mt-16 max-w-5xl mx-auto min-h-[260px] sm:min-h-[320px]">
+          <div className="relative mt-10 sm:mt-16 max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:block gap-3.5 sm:gap-4 md:gap-0 md:min-h-[340px]">
             {/* Widget 1: Top Left - Deal Card */}
-            <div className="sm:absolute sm:top-2 sm:left-6 bg-white/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-lg border border-slate-200/90 text-left animate-float-slow max-w-xs mb-3 sm:mb-0">
+            <div className="md:absolute md:top-2 md:left-6 bg-white/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-lg border border-slate-200/90 text-left md:animate-float-slow w-full max-w-xs mx-auto md:mx-0">
               <div className="flex items-center justify-between gap-3 mb-1.5">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200/60">
                   Confirmed Deal
@@ -354,7 +357,7 @@ export default function Landing() {
             </div>
 
             {/* Widget 2: Top Right - Rating Card */}
-            <div className="sm:absolute sm:top-4 sm:right-8 bg-white/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-lg border border-slate-200/90 text-left animate-float-reverse max-w-xs mb-3 sm:mb-0">
+            <div className="md:absolute md:top-4 md:right-8 bg-white/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-lg border border-slate-200/90 text-left md:animate-float-reverse w-full max-w-xs mx-auto md:mx-0">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-lg font-extrabold text-slate-900">98.4%</span>
                 <div className="flex text-amber-400">
@@ -368,7 +371,7 @@ export default function Landing() {
             </div>
 
             {/* Widget 3: Bottom Left - Sparkline Metrics */}
-            <div className="sm:absolute sm:bottom-4 sm:left-12 bg-white/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-lg border border-slate-200/90 text-left animate-float-gentle max-w-xs mb-3 sm:mb-0">
+            <div className="md:absolute md:bottom-4 md:left-12 bg-white/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-lg border border-slate-200/90 text-left md:animate-float-gentle w-full max-w-xs mx-auto md:mx-0">
               <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Monthly Conversion</p>
               <div className="flex items-baseline gap-2 mt-0.5">
                 <span className="text-base font-bold text-slate-900">₹38,50,000</span>
@@ -388,7 +391,7 @@ export default function Landing() {
             </div>
 
             {/* Widget 4: Center - Donut Metric Pill */}
-            <div className="sm:absolute sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 bg-white/95 backdrop-blur-lg p-4 rounded-2xl shadow-xl border border-teal-200/90 animate-float-slow text-center max-w-[210px] mb-3 sm:mb-0">
+            <div className="md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 bg-white/95 backdrop-blur-lg p-4 rounded-2xl shadow-xl border border-teal-200/90 md:animate-float-slow text-center w-full max-w-[220px] sm:max-w-[210px] mx-auto md:mx-0 sm:col-span-2 md:col-span-1">
               <div className="relative w-16 h-16 mx-auto mb-2">
                 <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
                   <path
@@ -417,7 +420,7 @@ export default function Landing() {
             </div>
 
             {/* Widget 5: Bottom Right - Urgent Follow-up Alert */}
-            <div className="sm:absolute sm:bottom-2 sm:right-10 bg-white/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-lg border border-rose-200 text-left animate-float-reverse max-w-xs">
+            <div className="md:absolute md:bottom-2 md:right-10 bg-white/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-lg border border-rose-200 text-left md:animate-float-reverse w-full max-w-xs mx-auto md:mx-0 sm:col-span-2 md:col-span-1">
               <div className="flex items-center gap-1.5 mb-1 text-rose-700">
                 <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping" />
                 <span className="text-[10px] font-bold uppercase tracking-wider">Overdue Callback</span>
@@ -439,8 +442,8 @@ export default function Landing() {
 
         {/* Marquee Wrapper with soft left and right edge gradient fades */}
         <div className="relative w-full overflow-hidden flex items-center py-1">
-          <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-24 md:w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-24 md:w-32 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
 
           <div className="animate-marquee flex items-center gap-4 sm:gap-6">
             {[...PARTNERS, ...PARTNERS, ...PARTNERS, ...PARTNERS].map((partner, i) => {
@@ -477,26 +480,26 @@ export default function Landing() {
           {/* Interactive Mock Dashboard Container */}
           <div className="bg-white rounded-3xl shadow-xl border border-slate-200/90 overflow-hidden max-w-5xl mx-auto">
             {/* Window Topbar */}
-            <div className="bg-slate-900 text-slate-400 px-4 py-3 flex items-center justify-between border-b border-slate-800">
+            <div className="bg-slate-900 text-slate-400 px-3.5 sm:px-4 py-3 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800">
               <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block" />
-                <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block" />
-                <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
-                <span className="text-xs font-mono font-medium text-slate-300 ml-2">
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-rose-500/80 inline-block" />
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500/80 inline-block" />
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500/80 inline-block" />
+                <span className="text-[11px] sm:text-xs font-mono font-medium text-slate-300 ml-1 sm:ml-2">
                   actilynq.app/leads/pipeline
                 </span>
               </div>
-              <span className="text-[11px] font-semibold text-teal-400 bg-teal-950/80 px-2 py-0.5 rounded border border-teal-800/60">
-                Active Tenant: Nilesh Travels (INR)
+              <span className="text-[10px] sm:text-[11px] font-semibold text-teal-400 bg-teal-950/80 px-2 py-0.5 rounded border border-teal-800/60 truncate">
+                <span className="hidden xs:inline">Active Tenant: </span>Nilesh Travels (INR)
               </span>
             </div>
 
             {/* Pipeline Stage Pills */}
-            <div className="p-4 sm:p-6 bg-slate-50/80 border-b border-slate-200">
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">
+            <div className="p-3.5 sm:p-6 bg-slate-50/80 border-b border-slate-200">
+              <p className="text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mb-2.5 sm:mb-3">
                 9-Stage Progression Cycle
               </p>
-              <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-1.5 text-center text-[10px] font-semibold">
+              <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-1 sm:gap-1.5 text-center text-[9px] sm:text-[10px] font-semibold">
                 {[
                   { name: '1. New Enquiry', active: false },
                   { name: '2. Contacted', active: false },
@@ -510,7 +513,7 @@ export default function Landing() {
                 ].map((s, idx) => (
                   <div
                     key={idx}
-                    className={`py-2 px-1.5 rounded-lg border transition-all ${
+                    className={`py-1.5 sm:py-2 px-1 sm:px-1.5 rounded-lg border transition-all ${
                       s.active
                         ? 'bg-teal-700 text-white border-teal-700 font-bold shadow-xs'
                         : 'bg-white text-slate-600 border-slate-200'
@@ -526,23 +529,23 @@ export default function Landing() {
             <div className="p-4 sm:p-8 grid md:grid-cols-12 gap-6 items-center">
               {/* Left Column: Sample Lead Card */}
               <div className="md:col-span-7 space-y-4">
-                <div className="p-5 rounded-2xl border border-teal-200 bg-teal-50/30 shadow-xs">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-bold text-teal-800 uppercase tracking-wide">
+                <div className="p-4 sm:p-5 rounded-2xl border border-teal-200 bg-teal-50/30 shadow-xs">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+                    <span className="text-[11px] sm:text-xs font-bold text-teal-800 uppercase tracking-wide">
                       Selected High-Intent Enquiry
                     </span>
                     <span className="text-xs font-extrabold text-slate-900">₹3,20,000 Estimated Value</span>
                   </div>
-                  <h4 className="text-base font-bold text-slate-900">Rahul &amp; Priya Patel</h4>
+                  <h4 className="text-sm sm:text-base font-bold text-slate-900">Rahul &amp; Priya Patel</h4>
                   <p className="text-xs text-slate-600 mt-1">
                     Destination: <strong>Maldives (5 Nights Overwater Villa)</strong> &bull; 2 Travellers &bull; Departure: 15 Dec 2026
                   </p>
 
-                  <div className="mt-4 pt-3 border-t border-teal-100 flex items-center justify-between">
-                    <div className="text-xs text-slate-500">
+                  <div className="mt-4 pt-3 border-t border-teal-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="text-[11px] sm:text-xs text-slate-500">
                       Last Confirmed Contact: <strong className="text-slate-800">2 days ago via Phone Call</strong>
                     </div>
-                    <span className="text-xs font-bold text-teal-700 bg-teal-100/80 px-2 py-0.5 rounded">
+                    <span className="text-xs font-bold text-teal-700 bg-teal-100/80 px-2 py-0.5 rounded self-start sm:self-auto">
                       Quotation Sent
                     </span>
                   </div>
@@ -551,16 +554,16 @@ export default function Landing() {
                 {/* Next-Action Engine Prompt Card */}
                 <div className="p-4 rounded-xl bg-slate-900 text-white flex items-start gap-3 shadow-md">
                   <Zap className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-                  <div>
+                  <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">
+                      <span className="text-[11px] sm:text-xs font-bold text-amber-400 uppercase tracking-wider">
                         Next-Action Co-pilot Recommendation
                       </span>
                     </div>
                     <p className="text-xs font-medium text-slate-200 mt-1 leading-relaxed">
                       Quotation was sent 2 days ago without subsequent customer contact. Follow up on WhatsApp to discuss hotel choices before prices increase.
                     </p>
-                    <div className="mt-3 flex items-center gap-2">
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
                       <a
                         href={WHATSAPP_LINK_BASE}
                         target="_blank"
@@ -690,7 +693,7 @@ export default function Landing() {
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
+                <div className="pt-2 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs text-slate-600">
                   <span>Dual Customer Contact Validation:</span>
                   <span className="font-bold text-teal-800">Calls &bull; WhatsApp &bull; Notes</span>
                 </div>
@@ -711,39 +714,39 @@ export default function Landing() {
       </section>
 
       {/* 4-COLUMN SOCIAL PROOF METRICS (Frame 9 from reference video) */}
-      <section id="features" className="py-16 bg-white border-y border-slate-200/80">
+      <section id="features" className="py-14 sm:py-16 bg-white border-y border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            <div className="p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+            <div className="p-4 sm:p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
+              <p className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
                 3.4x
               </p>
-              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-2">Faster Enquiry Follow-ups</p>
-              <p className="text-[11px] text-slate-500 mt-1">Actions surfaced in under 1 second</p>
+              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-1.5 sm:mt-2">Faster Enquiry Follow-ups</p>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">Actions surfaced in under 1s</p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
+            <div className="p-4 sm:p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
+              <p className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
                 0%
               </p>
-              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-2">Forgotten Enquiries</p>
-              <p className="text-[11px] text-slate-500 mt-1">Automatic alert triggers on overdue callbacks</p>
+              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-1.5 sm:mt-2">Forgotten Enquiries</p>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">Automatic alert triggers</p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
+            <div className="p-4 sm:p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
+              <p className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
                 ₹18Cr+
               </p>
-              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-2">Holiday Bookings Tracked</p>
-              <p className="text-[11px] text-slate-500 mt-1">Across 250+ tour operator teams</p>
+              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-1.5 sm:mt-2">Bookings Tracked</p>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">Across 250+ tour teams</p>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
+            <div className="p-4 sm:p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
+              <p className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
                 100%
               </p>
-              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-2">Deterministic Rules</p>
-              <p className="text-[11px] text-slate-500 mt-1">Zero AI hallucinations or unpredictable drift</p>
+              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-1.5 sm:mt-2">Deterministic Rules</p>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">Zero AI hallucinations</p>
             </div>
           </div>
         </div>
@@ -1002,7 +1005,7 @@ export default function Landing() {
               href={`${WHATSAPP_LINK_BASE}?text=Hello%20ActiLynq%20Team%2C%20I%20want%20to%20discuss%20a%20custom%20plan%20for%20my%20travel%20agency.`}
               target="_blank"
               rel="noreferrer"
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 transition-colors flex-shrink-0 shadow-xs"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors flex-shrink-0 shadow-xs"
             >
               <WhatsAppIcon className="w-4 h-4" />
               <span>WhatsApp Founder</span>
@@ -1138,9 +1141,9 @@ export default function Landing() {
                 key={i}
                 className="group bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 hover:border-teal-300 transition-colors cursor-pointer"
               >
-                <summary className="flex items-center justify-between font-bold text-slate-900 text-xs sm:text-sm select-none outline-none">
+                <summary className="flex items-start sm:items-center justify-between gap-3 font-bold text-slate-900 text-xs sm:text-sm select-none outline-none">
                   <span>{faq.q}</span>
-                  <ChevronRight className="w-4 h-4 text-slate-400 group-open:rotate-90 transition-transform" />
+                  <ChevronRight className="w-4 h-4 text-slate-400 group-open:rotate-90 transition-transform flex-shrink-0 mt-0.5 sm:mt-0" />
                 </summary>
                 <p className="mt-3 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
                   {faq.a}
@@ -1152,9 +1155,9 @@ export default function Landing() {
       </section>
 
       {/* PRE-FOOTER HIGH-CONVERTING CTA BANNER (Clean Light Glassmorphic Style) */}
-      <section className="py-20 bg-gradient-to-b from-slate-50 to-teal-50/50">
+      <section className="py-14 sm:py-20 bg-gradient-to-b from-slate-50 to-teal-50/50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-8 sm:p-14 rounded-3xl bg-white border border-teal-200/90 shadow-xl shadow-teal-900/5 text-center relative overflow-hidden">
+          <div className="p-6 sm:p-12 md:p-14 rounded-3xl bg-white border border-teal-200/90 shadow-xl shadow-teal-900/5 text-center relative overflow-hidden">
             <div className="absolute top-0 right-0 w-80 h-80 bg-teal-100/50 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-100/40 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
@@ -1162,18 +1165,18 @@ export default function Landing() {
               <span className="text-[11px] font-bold text-teal-800 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-3">
                 14-Day Full Access Trial
               </span>
-              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
                 Ready to Never Lose Another Travel Booking?
               </h2>
-              <p className="mt-4 text-xs sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
+              <p className="mt-3 sm:mt-4 text-xs sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
                 Start your 14-day free trial today. Join 250+ tour operators who follow up faster, close more itineraries, and grow their agency revenue.
               </p>
 
-              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button
                   type="button"
                   onClick={() => navigate('/register')}
-                  className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-teal-700 via-teal-800 to-teal-900 hover:from-teal-800 hover:to-teal-950 text-white font-bold text-sm shadow-lg shadow-teal-900/20 hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3.5 rounded-full bg-gradient-to-r from-teal-700 via-teal-800 to-teal-900 hover:from-teal-800 hover:to-teal-950 text-white font-bold text-xs sm:text-sm shadow-lg shadow-teal-900/20 hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
                 >
                   <span>Create Free Agency Workspace</span>
                   <ArrowRight className="w-4 h-4" />
@@ -1182,7 +1185,7 @@ export default function Landing() {
                   href={`${WHATSAPP_LINK_BASE}?text=Hi%2C%20I%20am%20interested%20in%20ActiLynq%20Travel%20CRM.`}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white hover:bg-emerald-50 border border-emerald-300 text-emerald-800 font-bold text-sm shadow-xs transition-all flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-5 sm:px-7 py-3.5 rounded-full bg-white hover:bg-emerald-50 border border-emerald-300 text-emerald-800 font-bold text-xs sm:text-sm shadow-xs transition-all flex items-center justify-center gap-2"
                 >
                   <WhatsAppIcon className="w-4 h-4 text-emerald-600" />
                   <span>WhatsApp Founder (+91 7359510771)</span>
@@ -1194,11 +1197,11 @@ export default function Landing() {
       </section>
 
       {/* 4-COLUMN FOOTER (Clean Crisp White Style matching Reference Video) */}
-      <footer className="bg-white text-slate-600 py-14 border-t border-slate-200 text-xs">
+      <footer className="bg-white text-slate-600 py-12 sm:py-14 border-t border-slate-200 text-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-slate-200">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-slate-200">
             {/* Col 1: Brand & Tagline */}
-            <div className="col-span-2 space-y-3">
+            <div className="sm:col-span-2 space-y-3">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-xl bg-teal-800 text-white flex items-center justify-center shadow-xs">
                   <Compass className="w-4 h-4 text-teal-300" />
@@ -1261,10 +1264,42 @@ export default function Landing() {
             <div className="space-y-2.5">
               <p className="font-bold text-slate-900 uppercase tracking-wider text-[11px]">Integrations</p>
               <ul className="space-y-1.5 text-slate-500">
-                <li><a href="#engine" className="hover:text-teal-700 transition-colors">WhatsApp Business</a></li>
-                <li><a href="#features" className="hover:text-teal-700 transition-colors">Google OAuth</a></li>
-                <li><a href="#features" className="hover:text-teal-700 transition-colors">Gmail SMTP</a></li>
-                <li><a href="#features" className="hover:text-teal-700 transition-colors">Calendar Callbacks</a></li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={(e) => scrollToSection(e, 'engine')}
+                    className="hover:text-teal-700 transition-colors text-left cursor-pointer"
+                  >
+                    WhatsApp Business
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={(e) => scrollToSection(e, 'features')}
+                    className="hover:text-teal-700 transition-colors text-left cursor-pointer"
+                  >
+                    Google Workspace
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={(e) => scrollToSection(e, 'features')}
+                    className="hover:text-teal-700 transition-colors text-left cursor-pointer"
+                  >
+                    Gmail Integration
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={(e) => scrollToSection(e, 'engine')}
+                    className="hover:text-teal-700 transition-colors text-left cursor-pointer"
+                  >
+                    Calendar Callbacks
+                  </button>
+                </li>
               </ul>
             </div>
 
@@ -1280,9 +1315,9 @@ export default function Landing() {
             </div>
           </div>
 
-          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
+          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px] text-center sm:text-left">
             <p>&copy; {new Date().getFullYear()} ActiLynq Travel CRM. All rights reserved.</p>
-            <div className="flex items-center gap-6">
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
               <span className="hover:text-slate-800 cursor-pointer">Privacy Policy</span>
               <span className="hover:text-slate-800 cursor-pointer">Terms of Service</span>
               <span className="hover:text-slate-800 cursor-pointer">Security Overview</span>
