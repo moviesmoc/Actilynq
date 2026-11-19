@@ -286,15 +286,104 @@ export default function Landing() {
       </header>
 
       {/* HERO SECTION (Matches Reference Video Frame 2-5: Grid Mesh + Floating Micro-Cards) */}
-      <section className="relative pt-12 pb-24 md:pt-20 md:pb-36 bg-gradient-to-b from-teal-50/70 via-white to-slate-50 bg-grid-mesh overflow-hidden">
+      <section className="relative pt-10 pb-14 sm:pt-16 sm:pb-20 xl:pt-24 xl:pb-32 bg-gradient-to-b from-teal-50/70 via-white to-slate-50 bg-grid-mesh overflow-hidden">
         {/* Soft Ambient Radial Glows */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] bg-teal-400/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute top-1/3 left-10 w-72 h-72 bg-emerald-400/10 rounded-full blur-2xl pointer-events-none" />
         <div className="absolute top-1/3 right-10 w-72 h-72 bg-cyan-400/10 rounded-full blur-2xl pointer-events-none" />
 
+        {/* DESKTOP-ONLY FLOATING MICRO-CARDS (Frame 2 of Reference Video - positioned around perimeter on >= 1280px) */}
+        {/* Widget 1: Top Left - Deal Card */}
+        <div className="hidden xl:block absolute top-14 left-6 2xl:left-16 max-w-[260px] animate-float-slow bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-slate-200/90 text-left z-20 pointer-events-none">
+          <div className="flex items-center justify-between gap-3 mb-1">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200/60">
+              Confirmed Deal
+            </span>
+            <span className="text-xs font-bold text-slate-900">₹2,40,000</span>
+          </div>
+          <p className="text-xs font-bold text-slate-900">Bali 6N Luxury Honeymoon</p>
+          <p className="text-[10px] text-slate-500 mt-0.5 flex items-center gap-1">
+            <CheckCircle2 className="w-3 h-3 text-emerald-600 flex-shrink-0" />
+            <span>Nilesh Travels &bull; Advance Paid</span>
+          </p>
+        </div>
+
+        {/* Widget 2: Top Right - Rating Card */}
+        <div className="hidden xl:block absolute top-16 right-6 2xl:right-16 max-w-[250px] animate-float-reverse bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-slate-200/90 text-left z-20 pointer-events-none">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-base font-extrabold text-slate-900">98.4%</span>
+            <div className="flex text-amber-400">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
+              ))}
+            </div>
+          </div>
+          <p className="text-xs font-bold text-slate-800">On-Time Callback Rate</p>
+          <p className="text-[10px] text-slate-500">Zero forgotten enquiries across team</p>
+        </div>
+
+        {/* Widget 3: Lower Left - Monthly Conversion Sparkline */}
+        <div className="hidden xl:block absolute bottom-20 left-6 2xl:left-16 max-w-[260px] animate-float-gentle bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-slate-200/90 text-left z-20 pointer-events-none">
+          <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Monthly Conversion</p>
+          <div className="flex items-baseline gap-2 mt-0.5">
+            <span className="text-base font-bold text-slate-900">₹38,50,000</span>
+            <span className="text-xs font-bold text-emerald-600 flex items-center">
+              <TrendingUp className="w-3 h-3 mr-0.5" /> +34.2%
+            </span>
+          </div>
+          <svg className="w-36 h-5 mt-1.5 text-emerald-500" viewBox="0 0 100 20" fill="none">
+            <path
+              d="M0 16 Q 20 18, 35 11 T 70 6 T 100 2"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+
+        {/* Widget 5: Lower Right - Overdue Callback Alert */}
+        <div className="hidden xl:block absolute bottom-24 right-6 2xl:right-16 max-w-[260px] animate-float-reverse bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-xl border border-rose-200 text-left z-20 pointer-events-none">
+          <div className="flex items-center gap-1.5 mb-1 text-rose-700">
+            <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping flex-shrink-0" />
+            <span className="text-[10px] font-bold uppercase tracking-wider">Overdue Callback</span>
+          </div>
+          <p className="text-xs font-bold text-slate-900">Aditi Sharma &bull; Switzerland</p>
+          <p className="text-[10px] text-slate-500 mt-0.5">Scheduled callback 15m ago &bull; 1-Click WhatsApp</p>
+        </div>
+
+        {/* Widget 4: Bottom Center - Donut Velocity */}
+        <div className="hidden xl:block absolute -bottom-6 left-1/2 -translate-x-1/2 max-w-[210px] animate-float-slow bg-white/95 backdrop-blur-lg p-3.5 rounded-2xl shadow-2xl border border-teal-200/90 text-center z-20 pointer-events-none">
+          <div className="relative w-14 h-14 mx-auto mb-1.5">
+            <svg className="w-14 h-14 transform -rotate-90" viewBox="0 0 36 36">
+              <path
+                className="text-slate-100"
+                strokeWidth="3.8"
+                stroke="currentColor"
+                fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path
+                className="text-teal-600"
+                strokeDasharray="78, 100"
+                strokeWidth="3.8"
+                strokeLinecap="round"
+                stroke="currentColor"
+                fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center font-extrabold text-[11px] text-slate-900">
+              78.4%
+            </div>
+          </div>
+          <p className="text-xs font-bold text-slate-800">Booking Velocity</p>
+          <p className="text-[10px] text-teal-700 font-semibold mt-0.5">High Intent Leads</p>
+        </div>
+
+        {/* Hero Center Text & Actions */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           {/* Top Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-teal-200/80 shadow-xs mb-6 backdrop-blur-xs">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-teal-200/80 shadow-xs mb-5 backdrop-blur-xs">
             <span className="w-2 h-2 rounded-full bg-teal-500 animate-ping" />
             <span className="text-[11px] font-bold tracking-wider text-teal-800 uppercase">
               No.1 Travel CRM &amp; Next-Action Co-pilot
@@ -310,12 +399,12 @@ export default function Landing() {
           </h1>
 
           {/* Subtitle */}
-          <p className="mt-5 text-sm sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-4 sm:mt-5 text-sm sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
             Eliminate lost callbacks, accelerate quotation follow-ups on WhatsApp, and turn raw tourist enquiries into confirmed holiday bookings with deterministic sales intelligence.
           </p>
 
           {/* CTA Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+          <div className="mt-7 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
             <button
               type="button"
               onClick={() => navigate('/register')}
@@ -345,94 +434,66 @@ export default function Landing() {
             </span>
           </div>
 
-          {/* FLOATING MICRO-UI GLASS WIDGETS (Matching the reference video) */}
-          <div className="relative mt-10 sm:mt-16 max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:block gap-3.5 sm:gap-4 md:gap-0 md:min-h-[340px]">
-            {/* Widget 1: Top Left - Deal Card */}
-            <div className="md:absolute md:top-2 md:left-6 bg-white/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-lg border border-slate-200/90 text-left md:animate-float-slow w-full max-w-xs mx-auto md:mx-0">
-              <div className="flex items-center justify-between gap-3 mb-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200/60">
-                  Confirmed Deal
-                </span>
-                <span className="text-xs font-bold text-slate-900">₹2,40,000</span>
-              </div>
-              <p className="text-xs font-bold text-slate-900">Bali 6N Luxury Honeymoon</p>
-              <p className="text-[10px] text-slate-500 mt-0.5 flex items-center gap-1">
-                <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                <span>Nilesh Travels &bull; Advance Paid</span>
-              </p>
-            </div>
-
-            {/* Widget 2: Top Right - Rating Card */}
-            <div className="md:absolute md:top-4 md:right-8 bg-white/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-lg border border-slate-200/90 text-left md:animate-float-reverse w-full max-w-xs mx-auto md:mx-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-lg font-extrabold text-slate-900">98.4%</span>
-                <div className="flex text-amber-400">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-              </div>
-              <p className="text-xs font-bold text-slate-800">On-Time Callback Rate</p>
-              <p className="text-[10px] text-slate-500">Zero forgotten enquiries across team</p>
-            </div>
-
-            {/* Widget 3: Bottom Left - Sparkline Metrics */}
-            <div className="md:absolute md:bottom-4 md:left-12 bg-white/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-lg border border-slate-200/90 text-left md:animate-float-gentle w-full max-w-xs mx-auto md:mx-0">
-              <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wide">Monthly Conversion</p>
-              <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-base font-bold text-slate-900">₹38,50,000</span>
-                <span className="text-xs font-bold text-emerald-600 flex items-center">
-                  <TrendingUp className="w-3 h-3 mr-0.5" /> +34.2%
+          {/* TABLET & MOBILE UNIFIED PREVIEW CARD (< 1280px / xl:hidden) */}
+          <div className="xl:hidden mt-8 sm:mt-10 max-w-lg mx-auto bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-xl border border-teal-200/90 text-left">
+            {/* Card Topbar */}
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-[11px] font-bold text-slate-800 uppercase tracking-wide">
+                  Live Agency Co-pilot
                 </span>
               </div>
-              {/* Minimal SVG Sparkline */}
-              <svg className="w-36 h-6 mt-2 text-emerald-500" viewBox="0 0 100 20" fill="none">
-                <path
-                  d="M0 16 Q 20 18, 35 11 T 70 6 T 100 2"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <span className="text-[10px] font-bold text-teal-800 bg-teal-50 border border-teal-200/70 px-2 py-0.5 rounded-md">
+                Active Deal: ₹2,40,000
+              </span>
             </div>
 
-            {/* Widget 4: Center - Donut Metric Pill */}
-            <div className="md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 bg-white/95 backdrop-blur-lg p-4 rounded-2xl shadow-xl border border-teal-200/90 md:animate-float-slow text-center w-full max-w-[220px] sm:max-w-[210px] mx-auto md:mx-0 sm:col-span-2 md:col-span-1">
-              <div className="relative w-16 h-16 mx-auto mb-2">
-                <svg className="w-16 h-16 transform -rotate-90" viewBox="0 0 36 36">
-                  <path
-                    className="text-slate-100"
-                    strokeWidth="3.8"
-                    stroke="currentColor"
-                    fill="none"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  />
-                  <path
-                    className="text-teal-600"
-                    strokeDasharray="78, 100"
-                    strokeWidth="3.8"
-                    strokeLinecap="round"
-                    stroke="currentColor"
-                    fill="none"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center font-extrabold text-xs text-slate-900">
-                  78.4%
+            {/* Active Lead Summary */}
+            <div className="py-3 flex items-start justify-between gap-3">
+              <div>
+                <p className="text-xs sm:text-sm font-extrabold text-slate-900">Bali 6N Luxury Honeymoon</p>
+                <p className="text-[11px] text-slate-500 mt-0.5">Nilesh Travels &bull; Advance Paid &bull; Departure 15 Dec</p>
+              </div>
+              <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded flex items-center gap-1 flex-shrink-0">
+                <CheckCircle2 className="w-3 h-3 text-emerald-600" /> Confirmed
+              </span>
+            </div>
+
+            {/* 3 Metric Pills */}
+            <div className="grid grid-cols-3 gap-2 py-2.5 border-y border-slate-100 text-center">
+              <div className="p-2 rounded-xl bg-slate-50 border border-slate-200/60">
+                <p className="text-[10px] text-slate-500 font-medium">Callback Rate</p>
+                <p className="text-xs sm:text-sm font-extrabold text-slate-900 mt-0.5">98.4%</p>
+              </div>
+              <div className="p-2 rounded-xl bg-slate-50 border border-slate-200/60">
+                <p className="text-[10px] text-slate-500 font-medium">Monthly</p>
+                <p className="text-xs sm:text-sm font-extrabold text-teal-700 mt-0.5">₹38.5L</p>
+              </div>
+              <div className="p-2 rounded-xl bg-slate-50 border border-slate-200/60">
+                <p className="text-[10px] text-slate-500 font-medium">Velocity</p>
+                <p className="text-xs sm:text-sm font-extrabold text-emerald-600 mt-0.5">78.4%</p>
+              </div>
+            </div>
+
+            {/* Live Urgent Next-Action Prompt */}
+            <div className="mt-3 p-3 rounded-xl bg-gradient-to-r from-rose-50 to-orange-50 border border-rose-200/80 flex items-center justify-between gap-2.5">
+              <div className="min-w-0">
+                <div className="flex items-center gap-1.5 text-rose-700 font-bold text-[10px] uppercase tracking-wide">
+                  <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping flex-shrink-0" />
+                  <span>Overdue Callback &bull; 15m ago</span>
                 </div>
+                <p className="text-xs font-bold text-slate-900 truncate mt-0.5">Aditi Sharma &bull; Switzerland</p>
               </div>
-              <p className="text-xs font-bold text-slate-800">Booking Velocity</p>
-              <p className="text-[10px] text-teal-700 font-semibold mt-0.5">High Intent Leads</p>
-            </div>
-
-            {/* Widget 5: Bottom Right - Urgent Follow-up Alert */}
-            <div className="md:absolute md:bottom-2 md:right-10 bg-white/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl shadow-lg border border-rose-200 text-left md:animate-float-reverse w-full max-w-xs mx-auto md:mx-0 sm:col-span-2 md:col-span-1">
-              <div className="flex items-center gap-1.5 mb-1 text-rose-700">
-                <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping" />
-                <span className="text-[10px] font-bold uppercase tracking-wider">Overdue Callback</span>
-              </div>
-              <p className="text-xs font-bold text-slate-900">Aditi Sharma &bull; Switzerland</p>
-              <p className="text-[10px] text-slate-500 mt-0.5">Scheduled callback 15m ago &bull; 1-Click WhatsApp ready</p>
+              <a
+                href={WHATSAPP_LINK_BASE}
+                target="_blank"
+                rel="noreferrer"
+                className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold flex items-center gap-1 transition-colors flex-shrink-0 shadow-xs"
+              >
+                <WhatsAppIcon className="w-3.5 h-3.5" />
+                <span>WhatsApp</span>
+              </a>
             </div>
           </div>
         </div>
@@ -630,25 +691,25 @@ export default function Landing() {
               <div className="mt-8 space-y-2.5">
                 <div className="p-3 bg-white rounded-xl shadow-xs border border-rose-200 flex items-center gap-3">
                   <span className="w-2.5 h-2.5 rounded-full bg-rose-500 flex-shrink-0 animate-pulse" />
-                  <div className="text-xs">
-                    <p className="font-bold text-slate-900">Overdue Callback &bull; Aditi Sharma</p>
-                    <p className="text-slate-500 text-[11px]">Scheduled callback 15m ago &bull; Switzerland package</p>
+                  <div className="text-xs min-w-0">
+                    <p className="font-bold text-slate-900 truncate">Overdue Callback &bull; Aditi Sharma</p>
+                    <p className="text-slate-500 text-[11px] truncate">Scheduled callback 15m ago &bull; Switzerland package</p>
                   </div>
                 </div>
 
                 <div className="p-3 bg-white rounded-xl shadow-xs border border-amber-200 flex items-center gap-3">
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-500 flex-shrink-0" />
-                  <div className="text-xs">
-                    <p className="font-bold text-slate-900">Quotation Follow-Up &bull; Rahul Patel</p>
-                    <p className="text-slate-500 text-[11px]">Quotation sent 2 days ago &bull; No contact recorded</p>
+                  <div className="text-xs min-w-0">
+                    <p className="font-bold text-slate-900 truncate">Quotation Follow-Up &bull; Rahul Patel</p>
+                    <p className="text-slate-500 text-[11px] truncate">Quotation sent 2 days ago &bull; No contact recorded</p>
                   </div>
                 </div>
 
                 <div className="p-3 bg-white rounded-xl shadow-xs border border-teal-200 flex items-center gap-3">
                   <span className="w-2.5 h-2.5 rounded-full bg-teal-500 flex-shrink-0" />
-                  <div className="text-xs">
-                    <p className="font-bold text-slate-900">Missing Information &bull; Karan Johar</p>
-                    <p className="text-slate-500 text-[11px]">Traveller count &amp; departure city required</p>
+                  <div className="text-xs min-w-0">
+                    <p className="font-bold text-slate-900 truncate">Missing Information &bull; Karan Johar</p>
+                    <p className="text-slate-500 text-[11px] truncate">Traveller count &amp; departure city required</p>
                   </div>
                 </div>
               </div>
@@ -723,35 +784,35 @@ export default function Landing() {
       <section id="features" className="py-14 sm:py-16 bg-white border-y border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-            <div className="p-4 sm:p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
+            <div className="p-3 sm:p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
               <p className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
                 3.4x
               </p>
-              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-1.5 sm:mt-2">Faster Enquiry Follow-ups</p>
+              <p className="text-[11px] sm:text-sm font-bold text-slate-900 mt-1.5 sm:mt-2">Faster Enquiry Follow-ups</p>
               <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">Actions surfaced in under 1s</p>
             </div>
 
-            <div className="p-4 sm:p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
+            <div className="p-3 sm:p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
               <p className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
                 0%
               </p>
-              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-1.5 sm:mt-2">Forgotten Enquiries</p>
+              <p className="text-[11px] sm:text-sm font-bold text-slate-900 mt-1.5 sm:mt-2">Forgotten Enquiries</p>
               <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">Automatic alert triggers</p>
             </div>
 
-            <div className="p-4 sm:p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
+            <div className="p-3 sm:p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
               <p className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
                 ₹18Cr+
               </p>
-              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-1.5 sm:mt-2">Bookings Tracked</p>
+              <p className="text-[11px] sm:text-sm font-bold text-slate-900 mt-1.5 sm:mt-2">Bookings Tracked</p>
               <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">Across 250+ tour teams</p>
             </div>
 
-            <div className="p-4 sm:p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
+            <div className="p-3 sm:p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
               <p className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-teal-700 tracking-tight">
                 100%
               </p>
-              <p className="text-xs sm:text-sm font-bold text-slate-900 mt-1.5 sm:mt-2">Deterministic Rules</p>
+              <p className="text-[11px] sm:text-sm font-bold text-slate-900 mt-1.5 sm:mt-2">Deterministic Rules</p>
               <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 sm:mt-1">Zero AI hallucinations</p>
             </div>
           </div>
