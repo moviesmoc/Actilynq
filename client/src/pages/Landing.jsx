@@ -107,18 +107,20 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden selection:bg-teal-100 selection:text-teal-900 font-sans">
       {/* Top Banner: 14-Day Free Trial Announcement */}
-      <div className="bg-slate-950 text-slate-300 py-2 px-3 sm:px-4 text-[11px] sm:text-xs border-b border-slate-800 text-center flex flex-wrap items-center justify-center gap-x-2 gap-y-0.5">
+      <div className="bg-slate-950 text-slate-300 py-2 px-3 sm:px-4 text-[11px] sm:text-xs border-b border-slate-800 text-center flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
         <span className="inline-flex items-center gap-1.5 font-semibold text-teal-400">
           <Sparkles className="w-3.5 h-3.5 text-teal-400 animate-pulse flex-shrink-0" />
           <span>New in ActiLynq 2.0:</span>
         </span>
         <span className="hidden sm:inline">14-Day Full Access Free Trial &bull; Real Google OAuth &bull; Dedicated Sales Agent Seats</span>
         <span className="sm:hidden">14-Day Free Trial Available</span>
+        <span className="text-slate-600 hidden sm:inline">&bull;</span>
         <Link
           to="/register"
-          className="underline font-semibold text-white hover:text-teal-300 ml-0.5 transition-colors"
+          className="font-bold text-teal-300 hover:text-white underline underline-offset-2 transition-colors inline-flex items-center gap-1"
         >
-          Claim Trial &rarr;
+          <span>Claim Trial</span>
+          <span aria-hidden="true">&rarr;</span>
         </Link>
       </div>
 
@@ -146,21 +148,21 @@ export default function Landing() {
             </div>
           </Link>
 
-          {/* Desktop Nav Links with Smooth Scrolling */}
-          <nav className="hidden lg:flex items-center gap-7 text-xs font-semibold text-slate-600">
+          {/* Desktop Nav Links with Smooth Scrolling - Visible on md: (768px+) and up */}
+          <nav className="hidden md:flex items-center gap-4 lg:gap-7 text-xs font-semibold text-slate-600">
             <button
               type="button"
               onClick={(e) => scrollToSection(e, 'pipeline')}
               className="hover:text-teal-700 transition-colors cursor-pointer"
             >
-              Sales Pipeline
+              Pipeline
             </button>
             <button
               type="button"
               onClick={(e) => scrollToSection(e, 'engine')}
               className="hover:text-teal-700 transition-colors cursor-pointer"
             >
-              Next-Action Engine
+              Engine
             </button>
             <button
               type="button"
@@ -174,14 +176,14 @@ export default function Landing() {
               onClick={(e) => scrollToSection(e, 'pricing')}
               className="hover:text-teal-700 transition-colors cursor-pointer"
             >
-              Pricing Plans
+              Pricing
             </button>
             <button
               type="button"
               onClick={(e) => scrollToSection(e, 'testimonials')}
               className="hover:text-teal-700 transition-colors cursor-pointer"
             >
-              Testimonials
+              Reviews
             </button>
             <button
               type="button"
@@ -192,8 +194,8 @@ export default function Landing() {
             </button>
           </nav>
 
-          {/* Desktop Right CTAs */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Desktop Right CTAs - Synchronized with nav links on md: (768px+) */}
+          <div className="hidden md:flex items-center gap-2.5 lg:gap-3">
             <Link
               to="/login"
               className="text-xs font-bold text-slate-700 hover:text-teal-800 px-3.5 py-2 rounded-lg hover:bg-slate-100/80 transition-colors"
@@ -209,20 +211,20 @@ export default function Landing() {
             </Link>
           </div>
 
-          {/* Mobile Menu Button - visible on screens < lg */}
+          {/* Mobile Menu Button - Visible ONLY on mobile screens < md (under 768px) */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-slate-700 hover:text-slate-900 rounded-lg hover:bg-slate-100"
+            className="md:hidden p-2 text-slate-700 hover:text-slate-900 rounded-lg hover:bg-slate-100"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile Dropdown with Smooth Scrolling - visible on screens < lg */}
+        {/* Mobile Dropdown with Smooth Scrolling - Visible ONLY on screens < md */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-5 space-y-3 shadow-xl">
+          <div className="md:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-5 space-y-3 shadow-xl">
             <button
               type="button"
               onClick={(e) => scrollToSection(e, 'pipeline')}
