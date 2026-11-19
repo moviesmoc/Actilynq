@@ -1364,9 +1364,9 @@ export default function Landing() {
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px] text-center sm:text-left">
             <p>&copy; {new Date().getFullYear()} ActiLynq Travel CRM. All rights reserved.</p>
             <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-              <span className="hover:text-slate-800 cursor-pointer">Privacy Policy</span>
-              <span className="hover:text-slate-800 cursor-pointer">Terms of Service</span>
-              <span className="hover:text-slate-800 cursor-pointer">Security Overview</span>
+              <Link to="/privacy" className="hover:text-teal-700 transition-colors">Privacy Policy</Link>
+              <Link to="/terms" className="hover:text-teal-700 transition-colors">Terms of Service</Link>
+              <Link to="/security" className="hover:text-teal-700 transition-colors">Security Overview</Link>
             </div>
           </div>
         </div>

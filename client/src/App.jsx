@@ -17,6 +17,9 @@ import LeadDetail from './pages/LeadDetail';
 import Pipeline from './pages/Pipeline';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import SecurityOverview from './pages/SecurityOverview';
 
 export default function App() {
   return (
@@ -25,6 +28,14 @@ export default function App() {
         <Routes>
           {/* Public Landing Page */}
           <Route path="/" element={<Landing />} />
+
+          {/* Public Legal & Security Trust Center */}
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/security" element={<SecurityOverview />} />
+          <Route path="/security-overview" element={<SecurityOverview />} />
 
           {/* Public Auth Routes */}
           <Route element={<AuthLayout />}>
