@@ -5,14 +5,14 @@ import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
 import TrialStatusBar from '../components/TrialStatusBar';
 import TrialExpiredPaywall from '../components/TrialExpiredPaywall';
+import ActiLynqPreloader from '../components/ActiLynqPreloader';
 import api from '../api/client';
 import {
   LayoutDashboard,
   Zap,
   Users,
   Kanban,
-  Menu,
-  Compass
+  Menu
 } from 'lucide-react';
 
 export default function AppLayout() {
@@ -44,19 +44,7 @@ export default function AppLayout() {
   }, [isAuthenticated]);
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 w-full max-w-full">
-        <div className="flex flex-col items-center gap-4 text-center animate-pulse">
-          <div className="w-12 h-12 rounded-2xl bg-teal-500/20 border border-teal-500/40 flex items-center justify-center text-teal-400 shadow-glow-teal">
-            <Compass className="w-7 h-7 animate-spin" style={{ animationDuration: '3s' }} />
-          </div>
-          <div>
-            <div className="text-base font-bold text-white tracking-wide">Acti<span className="text-teal-400">Lynq</span></div>
-            <div className="text-xs text-slate-400 mt-1">Preparing travel sales console...</div>
-          </div>
-        </div>
-      </div>
-    );
+    return <ActiLynqPreloader message="Preparing travel sales console..." theme="dark" />;
   }
 
   if (!isAuthenticated) {

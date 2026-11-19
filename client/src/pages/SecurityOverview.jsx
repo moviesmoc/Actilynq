@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import ActiLynqLogo from '../components/ActiLynqLogo';
 import {
   Compass,
   ArrowRight,
@@ -34,19 +35,7 @@ export default function SecurityOverview() {
       {/* Top Navbar */}
       <header className="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-slate-200/80 py-3.5 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-teal-700 to-teal-900 text-white flex items-center justify-center shadow-md shadow-teal-900/20 group-hover:scale-105 transition-transform">
-              <Compass className="w-5 h-5 text-teal-300" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-lg font-bold tracking-tight text-slate-900 leading-none">
-                Acti<span className="text-teal-700">Lynq</span>
-              </span>
-              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mt-0.5">
-                Trust &amp; Legal Center
-              </span>
-            </div>
-          </Link>
+          <ActiLynqLogo size="sm" theme="light" to="/" subtitle="Trust & Legal Center" />
 
           <div className="flex items-center gap-3">
             <Link

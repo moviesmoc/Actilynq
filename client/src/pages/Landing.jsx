@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import ActiLynqLogo from '../components/ActiLynqLogo';
 import {
   Compass,
   ArrowRight,
@@ -134,19 +135,7 @@ export default function Landing() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-700 to-teal-900 text-white flex items-center justify-center shadow-md shadow-teal-900/20 group-hover:scale-105 transition-transform">
-              <Compass className="w-5 h-5 text-teal-300" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-slate-900 leading-none">
-                Acti<span className="text-teal-700">Lynq</span>
-              </span>
-              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mt-0.5">
-                Travel CRM &amp; Co-pilot
-              </span>
-            </div>
-          </Link>
+          <ActiLynqLogo size="md" theme="light" to="/" />
 
           {/* Desktop Nav Links with Smooth Scrolling - Visible on md: (768px+) and up */}
           <nav className="hidden md:flex items-center gap-4 lg:gap-7 text-xs font-semibold text-slate-600">
@@ -1311,12 +1300,7 @@ export default function Landing() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 pb-12 border-b border-slate-200">
             {/* Col 1: Brand & Tagline */}
             <div className="sm:col-span-2 space-y-3">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-teal-800 text-white flex items-center justify-center shadow-xs">
-                  <Compass className="w-4 h-4 text-teal-300" />
-                </div>
-                <span className="text-lg font-bold text-slate-900 tracking-tight">Acti<span className="text-teal-700">Lynq</span></span>
-              </div>
+              <ActiLynqLogo size="sm" theme="light" to="/" />
               <p className="text-slate-500 max-w-sm text-xs leading-relaxed">
                 The high-performance sales action platform and Next-Action Co-pilot built specifically for modern travel agencies and holiday tour operators.
               </p>

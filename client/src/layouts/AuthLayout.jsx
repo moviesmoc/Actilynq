@@ -1,18 +1,16 @@
 import React from 'react';
 import { Navigate, Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Compass, CheckCircle2 } from 'lucide-react';
+import ActiLynqLogo from '../components/ActiLynqLogo';
+import ActiLynqPreloader from '../components/ActiLynqPreloader';
+import { CheckCircle2 } from 'lucide-react';
 
 export default function AuthLayout() {
   const { isAuthenticated, loading } = useAuth();
   const location = useLocation();
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
-        <div className="w-8 h-8 border-3 border-brand-700 border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
+    return <ActiLynqPreloader message="Verifying session..." theme="light" />;
   }
 
   if (isAuthenticated) {
@@ -21,16 +19,14 @@ export default function AuthLayout() {
 
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col justify-center py-8 sm:py-12 px-4 sm:px-6 lg:px-8 w-full max-w-full overflow-x-hidden">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-brand-700 text-white shadow-sm mb-4">
-          <Compass className="w-6 h-6" />
-        </div>
-        <h2 className="text-2xl font-bold tracking-tight text-neutral-900">
-          Acti<span className="text-brand-700">Lynq</span>
-        </h2>
-        <p className="mt-2 text-sm text-neutral-600">
-          Sales action platform for travel agencies
-        </p>
+      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center flex flex-col items-center">
+        <ActiLynqLogo
+          size="lg"
+          theme="light"
+          to="/"
+          subtitle="Sales action platform for travel agencies"
+          className="justify-center"
+        />
       </div>
 
       <div className="mt-6 sm:mt-8 sm:mx-auto sm:w-full sm:max-w-md">

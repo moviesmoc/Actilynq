@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
+import ActiLynqLogo from './ActiLynqLogo';
 import {
   LayoutDashboard,
   Zap,
@@ -37,25 +38,15 @@ export default function Sidebar({ actionCount = 0, isOpen = false, onClose }) {
     <div className="flex flex-col h-full bg-slate-900 text-slate-200 border-r border-slate-800">
       {/* Brand Header */}
       <div className="h-16 flex items-center justify-between px-5 border-b border-slate-800/80 bg-slate-950/40">
-        <Link
+        <ActiLynqLogo
+          size="sm"
+          theme="dark"
           to="/app"
           onClick={onClose}
-          className="flex items-center gap-2.5 group"
-        >
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-teal-600 to-teal-400 text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform duration-200">
-            <Compass className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <div className="font-bold text-white text-base tracking-tight leading-tight flex items-center gap-1">
-              <span>Acti<span className="text-teal-400">Lynq</span></span>
-              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-teal-900/60 text-teal-300 border border-teal-700/50">PRO</span>
-            </div>
-            <div className="text-[10px] text-slate-400 font-medium tracking-wide uppercase flex items-center gap-1">
-              <Plane className="w-2.5 h-2.5 text-teal-400 inline" />
-              <span>Travel Sales Action</span>
-            </div>
-          </div>
-        </Link>
+          showBadge={true}
+          badgeText="PRO"
+          subtitle="Travel Sales Action"
+        />
 
         {/* Mobile close button */}
         {onClose && (
