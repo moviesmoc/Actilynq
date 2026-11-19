@@ -55,17 +55,17 @@ export default function TrialExpiredModal({ isOpen, business, onRefresh }) {
           </p>
         </div>
 
-        {/* Sponsor Contact Card */}
+        {/* Founder Contact Card */}
         <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 sm:p-5 mb-6 text-center space-y-3">
           <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-            Official ActiLynq Sponsor & Support
+            Official ActiLynq Founder &amp; Support
           </div>
           <div className="text-lg font-bold text-slate-900 flex items-center justify-center gap-2">
             <Phone className="w-4 h-4 text-teal-600" />
             <span>+91 {sponsorPhone}</span>
           </div>
           <p className="text-xs text-slate-600">
-            Contact our sponsor directly to renew your subscription and unlock full CRM access.
+            Contact the founder directly on WhatsApp or Call to renew your subscription and unlock full CRM access.
           </p>
 
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">

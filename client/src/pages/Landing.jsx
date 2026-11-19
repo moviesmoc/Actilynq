@@ -34,8 +34,34 @@ export default function Landing() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
 
-  const SPONSOR_PHONE = '+91 7359510771';
+  const FOUNDER_PHONE = '+91 7359510771';
+  const SPONSOR_PHONE = FOUNDER_PHONE;
   const WHATSAPP_LINK_BASE = 'https://wa.me/917359510771';
+
+  const PARTNERS = [
+    { label: 'WhatsApp Business', color: 'bg-emerald-50 text-emerald-800 border-emerald-200', icon: WhatsAppIcon },
+    { label: 'Google Workspace', color: 'bg-blue-50 text-blue-800 border-blue-200', icon: Building2 },
+    { label: 'Google Calendar', color: 'bg-amber-50 text-amber-800 border-amber-200', icon: Calendar },
+    { label: 'Razorpay Advances', color: 'bg-indigo-50 text-indigo-800 border-indigo-200', icon: Activity },
+    { label: 'Portal Inward Leads', color: 'bg-teal-50 text-teal-800 border-teal-200', icon: Zap },
+    { label: 'Click-to-Call Cloud', color: 'bg-rose-50 text-rose-800 border-rose-200', icon: Phone }
+  ];
+
+  const scrollToSection = (e, targetId) => {
+    if (e) e.preventDefault();
+    const element = document.getElementById(targetId);
+    if (element) {
+      const headerOffset = 76;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+    setMobileMenuOpen(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -114,26 +140,50 @@ export default function Landing() {
             </div>
           </Link>
 
-          {/* Desktop Nav Links */}
+          {/* Desktop Nav Links with Smooth Scrolling */}
           <nav className="hidden lg:flex items-center gap-7 text-xs font-semibold text-slate-600">
-            <a href="#pipeline" className="hover:text-teal-700 transition-colors">
+            <button
+              type="button"
+              onClick={(e) => scrollToSection(e, 'pipeline')}
+              className="hover:text-teal-700 transition-colors cursor-pointer"
+            >
               Sales Pipeline
-            </a>
-            <a href="#engine" className="hover:text-teal-700 transition-colors">
+            </button>
+            <button
+              type="button"
+              onClick={(e) => scrollToSection(e, 'engine')}
+              className="hover:text-teal-700 transition-colors cursor-pointer"
+            >
               Next-Action Engine
-            </a>
-            <a href="#features" className="hover:text-teal-700 transition-colors">
+            </button>
+            <button
+              type="button"
+              onClick={(e) => scrollToSection(e, 'features')}
+              className="hover:text-teal-700 transition-colors cursor-pointer"
+            >
               Features
-            </a>
-            <a href="#pricing" className="hover:text-teal-700 transition-colors">
+            </button>
+            <button
+              type="button"
+              onClick={(e) => scrollToSection(e, 'pricing')}
+              className="hover:text-teal-700 transition-colors cursor-pointer"
+            >
               Pricing Plans
-            </a>
-            <a href="#testimonials" className="hover:text-teal-700 transition-colors">
+            </button>
+            <button
+              type="button"
+              onClick={(e) => scrollToSection(e, 'testimonials')}
+              className="hover:text-teal-700 transition-colors cursor-pointer"
+            >
               Testimonials
-            </a>
-            <a href="#faq" className="hover:text-teal-700 transition-colors">
+            </button>
+            <button
+              type="button"
+              onClick={(e) => scrollToSection(e, 'faq')}
+              className="hover:text-teal-700 transition-colors cursor-pointer"
+            >
               FAQ
-            </a>
+            </button>
           </nav>
 
           {/* Desktop Right CTAs */}
@@ -163,37 +213,51 @@ export default function Landing() {
           </button>
         </div>
 
-        {/* Mobile Dropdown */}
+        {/* Mobile Dropdown with Smooth Scrolling */}
         {mobileMenuOpen && (
           <div className="sm:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-5 space-y-3 shadow-xl">
-            <a
-              href="#pipeline"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm font-semibold text-slate-700 py-1.5"
+            <button
+              type="button"
+              onClick={(e) => scrollToSection(e, 'pipeline')}
+              className="block w-full text-left text-sm font-semibold text-slate-700 py-1.5"
             >
               Sales Pipeline
-            </a>
-            <a
-              href="#engine"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm font-semibold text-slate-700 py-1.5"
+            </button>
+            <button
+              type="button"
+              onClick={(e) => scrollToSection(e, 'engine')}
+              className="block w-full text-left text-sm font-semibold text-slate-700 py-1.5"
             >
               Next-Action Engine
-            </a>
-            <a
-              href="#pricing"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm font-semibold text-slate-700 py-1.5"
+            </button>
+            <button
+              type="button"
+              onClick={(e) => scrollToSection(e, 'features')}
+              className="block w-full text-left text-sm font-semibold text-slate-700 py-1.5"
+            >
+              Features
+            </button>
+            <button
+              type="button"
+              onClick={(e) => scrollToSection(e, 'pricing')}
+              className="block w-full text-left text-sm font-semibold text-slate-700 py-1.5"
             >
               Pricing Plans
-            </a>
-            <a
-              href="#testimonials"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm font-semibold text-slate-700 py-1.5"
+            </button>
+            <button
+              type="button"
+              onClick={(e) => scrollToSection(e, 'testimonials')}
+              className="block w-full text-left text-sm font-semibold text-slate-700 py-1.5"
             >
               Reviews
-            </a>
+            </button>
+            <button
+              type="button"
+              onClick={(e) => scrollToSection(e, 'faq')}
+              className="block w-full text-left text-sm font-semibold text-slate-700 py-1.5"
+            >
+              FAQ
+            </button>
             <div className="pt-2 border-t border-slate-100 flex flex-col gap-2">
               <Link
                 to="/login"
@@ -365,29 +429,28 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* 3D PARTNER INTEGRATION TILES (Frame 4 from reference video) */}
-      <section className="py-12 bg-white border-y border-slate-200/70">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-6">
+      {/* 3D PARTNER INTEGRATION TILES (Infinite Horizontal Marquee Loop) */}
+      <section className="py-10 bg-white border-y border-slate-200/80 overflow-hidden relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-6">
+          <p className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-400">
             Seamlessly Connected With Modern Travel &amp; Sales Channels
           </p>
+        </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-            {[
-              { label: 'WhatsApp', color: 'bg-emerald-50 text-emerald-700 border-emerald-200', icon: WhatsAppIcon },
-              { label: 'Google Workspace', color: 'bg-blue-50 text-blue-700 border-blue-200', icon: Building2 },
-              { label: 'Google Calendar', color: 'bg-amber-50 text-amber-700 border-amber-200', icon: Calendar },
-              { label: 'Razorpay Advances', color: 'bg-indigo-50 text-indigo-700 border-indigo-200', icon: Activity },
-              { label: 'Portal Inward Leads', color: 'bg-teal-50 text-teal-700 border-teal-200', icon: Zap },
-              { label: 'Click-to-Call Cloud', color: 'bg-rose-50 text-rose-700 border-rose-200', icon: Phone }
-            ].map((partner, i) => {
+        {/* Marquee Wrapper with soft left and right edge gradient fades */}
+        <div className="relative w-full overflow-hidden flex items-center py-1">
+          <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
+
+          <div className="animate-marquee flex items-center gap-4 sm:gap-6">
+            {[...PARTNERS, ...PARTNERS, ...PARTNERS, ...PARTNERS].map((partner, i) => {
               const Icon = partner.icon;
               return (
                 <div
                   key={i}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border ${partner.color} shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-default font-semibold text-xs`}
+                  className={`flex items-center gap-2.5 px-5 py-2.5 rounded-full border ${partner.color} shadow-xs hover:shadow-md hover:scale-105 transition-all duration-200 cursor-default font-semibold text-xs whitespace-nowrap flex-shrink-0 select-none`}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-4 h-4 flex-shrink-0" />
                   <span>{partner.label}</span>
                 </div>
               );
@@ -648,7 +711,7 @@ export default function Landing() {
       </section>
 
       {/* 4-COLUMN SOCIAL PROOF METRICS (Frame 9 from reference video) */}
-      <section className="py-16 bg-white border-y border-slate-200/80">
+      <section id="features" className="py-16 bg-white border-y border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <div className="p-6 rounded-2xl bg-slate-50/80 border border-slate-200 text-center shadow-xs hover:border-teal-300 transition-colors">
@@ -920,7 +983,7 @@ export default function Landing() {
             </div>
           </div>
 
-          {/* Sponsor Direct Contact Strip */}
+          {/* Founder Direct Contact Strip */}
           <div className="mt-12 p-4 sm:p-5 rounded-2xl bg-white border border-teal-200 shadow-xs max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center flex-shrink-0">
@@ -931,7 +994,7 @@ export default function Landing() {
                   Need a custom deployment, multi-branch setup, or direct consultation?
                 </p>
                 <p className="text-[11px] text-slate-500">
-                  Speak directly with our team at <strong className="text-slate-800 font-semibold">{SPONSOR_PHONE}</strong>.
+                  Speak directly with the founder at <strong className="text-slate-800 font-semibold">{FOUNDER_PHONE}</strong>.
                 </p>
               </div>
             </div>
@@ -1052,7 +1115,7 @@ export default function Landing() {
             {[
               {
                 q: 'How does the 14-day free trial work?',
-                a: 'You get instant full access to the entire platform - including 2 sales agent seats, the Next-Action Engine, and WhatsApp drafts. No credit card is required. When your trial ends, you can renew by contacting our sponsor on WhatsApp or choosing one of our affordable plans.'
+                a: 'You get instant full access to the entire platform - including 2 sales agent seats, the Next-Action Engine, and WhatsApp drafts. No credit card is required. When your trial ends, you can renew by contacting our founder on WhatsApp or choosing one of our affordable plans.'
               },
               {
                 q: 'Can multiple sales agents log in under the same business?',
@@ -1146,8 +1209,8 @@ export default function Landing() {
                 The high-performance sales action platform and Next-Action Co-pilot built specifically for modern travel agencies and holiday tour operators.
               </p>
               <div className="pt-2 text-slate-600">
-                <p className="font-semibold text-slate-900">Sponsor / Direct Support Hotline:</p>
-                <p className="font-mono text-teal-700 font-bold mt-0.5">{SPONSOR_PHONE}</p>
+                <p className="font-semibold text-slate-900">Founder &amp; Direct Support Hotline:</p>
+                <p className="font-mono text-teal-700 font-bold mt-0.5">{FOUNDER_PHONE}</p>
               </div>
             </div>
 
@@ -1155,10 +1218,42 @@ export default function Landing() {
             <div className="space-y-2.5">
               <p className="font-bold text-slate-900 uppercase tracking-wider text-[11px]">Product</p>
               <ul className="space-y-1.5 text-slate-500">
-                <li><a href="#pipeline" className="hover:text-teal-700 transition-colors">Sales Pipeline</a></li>
-                <li><a href="#engine" className="hover:text-teal-700 transition-colors">Next-Action Engine</a></li>
-                <li><a href="#pricing" className="hover:text-teal-700 transition-colors">Pricing Plans</a></li>
-                <li><a href="#features" className="hover:text-teal-700 transition-colors">Team Access</a></li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={(e) => scrollToSection(e, 'pipeline')}
+                    className="hover:text-teal-700 transition-colors text-left cursor-pointer"
+                  >
+                    Sales Pipeline
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={(e) => scrollToSection(e, 'engine')}
+                    className="hover:text-teal-700 transition-colors text-left cursor-pointer"
+                  >
+                    Next-Action Engine
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={(e) => scrollToSection(e, 'features')}
+                    className="hover:text-teal-700 transition-colors text-left cursor-pointer"
+                  >
+                    Key Features
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={(e) => scrollToSection(e, 'pricing')}
+                    className="hover:text-teal-700 transition-colors text-left cursor-pointer"
+                  >
+                    Pricing Plans
+                  </button>
+                </li>
               </ul>
             </div>
 

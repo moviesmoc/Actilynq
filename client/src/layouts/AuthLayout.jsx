@@ -1,10 +1,11 @@
 import React from 'react';
-import { Navigate, Outlet, Link } from 'react-router-dom';
+import { Navigate, Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Compass, CheckCircle2 } from 'lucide-react';
 
 export default function AuthLayout() {
   const { isAuthenticated, loading } = useAuth();
+  const location = useLocation();
 
   if (loading) {
     return (
@@ -33,7 +34,7 @@ export default function AuthLayout() {
       </div>
 
       <div className="mt-6 sm:mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-6 sm:py-8 px-4 sm:px-10 shadow-sm border border-neutral-200 rounded-xl max-w-full overflow-hidden">
+        <div key={location.pathname} className="page-transition bg-white py-6 sm:py-8 px-4 sm:px-10 shadow-sm border border-neutral-200 rounded-xl max-w-full overflow-hidden">
           <Outlet />
         </div>
 

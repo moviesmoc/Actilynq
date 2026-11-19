@@ -49,7 +49,7 @@ export default function TrialStatusBar({ business, onRefresh }) {
             className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-white text-slate-900 font-bold hover:bg-slate-100 transition-colors shadow-2xs text-[11px]"
           >
             <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-600" />
-            <span>WhatsApp Sponsor</span>
+            <span>WhatsApp Founder</span>
           </a>
           <a
             href={`tel:+91${sponsorPhone}`}

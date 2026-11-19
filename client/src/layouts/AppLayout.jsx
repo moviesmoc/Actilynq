@@ -93,7 +93,7 @@ export default function AppLayout() {
         {business?.isTrialExpired ? (
           <TrialExpiredPaywall business={business} onRefresh={refreshProfile} />
         ) : (
-          <main className="flex-1 px-3 sm:px-6 lg:px-8 py-4 sm:py-6 max-w-7xl w-full mx-auto pb-24 md:pb-8 min-w-0">
+          <main key={location.pathname} className="page-transition flex-1 px-3 sm:px-6 lg:px-8 py-4 sm:py-6 max-w-7xl w-full mx-auto pb-24 md:pb-8 min-w-0">
             <Outlet context={{
               refreshActionCount: () => {
                 fetchActionCount();

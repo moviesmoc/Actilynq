@@ -481,12 +481,12 @@ export default function SettingsPage() {
         )}
       </div>
 
-      {/* Subscription & Sponsor Contact */}
+      {/* Subscription & Founder Contact */}
       <div className="card border-teal-200 bg-gradient-to-br from-white to-teal-50/40">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
             <Clock className="w-5 h-5 text-teal-700" />
-            <span>Subscription & Sponsor Support</span>
+            <span>Subscription &amp; Founder Support</span>
           </h2>
           <span className={`text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${
             business?.isTrialExpired
@@ -514,11 +514,11 @@ export default function SettingsPage() {
           <div className="p-4 bg-teal-50/70 border border-teal-200 rounded-xl space-y-3">
             <div className="flex items-center gap-2">
               <Phone className="w-4 h-4 text-teal-700" />
-              <span className="font-bold text-slate-900">Official Sponsor Contact:</span>
+              <span className="font-bold text-slate-900">Direct Founder &amp; Support Contact:</span>
               <span className="font-bold text-teal-800">+91 {sponsorPhone}</span>
             </div>
             <p className="text-xs text-slate-600">
-              For plan renewals, seat upgrades, or customized travel CRM integrations, reach out to our sponsor directly:
+              For plan renewals, seat upgrades, or customized travel CRM integrations, reach out to the founder directly:
             </p>
             <div className="flex flex-wrap gap-2.5">
               <a

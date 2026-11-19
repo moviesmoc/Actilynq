@@ -55,10 +55,10 @@ export default function TrialExpiredPaywall({ business, onRefresh }) {
           <br className="hidden sm:inline" /> All your historical enquiry data is safely preserved.
         </p>
 
-        {/* Renewal & Sponsor Contact Box */}
+        {/* Renewal & Founder Contact Box */}
         <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-6 text-center space-y-3">
           <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-            To Renew Your Plan, Contact Our Sponsor Directly:
+            To Renew Your Plan, Contact Founder Support Directly:
           </div>
           <div className="text-xl font-bold text-slate-900 flex items-center justify-center gap-2">
             <Phone className="w-5 h-5 text-teal-600" />
