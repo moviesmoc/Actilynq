@@ -18,6 +18,7 @@ import {
   Star,
   ChevronRight,
   ChevronLeft,
+  ChevronDown,
   MessageSquare,
   Send,
   Bell,
@@ -33,6 +34,11 @@ export default function Landing() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
+  const [openFaqIdx, setOpenFaqIdx] = useState(0);
+
+  const toggleFaq = (index) => {
+    setOpenFaqIdx((prev) => (prev === index ? null : index));
+  };
 
   const FOUNDER_PHONE = '+91 7359510771';
   const SPONSOR_PHONE = FOUNDER_PHONE;
@@ -1136,20 +1142,60 @@ export default function Landing() {
                 q: 'How do I renew or upgrade my plan?',
                 a: 'You can connect directly with our founder on WhatsApp (+91 7359510771) or use the contact button inside your workspace. We support UPI, Net Banking, and Credit Cards via Razorpay.'
               }
-            ].map((faq, i) => (
-              <details
-                key={i}
-                className="group bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 hover:border-teal-300 transition-colors cursor-pointer"
-              >
-                <summary className="flex items-start sm:items-center justify-between gap-3 font-bold text-slate-900 text-xs sm:text-sm select-none outline-none">
-                  <span>{faq.q}</span>
-                  <ChevronRight className="w-4 h-4 text-slate-400 group-open:rotate-90 transition-transform flex-shrink-0 mt-0.5 sm:mt-0" />
-                </summary>
-                <p className="mt-3 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
-                  {faq.a}
-                </p>
-              </details>
-            ))}
+            ].map((faq, i) => {
+              const isOpen = openFaqIdx === i;
+              return (
+                <div
+                  key={i}
+                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                    isOpen
+                      ? 'bg-white border-teal-400 shadow-md ring-1 ring-teal-400/20'
+                      : 'bg-white border-slate-200/90 shadow-2xs hover:border-slate-300 hover:shadow-xs'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => toggleFaq(i)}
+                    className="w-full p-4 sm:p-5 flex items-start sm:items-center justify-between gap-3 text-left select-none cursor-pointer focus:outline-none transition-colors"
+                    aria-expanded={isOpen}
+                  >
+                    <span
+                      className={`font-bold text-xs sm:text-sm transition-colors duration-200 leading-snug ${
+                        isOpen ? 'text-teal-900' : 'text-slate-800'
+                      }`}
+                    >
+                      {faq.q}
+                    </span>
+                    <div
+                      className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
+                        isOpen
+                          ? 'bg-teal-50 text-teal-700 rotate-180 ring-1 ring-teal-200'
+                          : 'bg-slate-50 text-slate-400'
+                      }`}
+                    >
+                      <ChevronDown className="w-4 h-4" />
+                    </div>
+                  </button>
+
+                  {/* Smooth height-interpolating grid container with fade transition */}
+                  <div
+                    className={`grid transition-all duration-300 ease-in-out ${
+                      isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-4 pb-4 sm:px-5 sm:pb-5 pt-0">
+                        <div className="border-t border-slate-100 pt-3">
+                          <p className="text-xs text-slate-600 leading-relaxed">
+                            {faq.a}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
