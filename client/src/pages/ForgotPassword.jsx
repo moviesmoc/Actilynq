@@ -91,7 +91,7 @@ export default function ForgotPassword() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="agent@travelagency.com"
-                className="input-base text-sm pl-9"
+                className="input-base pl-9.5"
               />
               <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             </div>

@@ -18,31 +18,32 @@ export default function AuthLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex flex-col justify-center py-8 sm:py-12 px-4 sm:px-6 lg:px-8 w-full max-w-full overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-6 sm:py-12 px-3 sm:px-6 lg:px-8 w-full max-w-full overflow-x-hidden">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center flex flex-col items-center">
         <ActiLynqLogo
           size="lg"
           theme="light"
+          layout="vertical"
           to="/"
-          subtitle="Sales action platform for travel agencies"
-          className="justify-center"
+          subtitle="Travel CRM &bull; Next-Action Co-pilot"
+          className="mx-auto"
         />
       </div>
 
-      <div className="mt-6 sm:mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div key={location.pathname} className="page-transition bg-white py-6 sm:py-8 px-4 sm:px-10 shadow-sm border border-neutral-200 rounded-xl max-w-full overflow-hidden">
+      <div className="mt-5 sm:mt-7 sm:mx-auto sm:w-full sm:max-w-md">
+        <div key={location.pathname} className="bg-white py-5 px-4 sm:py-8 sm:px-8 shadow-sm border border-slate-200/90 rounded-2xl max-w-full overflow-hidden">
           <Outlet />
         </div>
 
         {/* Value Proposition bullets */}
-        <div className="mt-8 text-center text-xs text-neutral-600 space-y-2">
-          <div className="flex items-center justify-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-brand-700 flex-shrink-0" />
-            <span>Rule-based Next-Action Engine with transparent explanations</span>
+        <div className="mt-6 sm:mt-8 max-w-sm mx-auto text-xs text-slate-500 space-y-2 px-2">
+          <div className="flex items-start gap-2.5">
+            <CheckCircle2 className="w-4 h-4 text-teal-700 flex-shrink-0 mt-0.5" />
+            <span className="leading-snug">Rule-based Next-Action Engine with transparent explanations</span>
           </div>
-          <div className="flex items-center justify-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-brand-700 flex-shrink-0" />
-            <span>Travel-specific lead management and sales workflow</span>
+          <div className="flex items-start gap-2.5">
+            <CheckCircle2 className="w-4 h-4 text-teal-700 flex-shrink-0 mt-0.5" />
+            <span className="leading-snug">Travel-specific lead management and sales workflow</span>
           </div>
         </div>
       </div>

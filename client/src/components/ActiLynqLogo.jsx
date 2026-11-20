@@ -79,6 +79,7 @@ export function ActiLynqMark({ size = 'md', className = '', animated = false }) 
 export default function ActiLynqLogo({
   size = 'md',
   theme = 'light',
+  layout = 'horizontal',
   subtitle = 'Travel CRM & Co-pilot',
   to = null,
   onClick = null,
@@ -87,6 +88,7 @@ export default function ActiLynqLogo({
   className = ''
 }) {
   const isDark = theme === 'dark';
+  const isVertical = layout === 'vertical' || layout === 'centered';
 
   const textSizes = {
     sm: 'text-base',
@@ -105,7 +107,38 @@ export default function ActiLynqLogo({
   const textSize = textSizes[size] || textSizes.md;
   const subSize = subSizes[size] || subSizes.md;
 
-  const content = (
+  const content = isVertical ? (
+    <div className={`flex flex-col items-center text-center gap-2 group ${className}`}>
+      <ActiLynqMark size={size} className="group-hover:scale-105 transition-transform duration-200 mx-auto" />
+      <div className="flex flex-col items-center text-center">
+        <div className="flex items-center justify-center gap-1.5 leading-none">
+          <span className={`${textSize} font-extrabold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            Acti<span className={isDark ? 'text-teal-400' : 'text-teal-700'}>Lynq</span>
+          </span>
+          {showBadge && (
+            <span
+              className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded border ${
+                isDark
+                  ? 'bg-teal-950/80 text-teal-300 border-teal-700/60'
+                  : 'bg-teal-50 text-teal-800 border-teal-200'
+              }`}
+            >
+              {badgeText}
+            </span>
+          )}
+        </div>
+        {subtitle && (
+          <span
+            className={`${subSize} font-semibold uppercase tracking-wider mt-1 ${
+              isDark ? 'text-slate-400' : 'text-slate-500'
+            }`}
+          >
+            {subtitle}
+          </span>
+        )}
+      </div>
+    </div>
+  ) : (
     <div className={`flex items-center gap-2.5 group ${className}`}>
       <ActiLynqMark size={size} className="group-hover:scale-105 transition-transform duration-200" />
       <div className="flex flex-col">

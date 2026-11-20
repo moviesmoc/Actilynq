@@ -125,7 +125,7 @@ body {
 
   /* Input styles */
   .input-base {
-    @apply w-full max-w-full px-3 py-2 text-xs sm:text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-1 focus-visible:border-teal-700 shadow-xs;
+    @apply w-full max-w-full px-3.5 py-2.5 sm:py-2 text-base sm:text-sm border border-slate-200 rounded-lg bg-white text-slate-900 placeholder-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-700 focus-visible:ring-offset-1 focus-visible:border-teal-700 shadow-xs transition-colors;
   }
 
   /* Card styles */

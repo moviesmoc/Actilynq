@@ -30,56 +30,61 @@ export default function Login() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-neutral-900 mb-2">Sign in to your workspace</h1>
-        <p className="text-sm text-neutral-600">
+      <div className="mb-5 sm:mb-6 text-center sm:text-left">
+        <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight mb-1.5">
+          Sign in to your workspace
+        </h1>
+        <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
           Access your travel enquiry queue and Next-Action recommendations
         </p>
       </div>
 
       {/* Error Message */}
       {error && (
-        <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-sm text-red-800 flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-          <span>{error}</span>
+        <div className="mb-5 p-3.5 sm:p-4 rounded-xl bg-rose-50 border border-rose-200 text-xs sm:text-sm text-rose-800 flex items-start gap-2.5">
+          <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-rose-600 flex-shrink-0 mt-0.5" />
+          <span className="leading-snug">{error}</span>
         </div>
       )}
 
       {/* Google OAuth Button */}
-      <div className="mb-5">
+      <div className="mb-5 w-full flex justify-center">
         <GoogleLoginButton onError={(msg) => setError(msg)} />
       </div>
 
       <div className="relative flex py-2 items-center mb-5">
         <div className="flex-grow border-t border-slate-200"></div>
-        <span className="flex-shrink mx-3 text-xs text-slate-400 uppercase tracking-wider font-semibold">Or with email</span>
+        <span className="flex-shrink mx-3 text-[11px] sm:text-xs text-slate-400 uppercase tracking-wider font-semibold select-none">
+          Or with email
+        </span>
         <div className="flex-grow border-t border-slate-200"></div>
       </div>
 
       {/* Login Form */}
-      <form onSubmit={handleSubmit} className="space-y-4 mb-6">
+      <form onSubmit={handleSubmit} className="space-y-4 mb-5 sm:mb-6">
         <div>
-          <label className="block text-sm font-semibold text-neutral-900 mb-2">
-            Email Address
+          <label className="block text-xs sm:text-sm font-bold text-slate-800 mb-1.5">
+            Work Email Address
           </label>
           <input
             type="email"
             required
+            autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="agent@travelagency.com"
-            className="input-base text-sm"
+            className="input-base"
           />
         </div>
 
         <div>
-          <div className="flex items-center justify-between mb-2">
-            <label className="block text-sm font-semibold text-neutral-900">
+          <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
+            <label className="block text-xs sm:text-sm font-bold text-slate-800">
               Password
             </label>
             <Link
               to="/forgot-password"
-              className="text-xs font-semibold text-teal-700 hover:text-teal-800 transition-colors"
+              className="text-xs font-bold text-teal-700 hover:text-teal-900 transition-colors"
             >
               Forgot password?
             </Link>
@@ -88,15 +93,17 @@ export default function Login() {
             <input
               type={showPassword ? 'text' : 'password'}
               required
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="input-base text-sm"
+              className="input-base pr-11"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-neutral-700 transition-colors"
+              className="w-9 h-9 flex items-center justify-center absolute right-1 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 active:scale-95 transition-all rounded-md"
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? (
                 <EyeOff className="w-4 h-4" />
@@ -110,21 +117,20 @@ export default function Login() {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full btn-primary py-3 px-4 flex items-center justify-center gap-2 text-sm sm:text-base font-bold shadow-md shadow-teal-900/15 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed mt-2"
         >
-          <span>{submitting ? 'Signing in...' : 'Sign In'}</span>
+          <span>{submitting ? 'Signing in...' : 'Sign In to Workspace'}</span>
           {!submitting && <ArrowRight className="w-4 h-4" />}
         </button>
       </form>
 
       {/* Sign Up Link */}
-      <div className="border-t border-neutral-200 pt-6 text-center text-sm text-neutral-600">
+      <div className="border-t border-slate-200 pt-5 text-center text-xs sm:text-sm text-slate-600">
         New to ActiLynq?{' '}
-        <Link to="/register" className="font-semibold text-brand-700 hover:text-brand-600 transition-colors">
+        <Link to="/register" className="font-bold text-teal-700 hover:text-teal-900 transition-colors underline sm:no-underline sm:hover:underline ml-1">
           Start 14-Day Free Trial
         </Link>
       </div>
     </div>
   );
 }
-
