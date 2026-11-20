@@ -30,6 +30,9 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     const res = await api.post('/auth/login', { email, password });
     if (res.data?.success) {
+      if (res.data.token) {
+        try { localStorage.setItem('actilynq_token', res.data.token); } catch (e) {}
+      }
       setUser(res.data.user);
       setBusiness(res.data.business);
       return res.data;
@@ -39,6 +42,9 @@ export function AuthProvider({ children }) {
   const register = async (formData) => {
     const res = await api.post('/auth/register', formData);
     if (res.data?.success) {
+      if (res.data.token) {
+        try { localStorage.setItem('actilynq_token', res.data.token); } catch (e) {}
+      }
       setUser(res.data.user);
       setBusiness(res.data.business);
       return res.data;
@@ -48,6 +54,9 @@ export function AuthProvider({ children }) {
   const loginWithGoogle = async (googleData) => {
     const res = await api.post('/auth/google', googleData);
     if (res.data?.success) {
+      if (res.data.token) {
+        try { localStorage.setItem('actilynq_token', res.data.token); } catch (e) {}
+      }
       setUser(res.data.user);
       setBusiness(res.data.business);
       return res.data;
@@ -58,6 +67,7 @@ export function AuthProvider({ children }) {
     try {
       await api.post('/auth/logout');
     } finally {
+      try { localStorage.removeItem('actilynq_token'); } catch (e) {}
       setUser(null);
       setBusiness(null);
     }

@@ -28,11 +28,13 @@ dotenv.config();
 
 const app = express();
 
-// Security Middleware
+// Security Middleware (Configured for Google Identity Services & SPA compatibility)
 app.use(
   helmet({
     contentSecurityPolicy: false, // Ensures SPA scripts load smoothly in single-service mode
-    crossOriginEmbedderPolicy: false
+    crossOriginEmbedderPolicy: false,
+    crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' }, // Allows Google OAuth popup postMessage communication
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' } // Allows Google to verify Authorized JavaScript origin
   })
 );
 

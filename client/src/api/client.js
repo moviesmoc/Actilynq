@@ -8,6 +8,19 @@ const api = axios.create({
   }
 });
 
+// Request interceptor to attach Bearer token fallback if present
+api.interceptors.request.use((config) => {
+  try {
+    const token = localStorage.getItem('actilynq_token');
+    if (token && !config.headers.Authorization) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  } catch (e) {
+    // Ignore localStorage access restrictions in strict private mode
+  }
+  return config;
+});
+
 // Response interceptor to format errors nicely
 api.interceptors.response.use(
   (response) => response,

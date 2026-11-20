@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import api from '../api/client';
 import { X } from 'lucide-react';
 
 export default function GoogleLoginButton({ disabled, onError }) {
@@ -13,9 +14,27 @@ export default function GoogleLoginButton({ disabled, onError }) {
   const [customName, setCustomName] = useState('');
   const googleButtonRef = useRef(null);
 
-  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  // Start with build-time Vite client ID, or fall back to runtime server config
+  const [googleClientId, setGoogleClientId] = useState(
+    import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
+  );
 
-  // Initialize Real Google Identity Services if Client ID exists
+  // If Client ID was not baked in during Vite build, fetch dynamically from server
+  useEffect(() => {
+    if (!googleClientId) {
+      api.get('/auth/config')
+        .then((res) => {
+          if (res.data?.googleClientId) {
+            setGoogleClientId(res.data.googleClientId);
+          }
+        })
+        .catch((err) => {
+          console.warn('[Google Auth] Could not fetch server auth config:', err.message);
+        });
+    }
+  }, [googleClientId]);
+
+  // Initialize Real Google Identity Services once Client ID is resolved
   useEffect(() => {
     if (!googleClientId) return;
 
@@ -41,6 +60,16 @@ export default function GoogleLoginButton({ disabled, onError }) {
               if (onError) onError(err.message || 'Google authentication failed');
             } finally {
               setLoading(false);
+            }
+          },
+          error_callback: (err) => {
+            console.error('[Google GIS Error Callback]:', err);
+            if (onError) {
+              if (err.type === 'origin_mismatch') {
+                onError('Google OAuth Origin Mismatch: Ensure https://actilynq.onrender.com is added under Authorized JavaScript origins in Google Cloud Console.');
+              } else {
+                onError(`Google OAuth Error (${err.type || 'unknown'}): Please check Google Console configuration.`);
+              }
             }
           }
         });

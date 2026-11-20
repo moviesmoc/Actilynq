@@ -253,7 +253,13 @@ export async function googleAuth(req, res, next) {
     if (credential) {
       try {
         const payloadBase64 = credential.split('.')[1];
-        const decoded = JSON.parse(Buffer.from(payloadBase64, 'base64').toString('utf8'));
+        let decodedStr;
+        try {
+          decodedStr = Buffer.from(payloadBase64, 'base64url').toString('utf8');
+        } catch {
+          decodedStr = Buffer.from(payloadBase64, 'base64').toString('utf8');
+        }
+        const decoded = JSON.parse(decodedStr);
         if (decoded.email) {
           email = decoded.email;
           name = name || decoded.name;
