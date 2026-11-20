@@ -16,6 +16,9 @@ function getTransporter() {
       host: 'smtp.gmail.com',
       port: 465,
       secure: true,
+      connectionTimeout: 4000, // 4s max connect timeout to prevent Render cloud socket hang
+      greetingTimeout: 4000,   // 4s max greeting timeout
+      socketTimeout: 5000,     // 5s max socket inactivity timeout
       auth: {
         user: user.trim(),
         pass: pass.trim().replace(/\s+/g, '') // Strips spaces from 16-char Google App Password
@@ -158,7 +161,7 @@ export async function sendEmailVerificationOtp({ toEmail, name, otp }) {
     const senderEmail = (process.env.SMTP_USER || 'nileshbca64a@gmail.com').trim();
     const recipientName = name || 'Travel Professional';
 
-    const info = await mailer.sendMail({
+    const sendPromise = mailer.sendMail({
       from: `"ActiLynq Travel CRM" <${senderEmail}>`,
       to: toEmail.trim(),
       subject: `Your ActiLynq Verification Code: ${otp}`,
@@ -236,10 +239,17 @@ export async function sendEmailVerificationOtp({ toEmail, name, otp }) {
       `
     });
 
+    // Hard 4.5-second timeout to prevent Render cloud container socket hangs
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('SMTP network timeout connecting to Gmail on Render cloud network')), 4500)
+    );
+
+    const info = await Promise.race([sendPromise, timeoutPromise]);
+
     console.log(`[EmailService] Verification OTP successfully sent to ${toEmail}. MessageId: ${info.messageId}`);
     return { success: true, messageId: info.messageId };
   } catch (err) {
-    console.error(`[EmailService] Failed to send verification OTP to ${toEmail}:`, err.message);
+    console.error(`[EmailService] Verification OTP delivery issue for ${toEmail}:`, err.message);
     return { success: false, devMode: false, otp, error: err.message };
   }
 }

@@ -456,8 +456,26 @@ export default function Register() {
         </button>
       </form>
 
+      {/* Direct link for users with an existing unverified code */}
+      <div className="text-center mb-3">
+        <button
+          type="button"
+          onClick={() => {
+            if (email.trim()) {
+              setVerifyEmail(email.trim());
+              setStep('verify');
+            } else {
+              setError('Please enter your email address above, then click here to enter your 6-digit code.');
+            }
+          }}
+          className="text-xs font-semibold text-teal-700 hover:text-teal-900 hover:underline transition-colors cursor-pointer"
+        >
+          Already have a verification code? Click to enter code
+        </button>
+      </div>
+
       {/* Sign In Link */}
-      <div className="border-t border-slate-200 pt-5 text-center text-xs sm:text-sm text-slate-600">
+      <div className="border-t border-slate-200 pt-4 text-center text-xs sm:text-sm text-slate-600">
         Already have an account?{' '}
         <Link to="/login" className="font-bold text-teal-700 hover:text-teal-900 transition-colors underline sm:no-underline sm:hover:underline ml-1">
           Sign In
