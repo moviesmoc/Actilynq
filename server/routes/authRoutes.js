@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import {
   register,
+  verifyEmailOtp,
+  resendEmailOtp,
   login,
   logout,
   getMe,
@@ -14,6 +16,8 @@ import { authLimiter } from '../middleware/rateLimiter.js';
 const router = Router();
 
 router.post('/register', authLimiter, register);
+router.post('/verify-otp', authLimiter, verifyEmailOtp);
+router.post('/resend-otp', authLimiter, resendEmailOtp);
 router.post('/login', authLimiter, login);
 router.post('/logout', logout);
 router.get('/me', requireAuth, getMe);

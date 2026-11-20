@@ -5,12 +5,14 @@ import { Business } from '../models/Business.js';
 import { generateTokenAndSetCookie, clearAuthCookie } from '../middleware/auth.js';
 import {
   registerSchema,
+  verifyOtpSchema,
+  resendOtpSchema,
   loginSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
   googleAuthSchema
 } from '../validators/authValidator.js';
-import { sendPasswordResetEmail } from '../services/emailService.js';
+import { sendPasswordResetEmail, sendEmailVerificationOtp } from '../services/emailService.js';
 
 export async function register(req, res, next) {
   try {
@@ -18,18 +20,50 @@ export async function register(req, res, next) {
 
     const existingUser = await User.findOne({ email: validatedData.email });
     if (existingUser) {
-      return res.status(409).json({
-        success: false,
-        error: 'An account with this email address already exists.'
+      if (existingUser.isEmailVerified) {
+        return res.status(409).json({
+          success: false,
+          error: 'An account with this email address already exists. Please sign in.'
+        });
+      }
+
+      // Existing unverified account: update credentials and refresh OTP
+      const salt = await bcrypt.genSalt(10);
+      existingUser.name = validatedData.name;
+      existingUser.phone = validatedData.phone;
+      existingUser.passwordHash = await bcrypt.hash(validatedData.password, salt);
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      existingUser.emailVerificationOtp = otp;
+      existingUser.emailVerificationExpires = new Date(Date.now() + 15 * 60 * 1000);
+      existingUser.emailVerificationAttempts = 0;
+      await existingUser.save();
+
+      await Business.findByIdAndUpdate(existingUser.businessId, {
+        name: validatedData.businessName,
+        contactPhone: validatedData.phone
+      });
+
+      sendEmailVerificationOtp({
+        toEmail: existingUser.email,
+        name: existingUser.name,
+        otp
+      }).catch((e) => console.error('[Register] Failed to send OTP email:', e));
+
+      return res.status(200).json({
+        success: true,
+        requiresVerification: true,
+        email: existingUser.email,
+        message: 'A 6-digit verification code has been sent to your email.'
       });
     }
 
-    // Create Business first with 14-day free trial
+    // Create Business with 14-day free trial and contact phone
     const trialExpiry = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
     const business = await Business.create({
       name: validatedData.businessName,
       businessType: 'travel_agency',
       currency: 'INR',
+      contactPhone: validatedData.phone,
       isDemo: false,
       subscriptionPlan: 'trial',
       subscriptionExpiresAt: trialExpiry,
@@ -40,25 +74,117 @@ export async function register(req, res, next) {
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(validatedData.password, salt);
 
-    // Create User linked to Business
+    // Generate 6-digit verification code
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Create User linked to Business (unverified until OTP is entered)
     const user = await User.create({
       name: validatedData.name,
       email: validatedData.email,
+      phone: validatedData.phone,
       passwordHash,
       businessId: business._id,
-      role: 'owner'
+      role: 'owner',
+      isEmailVerified: false,
+      emailVerificationOtp: otp,
+      emailVerificationExpires: new Date(Date.now() + 15 * 60 * 1000),
+      emailVerificationAttempts: 0
     });
 
     // Link owner to business
     business.ownerUserId = user._id;
     await business.save();
 
-    // Generate JWT and set HttpOnly cookie
-    const token = generateTokenAndSetCookie(res, user, business);
+    // Send 6-digit OTP email in background
+    sendEmailVerificationOtp({
+      toEmail: user.email,
+      name: user.name,
+      otp
+    }).catch((e) => console.error('[Register] Failed to send OTP email:', e));
 
     return res.status(201).json({
       success: true,
-      message: 'Registration successful. 14-day free trial activated.',
+      requiresVerification: true,
+      email: user.email,
+      message: 'Account created! Please enter the 6-digit verification code sent to your email.'
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function verifyEmailOtp(req, res, next) {
+  try {
+    const { email, otp } = verifyOtpSchema.parse(req.body);
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'No registered account found with this email address.'
+      });
+    }
+
+    const business = await Business.findById(user.businessId);
+    if (!business) {
+      return res.status(404).json({
+        success: false,
+        error: 'Associated business account not found.'
+      });
+    }
+
+    if (user.isEmailVerified) {
+      const token = generateTokenAndSetCookie(res, user, business);
+      return res.status(200).json({
+        success: true,
+        message: 'Email is already verified.',
+        token,
+        user: { id: user._id, name: user.name, email: user.email, role: user.role },
+        business: { id: business._id, name: business.name, currency: business.currency, isDemo: business.isDemo }
+      });
+    }
+
+    if (user.emailVerificationAttempts >= 5) {
+      return res.status(429).json({
+        success: false,
+        error: 'Too many incorrect attempts. Please click "Resend Code" to request a new code.'
+      });
+    }
+
+    if (!user.emailVerificationExpires || new Date() > user.emailVerificationExpires) {
+      return res.status(400).json({
+        success: false,
+        error: 'Verification code has expired. Please click "Resend Code" to receive a fresh code.'
+      });
+    }
+
+    if (user.emailVerificationOtp !== otp.trim()) {
+      user.emailVerificationAttempts = (user.emailVerificationAttempts || 0) + 1;
+      await user.save();
+      const remaining = Math.max(0, 5 - user.emailVerificationAttempts);
+      return res.status(400).json({
+        success: false,
+        error: `Invalid verification code. Please check your email. (${remaining} attempts remaining)`
+      });
+    }
+
+    // Verification successful: activate account and free trial
+    user.isEmailVerified = true;
+    user.emailVerificationOtp = null;
+    user.emailVerificationExpires = null;
+    user.emailVerificationAttempts = 0;
+    await user.save();
+
+    const now = new Date();
+    const expiresAt = business.subscriptionExpiresAt ? new Date(business.subscriptionExpiresAt) : null;
+    const isTrialExpired = Boolean(expiresAt && now > expiresAt);
+    const daysRemaining = expiresAt ? Math.max(0, Math.ceil((expiresAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))) : 14;
+
+    const token = generateTokenAndSetCookie(res, user, business);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Email verified successfully! 14-day free trial activated.',
       token,
       user: {
         id: user._id,
@@ -71,11 +197,63 @@ export async function register(req, res, next) {
         name: business.name,
         currency: business.currency,
         isDemo: business.isDemo,
-        subscriptionPlan: business.subscriptionPlan,
+        subscriptionPlan: business.subscriptionPlan || 'trial',
         subscriptionExpiresAt: business.subscriptionExpiresAt,
-        isTrialExpired: false,
-        daysRemaining: 14
+        isTrialExpired,
+        daysRemaining
       }
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function resendEmailOtp(req, res, next) {
+  try {
+    const { email } = resendOtpSchema.parse(req.body);
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'No registered account found with this email address.'
+      });
+    }
+
+    if (user.isEmailVerified) {
+      return res.status(400).json({
+        success: false,
+        error: 'This account is already verified. Please sign in.'
+      });
+    }
+
+    // Rate limit resend to 1 per 60 seconds
+    if (user.emailVerificationExpires) {
+      const msUntilExpiry = user.emailVerificationExpires.getTime() - Date.now();
+      if (msUntilExpiry > 14 * 60 * 1000) {
+        const waitSec = Math.ceil((msUntilExpiry - 14 * 60 * 1000) / 1000);
+        return res.status(429).json({
+          success: false,
+          error: `Please wait ${waitSec}s before requesting a new code.`
+        });
+      }
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    user.emailVerificationOtp = otp;
+    user.emailVerificationExpires = new Date(Date.now() + 15 * 60 * 1000);
+    user.emailVerificationAttempts = 0;
+    await user.save();
+
+    await sendEmailVerificationOtp({
+      toEmail: user.email,
+      name: user.name,
+      otp
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: 'A fresh 6-digit verification code has been sent to your email.'
     });
   } catch (error) {
     next(error);
@@ -107,6 +285,28 @@ export async function login(req, res, next) {
       return res.status(404).json({
         success: false,
         error: 'Associated business account not found.'
+      });
+    }
+
+    // Require email verification for registered users (except Google OAuth and Demo accounts)
+    if (user.isEmailVerified === false && !user.googleId && !business.isDemo) {
+      const otp = Math.floor(100000 + Math.random() * 900000).toString();
+      user.emailVerificationOtp = otp;
+      user.emailVerificationExpires = new Date(Date.now() + 15 * 60 * 1000);
+      user.emailVerificationAttempts = 0;
+      await user.save();
+
+      sendEmailVerificationOtp({
+        toEmail: user.email,
+        name: user.name,
+        otp
+      }).catch((e) => console.error('[Login] Failed to send OTP email:', e));
+
+      return res.status(403).json({
+        success: false,
+        requiresVerification: true,
+        email: user.email,
+        error: 'Please verify your email address to access your workspace. A 6-digit code has been sent to your inbox.'
       });
     }
 
@@ -285,10 +485,15 @@ export async function googleAuth(req, res, next) {
     let business;
 
     if (user) {
+      if (!user.isEmailVerified) {
+        user.isEmailVerified = true;
+        user.emailVerificationOtp = null;
+        user.emailVerificationExpires = null;
+      }
       if (!user.googleId && googleId) {
         user.googleId = googleId;
-        await user.save();
       }
+      await user.save();
       business = await Business.findById(user.businessId);
     } else {
       // New user via Google: create dedicated business with 14-day free trial
@@ -315,7 +520,8 @@ export async function googleAuth(req, res, next) {
         passwordHash,
         businessId: business._id,
         role: 'owner',
-        googleId: googleId || `goog_${Date.now()}`
+        googleId: googleId || `goog_${Date.now()}`,
+        isEmailVerified: true // Real Google accounts are cryptographically verified
       });
 
       business.ownerUserId = user._id;

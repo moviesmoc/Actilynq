@@ -28,7 +28,9 @@ api.interceptors.response.use(
     const customError = {
       status: error.response?.status,
       message: error.response?.data?.error || error.message || 'Something went wrong',
-      details: error.response?.data?.details || null
+      details: error.response?.data?.details || null,
+      requiresVerification: Boolean(error.response?.data?.requiresVerification),
+      email: error.response?.data?.email || null
     };
     return Promise.reject(customError);
   }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ArrowRight, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { ArrowRight, AlertCircle, Eye, EyeOff, Mail } from 'lucide-react';
 import GoogleLoginButton from '../components/GoogleLoginButton';
 
 export default function Login() {
@@ -9,6 +9,8 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [requiresVerification, setRequiresVerification] = useState(false);
+  const [unverifiedEmail, setUnverifiedEmail] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   const { login } = useAuth();
@@ -17,11 +19,16 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setRequiresVerification(false);
     setSubmitting(true);
     try {
       await login(email, password);
       navigate('/app');
     } catch (err) {
+      if (err.requiresVerification) {
+        setRequiresVerification(true);
+        setUnverifiedEmail(err.email || email);
+      }
       setError(err.message || 'Invalid email or password');
     } finally {
       setSubmitting(false);
@@ -39,8 +46,27 @@ export default function Login() {
         </p>
       </div>
 
+      {/* Verification Required Action Banner */}
+      {requiresVerification && (
+        <div className="mb-5 p-4 rounded-xl bg-teal-50 border border-teal-200 text-xs sm:text-sm text-teal-900 flex flex-col gap-2.5 shadow-xs">
+          <div className="flex items-start gap-2">
+            <Mail className="w-4 h-4 text-teal-700 flex-shrink-0 mt-0.5" />
+            <span className="font-semibold leading-snug">
+              Account verification required. Enter the 6-digit code sent to your inbox to unlock your workspace:
+            </span>
+          </div>
+          <Link
+            to={`/register?verify=true&email=${encodeURIComponent(unverifiedEmail || email)}`}
+            className="w-full py-2.5 px-3 rounded-lg bg-teal-700 hover:bg-teal-800 text-white font-bold text-center transition-colors flex items-center justify-center gap-1.5 shadow-xs"
+          >
+            <span>Enter 6-Digit Verification Code</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+      )}
+
       {/* Error Message */}
-      {error && (
+      {error && !requiresVerification && (
         <div className="mb-5 p-3.5 sm:p-4 rounded-xl bg-rose-50 border border-rose-200 text-xs sm:text-sm text-rose-800 flex items-start gap-2.5">
           <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-rose-600 flex-shrink-0 mt-0.5" />
           <span className="leading-snug">{error}</span>

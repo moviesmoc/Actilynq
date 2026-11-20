@@ -3,8 +3,18 @@ import { z } from 'zod';
 export const registerSchema = z.object({
   name: z.string().trim().min(2, 'User name must be at least 2 characters'),
   email: z.string().trim().toLowerCase().email('Please enter a valid email address'),
+  phone: z.string().trim().min(7, 'Phone number must be at least 7 digits').max(20, 'Phone number is too long').regex(/^[+0-9\s\-()]+$/, 'Please enter a valid WhatsApp or phone number'),
   password: z.string().min(8, 'Password must be at least 8 characters long'),
   businessName: z.string().trim().min(2, 'Travel agency name must be at least 2 characters')
+});
+
+export const verifyOtpSchema = z.object({
+  email: z.string().trim().toLowerCase().email('Please enter a valid email address'),
+  otp: z.string().trim().length(6, 'Verification code must be exactly 6 digits').regex(/^[0-9]{6}$/, 'Verification code must be 6 numeric digits')
+});
+
+export const resendOtpSchema = z.object({
+  email: z.string().trim().toLowerCase().email('Please enter a valid email address')
 });
 
 export const loginSchema = z.object({

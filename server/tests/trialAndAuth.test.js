@@ -1,6 +1,14 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { forgotPasswordSchema, resetPasswordSchema, googleAuthSchema, createTeamMemberSchema } from '../validators/authValidator.js';
+import {
+  registerSchema,
+  verifyOtpSchema,
+  resendOtpSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
+  googleAuthSchema,
+  createTeamMemberSchema
+} from '../validators/authValidator.js';
 import { requireActiveSubscription } from '../middleware/auth.js';
 
 describe('Trial & Plan Expiry & Auth Recovery Logic', () => {
@@ -155,6 +163,79 @@ describe('Trial & Plan Expiry & Auth Recovery Logic', () => {
 
       const seatsRemaining = Math.max(0, maxUsers - currentUsers);
       assert.equal(seatsRemaining, 0);
+    });
+  });
+
+  describe('Registration & Email OTP Verification Validation', () => {
+    it('accepts valid registration data with WhatsApp phone number', () => {
+      const valid = registerSchema.parse({
+        name: 'Nilesh Dhankani',
+        email: 'Nilesh@ActiLynq.com',
+        phone: '+91 98765 43210',
+        businessName: 'Nilesh Luxury Journeys',
+        password: 'Password123!'
+      });
+      assert.equal(valid.name, 'Nilesh Dhankani');
+      assert.equal(valid.email, 'nilesh@actilynq.com');
+      assert.equal(valid.phone, '+91 98765 43210');
+      assert.equal(valid.businessName, 'Nilesh Luxury Journeys');
+    });
+
+    it('rejects registration without phone number', () => {
+      assert.throws(() => {
+        registerSchema.parse({
+          name: 'Nilesh Dhankani',
+          email: 'nilesh@actilynq.com',
+          businessName: 'Nilesh Journeys',
+          password: 'Password123!'
+        });
+      });
+    });
+
+    it('rejects registration with invalid phone format', () => {
+      assert.throws(() => {
+        registerSchema.parse({
+          name: 'Nilesh Dhankani',
+          email: 'nilesh@actilynq.com',
+          phone: '123', // too short
+          businessName: 'Nilesh Journeys',
+          password: 'Password123!'
+        });
+      });
+    });
+
+    it('accepts valid 6-digit numeric OTP', () => {
+      const valid = verifyOtpSchema.parse({
+        email: 'User@Domain.com',
+        otp: '482910'
+      });
+      assert.equal(valid.email, 'user@domain.com');
+      assert.equal(valid.otp, '482910');
+    });
+
+    it('rejects invalid or non-numeric OTP', () => {
+      assert.throws(() => {
+        verifyOtpSchema.parse({
+          email: 'user@domain.com',
+          otp: '12345' // only 5 digits
+        });
+      });
+
+      assert.throws(() => {
+        verifyOtpSchema.parse({
+          email: 'user@domain.com',
+          otp: 'ABC123' // non-numeric
+        });
+      });
+    });
+
+    it('validates resend OTP request schema', () => {
+      const valid = resendOtpSchema.parse({ email: 'Lead@TravelAgency.com' });
+      assert.equal(valid.email, 'lead@travelagency.com');
+
+      assert.throws(() => {
+        resendOtpSchema.parse({ email: 'not-an-email' });
+      });
     });
   });
 });

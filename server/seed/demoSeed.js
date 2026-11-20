@@ -42,6 +42,8 @@ export async function seedDemoDataIfRequested() {
       demoUser = await User.create({
         name: 'Priya Mehta (Sales Lead)',
         email: demoEmail,
+        phone: '+919820099887',
+        isEmailVerified: true,
         passwordHash,
         businessId: demoBusiness._id,
         role: 'owner'
@@ -51,6 +53,10 @@ export async function seedDemoDataIfRequested() {
       await demoBusiness.save();
     } else {
       demoBusiness = await Business.findById(demoUser.businessId);
+      if (demoUser && !demoUser.isEmailVerified) {
+        demoUser.isEmailVerified = true;
+        await demoUser.save();
+      }
       // Ensure isDemo flag is set on existing demo business
       if (demoBusiness && !demoBusiness.isDemo) {
         demoBusiness.isDemo = true;

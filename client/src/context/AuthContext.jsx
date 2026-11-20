@@ -44,11 +44,28 @@ export function AuthProvider({ children }) {
     if (res.data?.success) {
       if (res.data.token) {
         try { localStorage.setItem('actilynq_token', res.data.token); } catch (e) {}
+        setUser(res.data.user);
+        setBusiness(res.data.business);
+      }
+      return res.data;
+    }
+  };
+
+  const verifyOtp = async (email, otp) => {
+    const res = await api.post('/auth/verify-otp', { email, otp });
+    if (res.data?.success) {
+      if (res.data.token) {
+        try { localStorage.setItem('actilynq_token', res.data.token); } catch (e) {}
       }
       setUser(res.data.user);
       setBusiness(res.data.business);
       return res.data;
     }
+  };
+
+  const resendOtp = async (email) => {
+    const res = await api.post('/auth/resend-otp', { email });
+    return res.data;
   };
 
   const loginWithGoogle = async (googleData) => {
@@ -94,6 +111,8 @@ export function AuthProvider({ children }) {
         isAuthenticated: !!user,
         login,
         register,
+        verifyOtp,
+        resendOtp,
         loginWithGoogle,
         logout,
         refreshProfile

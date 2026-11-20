@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema(
       trim: true,
       index: true
     },
+    phone: {
+      type: String,
+      trim: true,
+      default: null
+    },
     passwordHash: {
       type: String,
       required: [true, 'Password hash is required']
@@ -29,6 +34,25 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['owner', 'agent', 'admin'],
       default: 'owner'
+    },
+    // Email Verification via 6-digit OTP
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+      index: true
+    },
+    emailVerificationOtp: {
+      type: String,
+      default: null,
+      index: true
+    },
+    emailVerificationExpires: {
+      type: Date,
+      default: null
+    },
+    emailVerificationAttempts: {
+      type: Number,
+      default: 0
     },
     // Password Reset tokens
     resetPasswordToken: {

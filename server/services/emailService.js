@@ -136,3 +136,103 @@ export async function sendPasswordResetEmail({ toEmail, name, resetUrl }) {
     return { success: false, error: err.message };
   }
 }
+
+/**
+ * Send 6-Digit Email Verification Code (OTP) for Trial Registration
+ */
+export async function sendEmailVerificationOtp({ toEmail, name, otp }) {
+  try {
+    const mailer = getTransporter();
+    if (!mailer) {
+      console.warn(`[EmailService DEV] SMTP not configured. Verification OTP for ${toEmail}: [${otp}]`);
+      return { success: true, devMode: true, otp };
+    }
+
+    const senderEmail = process.env.SMTP_USER || 'nileshbca64a@gmail.com';
+    const recipientName = name || 'Travel Professional';
+
+    const info = await mailer.sendMail({
+      from: `"ActiLynq Travel CRM" <${senderEmail}>`,
+      to: toEmail,
+      subject: `Your ActiLynq Verification Code: ${otp}`,
+      text: `Hello ${recipientName},\n\nThank you for signing up for ActiLynq Travel CRM.\n\nYour 6-digit account verification code is: ${otp}\n\nThis code will expire in 15 minutes.\n\nEnter this code on the registration page to activate your 14-day full access free trial.\n\nIf you did not request this account, please ignore this email.`,
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Verify Your Email — ActiLynq</title>
+        </head>
+        <body style="margin: 0; padding: 0; background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f1f5f9; padding: 30px 15px;">
+            <tr>
+              <td align="center">
+                <table role="presentation" width="100%" style="max-width: 520px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05); border: 1px solid #e2e8f0;">
+                  <!-- Header -->
+                  <tr>
+                    <td style="background-color: #042f2e; padding: 24px 30px; text-align: left;">
+                      <h1 style="margin: 0; font-size: 20px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">
+                        ActiLynq <span style="font-weight: 400; color: #2dd4bf; font-size: 14px;">| Travel CRM</span>
+                      </h1>
+                    </td>
+                  </tr>
+
+                  <!-- Body Content -->
+                  <tr>
+                    <td style="padding: 32px 30px 24px 30px;">
+                      <h2 style="margin: 0 0 14px 0; font-size: 18px; font-weight: 700; color: #0f172a;">
+                        Verify Your Email Address
+                      </h2>
+                      <p style="margin: 0 0 16px 0; font-size: 14px; line-height: 22px; color: #475569;">
+                        Hello <strong>${recipientName}</strong>,
+                      </p>
+                      <p style="margin: 0 0 20px 0; font-size: 14px; line-height: 22px; color: #475569;">
+                        Thank you for starting your free trial with ActiLynq. Please enter the following 6-digit verification code to activate your workspace:
+                      </p>
+
+                      <!-- OTP Box -->
+                      <div style="margin: 28px 0; text-align: center;">
+                        <div style="display: inline-block; padding: 18px 32px; background-color: #f0fdfa; border: 2px dashed #0f766e; border-radius: 10px;">
+                          <span style="font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; font-size: 32px; font-weight: 800; letter-spacing: 10px; color: #0f766e; padding-left: 10px;">
+                            ${otp}
+                          </span>
+                        </div>
+                        <p style="margin: 10px 0 0 0; font-size: 12px; color: #64748b; font-weight: 500;">
+                          Valid for 15 minutes &bull; Do not share this code
+                        </p>
+                      </div>
+
+                      <p style="margin: 24px 0 0 0; font-size: 13px; line-height: 20px; color: #64748b;">
+                        Once verified, your <strong>14-Day Free Evaluation Trial</strong> with 2 Sales Agent Seats will be immediately unlocked.
+                      </p>
+                      <p style="margin: 12px 0 0 0; font-size: 12px; line-height: 18px; color: #94a3b8;">
+                        If you did not register for ActiLynq, please ignore this email or contact support.
+                      </p>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="background-color: #f8fafc; padding: 16px 30px; border-top: 1px solid #e2e8f0; text-align: center;">
+                      <p style="margin: 0; font-size: 11px; color: #94a3b8;">
+                        &copy; ${new Date().getFullYear()} ActiLynq Travel CRM &bull; Next-Action Engine for Tour Operators
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>
+      `
+    });
+
+    console.log(`[EmailService] Verification OTP successfully sent to ${toEmail}. MessageId: ${info.messageId}`);
+    return { success: true, messageId: info.messageId };
+  } catch (err) {
+    console.error(`[EmailService] Failed to send verification OTP to ${toEmail}:`, err.message);
+    return { success: false, error: err.message };
+  }
+}
