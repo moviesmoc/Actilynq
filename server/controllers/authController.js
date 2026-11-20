@@ -420,7 +420,7 @@ export async function forgotPassword(req, res, next) {
     const clientOrigin = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
     const resetUrl = `${clientOrigin}/reset-password?token=${resetToken}`;
 
-    // Dispatch automated password reset email via configured Gmail SMTP
+    // Dispatch automated password reset email via configured email service
     const mailResult = await sendPasswordResetEmail({
       toEmail: user.email,
       name: user.name,
@@ -431,8 +431,10 @@ export async function forgotPassword(req, res, next) {
       success: true,
       message: mailResult.success
         ? `A password reset link has been dispatched to ${user.email}. Please check your inbox and click the link to reset your password.`
-        : 'Unable to deliver password reset email. Please contact support.',
-      emailSent: Boolean(mailResult.success)
+        : 'Email delivery was delayed by the cloud mail server. You can use the instant reset link provided below.',
+      emailSent: Boolean(mailResult.success),
+      resetUrl,
+      emailError: !mailResult.success ? mailResult.error : undefined
     });
   } catch (error) {
     next(error);

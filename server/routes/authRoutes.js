@@ -26,12 +26,16 @@ router.get('/me', requireAuth, getMe);
 router.post('/forgot-password', authLimiter, forgotPassword);
 router.post('/reset-password', authLimiter, resetPassword);
 
-// Public Auth Configuration (exposes Google Client ID & SMTP status safely at runtime)
+// Public Auth Configuration (exposes Google Client ID & Email status safely at runtime)
 router.get('/config', (req, res) => {
+  const smtpConfigured = Boolean(process.env.SMTP_USER && process.env.SMTP_PASS);
+  const resendConfigured = Boolean(process.env.RESEND_API_KEY && process.env.RESEND_API_KEY.trim());
   res.status(200).json({
     success: true,
     googleClientId: process.env.VITE_GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID || '',
-    smtpConfigured: Boolean(process.env.SMTP_USER && process.env.SMTP_PASS)
+    smtpConfigured,
+    resendConfigured,
+    emailConfigured: smtpConfigured || resendConfigured
   });
 });
 

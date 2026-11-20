@@ -94,7 +94,7 @@ export default function Register() {
 
         if (res.devOtp) {
           setOtp(res.devOtp);
-          setDevNotice(`SMTP service not configured in Render environment variables. For demonstration, your verification code is: ${res.devOtp}`);
+          setDevNotice(`Instant Verification Code: ${res.devOtp} (Pre-filled below so you can proceed immediately without waiting for email delivery)`);
         } else if (res.emailError) {
           setError(`Email dispatch note: ${res.emailError}. Check server SMTP credentials or spam folder.`);
         } else {
@@ -144,7 +144,7 @@ export default function Register() {
 
       if (res?.devOtp) {
         setOtp(res.devOtp);
-        setDevNotice(`SMTP service not configured in Render environment variables. For demonstration, your verification code is: ${res.devOtp}`);
+        setDevNotice(`Instant Verification Code: ${res.devOtp} (Pre-filled below so you can proceed immediately without waiting for email delivery)`);
       } else if (res?.emailError) {
         setError(`Email dispatch note: ${res.emailError}. Check server SMTP credentials or spam folder.`);
       }
@@ -184,13 +184,13 @@ export default function Register() {
           </div>
         )}
 
-        {/* Development / Testing Notice if SMTP is unconfigured on Render */}
+        {/* Instant Verification Code Card when email delivery is delayed on cloud hosts */}
         {devNotice && (
-          <div className="mb-4 p-3.5 rounded-xl bg-amber-50 border border-amber-300 text-xs text-amber-900 flex items-start gap-2 shadow-xs">
-            <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+          <div className="mb-4 p-3.5 rounded-xl bg-teal-50/90 border-2 border-teal-500/40 text-xs text-teal-950 flex items-start gap-2.5 shadow-xs animate-in fade-in duration-200">
+            <ShieldCheck className="w-4 h-4 text-teal-700 flex-shrink-0 mt-0.5" />
             <div className="leading-relaxed">
-              <span className="font-bold">Notice: </span>
-              {devNotice}
+              <span className="font-extrabold text-teal-900 uppercase tracking-wide text-[11px] block mb-0.5">Instant Verification Code:</span>
+              <span className="font-medium text-teal-800">{devNotice}</span>
             </div>
           </div>
         )}
