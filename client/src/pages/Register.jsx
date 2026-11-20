@@ -25,6 +25,7 @@ export default function Register() {
   const [resendCountdown, setResendCountdown] = useState(60);
   const [resendLoading, setResendLoading] = useState(false);
   const [resendSuccess, setResendSuccess] = useState('');
+  const [devNotice, setDevNotice] = useState('');
 
   const { register, verifyOtp, resendOtp } = useAuth();
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ export default function Register() {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setDevNotice('');
 
     // Validate passwords match
     if (password !== confirmPassword) {
@@ -89,7 +91,15 @@ export default function Register() {
         setVerifyEmail(email.trim());
         setStep('verify');
         setResendCountdown(60);
-        setOtp('');
+
+        if (res.devOtp) {
+          setOtp(res.devOtp);
+          setDevNotice(`SMTP service not configured in Render environment variables. For demonstration, your verification code is: ${res.devOtp}`);
+        } else if (res.emailError) {
+          setError(`Email dispatch note: ${res.emailError}. Check server SMTP credentials or spam folder.`);
+        } else {
+          setOtp('');
+        }
       } else {
         navigate('/app');
       }
@@ -130,9 +140,16 @@ export default function Register() {
 
     try {
       const res = await resendOtp(verifyEmail);
-      setResendSuccess(res?.message || 'A fresh verification code has been sent to your email.');
       setResendCountdown(60);
-      setOtp('');
+
+      if (res?.devOtp) {
+        setOtp(res.devOtp);
+        setDevNotice(`SMTP service not configured in Render environment variables. For demonstration, your verification code is: ${res.devOtp}`);
+      } else if (res?.emailError) {
+        setError(`Email dispatch note: ${res.emailError}. Check server SMTP credentials or spam folder.`);
+      }
+
+      setResendSuccess(res?.message || 'A fresh verification code has been sent to your email.');
     } catch (err) {
       setError(err.message || 'Failed to resend verification code');
     } finally {
@@ -166,6 +183,25 @@ export default function Register() {
             <span className="leading-snug">{error}</span>
           </div>
         )}
+
+        {/* Development / Testing Notice if SMTP is unconfigured on Render */}
+        {devNotice && (
+          <div className="mb-4 p-3.5 rounded-xl bg-amber-50 border border-amber-300 text-xs text-amber-900 flex items-start gap-2 shadow-xs">
+            <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+            <div className="leading-relaxed">
+              <span className="font-bold">Notice: </span>
+              {devNotice}
+            </div>
+          </div>
+        )}
+
+        {/* Spam / Junk Folder Tip */}
+        <div className="mb-4 p-3 rounded-xl bg-blue-50/70 border border-blue-200/80 text-[11px] text-blue-900 flex items-start gap-2">
+          <Mail className="w-3.5 h-3.5 text-blue-600 flex-shrink-0 mt-0.5" />
+          <div className="leading-relaxed">
+            <strong>Can't find the email?</strong> Please check your <strong>Spam</strong>, <strong>Junk</strong>, or <strong>Promotions</strong> tab. Automated verification emails often land there on first delivery.
+          </div>
+        </div>
 
         {/* Resend Success Notification */}
         {resendSuccess && (

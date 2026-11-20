@@ -43,17 +43,24 @@ export async function register(req, res, next) {
         contactPhone: validatedData.phone
       });
 
-      sendEmailVerificationOtp({
+      const mailResult = await sendEmailVerificationOtp({
         toEmail: existingUser.email,
         name: existingUser.name,
         otp
-      }).catch((e) => console.error('[Register] Failed to send OTP email:', e));
+      });
 
       return res.status(200).json({
         success: true,
         requiresVerification: true,
         email: existingUser.email,
-        message: 'A 6-digit verification code has been sent to your email.'
+        emailSent: Boolean(mailResult.success),
+        devOtp: mailResult.devMode || !mailResult.success ? otp : undefined,
+        emailError: !mailResult.success ? mailResult.error : undefined,
+        message: mailResult.success
+          ? 'A 6-digit verification code has been sent to your email.'
+          : mailResult.devMode
+          ? `SMTP not configured on server. Verification code: ${otp}`
+          : `Email delivery issue: ${mailResult.error}`
       });
     }
 
@@ -95,18 +102,25 @@ export async function register(req, res, next) {
     business.ownerUserId = user._id;
     await business.save();
 
-    // Send 6-digit OTP email in background
-    sendEmailVerificationOtp({
+    // Await sending OTP email so we can inspect delivery status
+    const mailResult = await sendEmailVerificationOtp({
       toEmail: user.email,
       name: user.name,
       otp
-    }).catch((e) => console.error('[Register] Failed to send OTP email:', e));
+    });
 
     return res.status(201).json({
       success: true,
       requiresVerification: true,
       email: user.email,
-      message: 'Account created! Please enter the 6-digit verification code sent to your email.'
+      emailSent: Boolean(mailResult.success),
+      devOtp: mailResult.devMode || !mailResult.success ? otp : undefined,
+      emailError: !mailResult.success ? mailResult.error : undefined,
+      message: mailResult.success
+        ? 'Account created! Please enter the 6-digit verification code sent to your email.'
+        : mailResult.devMode
+        ? `SMTP not configured on server. Verification code: ${otp}`
+        : `Email delivery issue: ${mailResult.error}`
     });
   } catch (error) {
     next(error);
@@ -245,7 +259,7 @@ export async function resendEmailOtp(req, res, next) {
     user.emailVerificationAttempts = 0;
     await user.save();
 
-    await sendEmailVerificationOtp({
+    const mailResult = await sendEmailVerificationOtp({
       toEmail: user.email,
       name: user.name,
       otp
@@ -253,7 +267,14 @@ export async function resendEmailOtp(req, res, next) {
 
     return res.status(200).json({
       success: true,
-      message: 'A fresh 6-digit verification code has been sent to your email.'
+      emailSent: Boolean(mailResult.success),
+      devOtp: mailResult.devMode || !mailResult.success ? otp : undefined,
+      emailError: !mailResult.success ? mailResult.error : undefined,
+      message: mailResult.success
+        ? 'A fresh 6-digit verification code has been sent to your email.'
+        : mailResult.devMode
+        ? `SMTP not configured on server. Verification code: ${otp}`
+        : `Email delivery issue: ${mailResult.error}`
     });
   } catch (error) {
     next(error);
@@ -296,17 +317,22 @@ export async function login(req, res, next) {
       user.emailVerificationAttempts = 0;
       await user.save();
 
-      sendEmailVerificationOtp({
+      const mailResult = await sendEmailVerificationOtp({
         toEmail: user.email,
         name: user.name,
         otp
-      }).catch((e) => console.error('[Login] Failed to send OTP email:', e));
+      });
 
       return res.status(403).json({
         success: false,
         requiresVerification: true,
         email: user.email,
-        error: 'Please verify your email address to access your workspace. A 6-digit code has been sent to your inbox.'
+        emailSent: Boolean(mailResult.success),
+        devOtp: mailResult.devMode || !mailResult.success ? otp : undefined,
+        emailError: !mailResult.success ? mailResult.error : undefined,
+        error: mailResult.success
+          ? 'Please verify your email address to access your workspace. A 6-digit code has been sent to your inbox.'
+          : `Account verification required. Verification code: ${otp}`
       });
     }
 

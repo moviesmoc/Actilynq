@@ -13,13 +13,15 @@ function getTransporter() {
 
   if (!transporter) {
     transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
       auth: {
         user: user.trim(),
-        pass: pass.trim().replace(/\s+/g, '') // Strips any spaces if provided formatted
+        pass: pass.trim().replace(/\s+/g, '') // Strips spaces from 16-char Google App Password
       },
       tls: {
-        rejectUnauthorized: false // Ensures reliable delivery across Windows, proxy, and containerized networks
+        rejectUnauthorized: false // Ensures reliable delivery across Render, cloud containers & proxies
       }
     });
   }
@@ -145,15 +147,20 @@ export async function sendEmailVerificationOtp({ toEmail, name, otp }) {
     const mailer = getTransporter();
     if (!mailer) {
       console.warn(`[EmailService DEV] SMTP not configured. Verification OTP for ${toEmail}: [${otp}]`);
-      return { success: true, devMode: true, otp };
+      return {
+        success: false,
+        devMode: true,
+        otp,
+        error: 'SMTP credentials (SMTP_USER / SMTP_PASS) not configured in environment variables.'
+      };
     }
 
-    const senderEmail = process.env.SMTP_USER || 'nileshbca64a@gmail.com';
+    const senderEmail = (process.env.SMTP_USER || 'nileshbca64a@gmail.com').trim();
     const recipientName = name || 'Travel Professional';
 
     const info = await mailer.sendMail({
       from: `"ActiLynq Travel CRM" <${senderEmail}>`,
-      to: toEmail,
+      to: toEmail.trim(),
       subject: `Your ActiLynq Verification Code: ${otp}`,
       text: `Hello ${recipientName},\n\nThank you for signing up for ActiLynq Travel CRM.\n\nYour 6-digit account verification code is: ${otp}\n\nThis code will expire in 15 minutes.\n\nEnter this code on the registration page to activate your 14-day full access free trial.\n\nIf you did not request this account, please ignore this email.`,
       html: `
@@ -233,6 +240,6 @@ export async function sendEmailVerificationOtp({ toEmail, name, otp }) {
     return { success: true, messageId: info.messageId };
   } catch (err) {
     console.error(`[EmailService] Failed to send verification OTP to ${toEmail}:`, err.message);
-    return { success: false, error: err.message };
+    return { success: false, devMode: false, otp, error: err.message };
   }
 }
